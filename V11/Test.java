@@ -5,17 +5,17 @@ import java.math.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
-
+ 
 import iBoxDB.LocalServer.*;
+import iBoxDB.LocalServer.LocalDatabaseServer.LocalDatabase;
 import iBoxDB.LocalServer.IO.*;
 import iBoxDB.LocalServer.Replication.*;
-import iBoxDB.LocalServer.LocalDataBaseServer.LocalDataBase;
 
 import iBoxDB.example.Test.Replication.MMSBaseServer;
 import iBoxDB.example.Test.Start.*;
 
-//  iBoxDB for java v1.0
-//  Test.java version 1.01
+//  iBoxDB for java v1.1
+//  Test.java version 1.1
 public class Test {
 
 	private static boolean isAndroid = false;
@@ -38,7 +38,7 @@ public class Test {
 
 	public static String run(boolean runSpeedTest) {
 		// Monitor
-		// BoxSystem.performance.PrintEnable = true;
+		 //BoxSystem.performance.PrintEnable = true;
 
 		StringBuilder sb = new StringBuilder();
 
@@ -55,7 +55,6 @@ public class Test {
 		return sb.toString();
 	}
 
-	
 	public static class Start {
 
 		public static abstract class IDClass {
@@ -87,8 +86,8 @@ public class Test {
 				_regTime = value;
 			}
 
-			@BoxLength(20)
-			// 20 chars
+			// 20 chars, just for index
+			@BoxLength(20)			
 			public String getName() {
 				return _name;
 			}
@@ -97,8 +96,8 @@ public class Test {
 				_name = value;
 			}
 
-			@BoxLength(256)
 			// 256 bytes
+			@BoxLength(256)			
 			public Object[] getTags() {
 				return _tags;
 			}
@@ -107,8 +106,8 @@ public class Test {
 				_tags = value;
 			}
 
-			@BoxLength(40)
 			// 40 bytes
+			@BoxLength(40)			
 			public BigDecimal getAmount() {
 				return _amount;
 			}
@@ -119,9 +118,9 @@ public class Test {
 
 		}
 
-		// document Object
-		@BoxLength(1024)
 		// 1024 bytes
+		// document Object
+		@BoxLength(1024)		
 		public static class Product extends HashMap<String, Object> {
 
 			public int Type() {
@@ -173,7 +172,7 @@ public class Test {
 			}
 		}
 
-		public static class C1BaseServer extends LocalDataBaseServer {
+		public static class C1BaseServer extends LocalDatabaseServer {
 			public static long DBAddress = 1;
 
 			public static class C1Config extends BoxFileStreamConfig {
@@ -193,7 +192,7 @@ public class Test {
 				}
 			}
 
-			protected DataBaseConfig BuildDataBaseConfig(long address) {
+			protected DatabaseConfig BuildDataBaseConfig(long address) {
 				if (address == DBAddress) {
 					return new C1Config(address);
 				}
@@ -214,10 +213,10 @@ public class Test {
 					C1BaseServer.DeleteForTest();
 					C1BaseServer server = new C1BaseServer();
 					try {
-						DataBase db = server
+						Database db = server
 								.getInstance(C1BaseServer.DBAddress);
 						try {
-							//java7 try( Box box = db.cube() ){ }							
+							// java7 try( Box box = db.cube() ){ }
 							Box box = db.cube();
 							try {
 
@@ -361,7 +360,7 @@ public class Test {
 			public static final int SlaveA_Address = -10;
 		}
 
-		public static class MMSBaseServer extends LocalDataBaseServer {
+		public static class MMSBaseServer extends LocalDatabaseServer {
 			public static void MMSDeleteForTest() {
 				C1BaseServer.DeleteForTest();
 
@@ -371,7 +370,7 @@ public class Test {
 				BoxSystem.DBDebug.DeleteDBFiles(ServerID.SlaveA_Address);
 			}
 
-			protected DataBaseConfig BuildDataBaseConfig(long address) {
+			protected DatabaseConfig BuildDataBaseConfig(long address) {
 				if (address == ServerID.SlaveA_Address) {
 					return new BoxFileStreamConfig();
 				}
@@ -383,7 +382,7 @@ public class Test {
 			}
 
 			protected IBoxRecycler BuildBoxRecycler(long address,
-					DataBaseConfig config) {
+					DatabaseConfig config) {
 				if (address == ServerID.MasterA_Address) {
 					return new InMemoryBoxRecycler(GetNameByAddr(address),
 							config);
@@ -410,7 +409,7 @@ public class Test {
 		public static class InMemoryBoxRecycler implements IBoxRecycler {
 			ArrayList<Package> qBuffer;
 
-			public InMemoryBoxRecycler(String name, DataBaseConfig config) {
+			public InMemoryBoxRecycler(String name, DatabaseConfig config) {
 				name = QBuffer.GetBufferName(name);
 				qBuffer = new ArrayList<Package>();
 			}
@@ -439,9 +438,9 @@ public class Test {
 					MMSBaseServer.MMSDeleteForTest();
 					MMSBaseServer server = new MMSBaseServer();
 					try {
-						LocalDataBase masterA = server
+						LocalDatabase masterA = (LocalDatabase) server
 								.getInstance(ServerID.MasterA_Address);
-						DataBase slaveA = server
+						Database slaveA = server
 								.getInstance(ServerID.SlaveA_Address);
 
 						Box box = masterA.cube();
@@ -505,9 +504,9 @@ public class Test {
 					MMSBaseServer.MMSDeleteForTest();
 					MMSBaseServer server = new MMSBaseServer();
 					try {
-						LocalDataBase masterA = server
+						LocalDatabase masterA = (LocalDatabase) server
 								.getInstance(ServerID.MasterA_Address);
-						LocalDataBase masterB = server
+						LocalDatabase masterB = (LocalDatabase) server
 								.getInstance(ServerID.MasterB_Address);
 
 						// send to MasterB_Address
@@ -599,15 +598,17 @@ public class Test {
 				C1BaseServer.DeleteForTest();
 				C1BaseServer server = new C1BaseServer();
 				try {
-					final DataBase db = server
+					final Database db = server
 							.getInstance(C1BaseServer.DBAddress);
 					try {
 						final int threadCount = isAndroid ? 20 : 20000;
 						final int objectCount = 10;
+						final int poolCount = isAndroid ? 2 : 8;
 						sb.append("\r\n*Begin Insert "
 								+ (threadCount * objectCount));
 						long begin = System.currentTimeMillis();
-						ExecutorService pool = Executors.newFixedThreadPool(8);
+						ExecutorService pool = Executors
+								.newFixedThreadPool(poolCount);
 						for (int i = 0; i < threadCount; i++) {
 							pool.execute(new Runnable() {
 								@Override
@@ -641,7 +642,7 @@ public class Test {
 						System.runFinalization();
 
 						begin = System.currentTimeMillis();
-						pool = Executors.newFixedThreadPool(8);
+						pool = Executors.newFixedThreadPool(poolCount);
 						for (int i = 0; i < threadCount; i++) {
 							final int finalI = i;
 							pool.execute(new Runnable() {
@@ -676,7 +677,7 @@ public class Test {
 
 						final AtomicInteger count = new AtomicInteger(0);
 						begin = System.currentTimeMillis();
-						pool = Executors.newFixedThreadPool(8);
+						pool = Executors.newFixedThreadPool(poolCount);
 						for (int i = 0; i < threadCount; i++) {
 							final int finalI = i;
 							pool.execute(new Runnable() {

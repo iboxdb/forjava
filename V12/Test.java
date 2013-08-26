@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.example.Test.Replication.MMSBaseServer;
 import iBoxDB.example.Test.Start.*;
 
-//  iBoxDB for java v1.1
+//  iBoxDB for java v1.2 , v1.1
 //  Test.java version 1.1
 public class Test {
 

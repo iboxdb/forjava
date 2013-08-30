@@ -1,4 +1,4 @@
-iBoxDB for java
+iBoxDB.java
 =======
 Traditional way deal with data, with NoSQL fashional styles, pure java database, not only CURD and QL, but also Replication services, for both Java and Android. 
 

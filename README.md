@@ -60,3 +60,8 @@ Custom DatabaseFunction use java
 		
     box.select(Member.class, "from Member where [Tags]",  new QueryArray("Strong")
     
+    
+Replication Master-Slave , Master-Master
+
+![](http://download-codeplex.sec.s-msft.com/Download?ProjectName=iboxdb&DownloadId=581898)
+  

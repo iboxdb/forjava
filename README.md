@@ -5,7 +5,13 @@ Traditional way deal with data, with NoSQL fashional styles, pure java database,
 features: CURD, Index, composite Index, query language, transactions support, concurrency control, replication, in-memory database supported, dynamic columns, NoSQL styles, high performance, zero configuration, copy and run.
 
 
+![](https://raw.github.com/iboxdb/forjava/master/images/show.png)
+
 [Benchmark with MongoDB](https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB)
+
+[iBoxDB JAVA Version(Current)](https://github.com/iboxdb/forjava)
+
+[iBoxDB NET Version](https://iboxdb.codeplex.com/)
 
 
 Examples:
@@ -64,4 +70,8 @@ Custom DatabaseFunction use java
 Replication Master-Slave , Master-Master
 
 ![](http://download-codeplex.sec.s-msft.com/Download?ProjectName=iboxdb&DownloadId=581898)
+
+
+
+
   

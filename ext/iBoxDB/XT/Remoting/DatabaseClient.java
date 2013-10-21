@@ -114,71 +114,6 @@ public class DatabaseClient extends DatabaseServer {
 			return new BoxClient(localAddress(), destAddress);
 		}
 
-		@Override
-		public AutoBox get(long destAddress) {
-			return new AutoBoxClient(this, localAddress(), destAddress);
-		}
-
-	}
-
-	class AutoBoxClient extends AutoBox {
-
-		private CommonClient cc;
-
-		public AutoBoxClient(Database database, long localAddress,
-				long destAddress) {
-			super(database, localAddress, destAddress);
-			cc = new CommonClient(localAddress, destAddress);
-		}
-
-		private OPEntity[] tempActions = new OPEntity[1];
-
-		@Override
-		public <R> R Action(OPEntity op) {
-			tempActions[0] = op;
-			return Action(tempActions);
-		}
-
-		@SuppressWarnings("unchecked")
-		public <R> R Action(OPEntity[] ops) {
-
-			OPEntity op = ops[0];
-			boolean justQuery = op.ActionType == ActionType.Select
-					|| op.ActionType == ActionType.SelectByKey
-					|| op.ActionType == ActionType.SelectCount
-					|| (op.ActionType == ActionType.NewId && ((Long) op.Value)
-							.longValue() == 0);
-
-			ArrayList<OPEntity> list = new ArrayList<OPEntity>();
-			list.add(cc.CreateCUBE());
-			for (OPEntity op2 : ops) {
-				list.add(op2);
-			}
-			if (!justQuery) {
-				list.add(new OPEntity(null, ActionType.Commit, null, null, -1));
-			}
-			list.add(cc.CreateDISPOSE());
-			ops = list.toArray(new OPEntity[ops.length + 1]);
-
-			cc.Open();
-			try {
-				cc.Send(ops);
-				return (R) cc.Receive();
-			} catch (Exception e) {
-				cc.Close(true);
-				return RemoteConvert.ToException(e);
-			} finally {
-				cc.Close(false);
-			}
-		}
-
-		@Override
-		public CommitResult batch(OPEntity... actions) throws RuntimeException {
-			if (actions == null || actions.length < 1) {
-				return CommitResult.Conflict;
-			}
-			return Action(actions);
-		}
 	}
 
 	class BoxClient extends Box {
@@ -251,14 +186,6 @@ public class DatabaseClient extends DatabaseServer {
 			} finally {
 				close();
 			}
-		}
-
-		@Override
-		public CommitResult batch(OPEntity... actions) throws RuntimeException {
-			if (actions == null || actions.length < 1) {
-				return CommitResult.Conflict;
-			}
-			return CommitResult.ToEBool((Boolean) Action(actions));
 		}
 
 		private OPEntity[] tempActions = new OPEntity[1];
@@ -376,7 +303,7 @@ public class DatabaseClient extends DatabaseServer {
 					try {
 						socket.close();
 					} catch (IOException e) {
-						//e.printStackTrace();
+						// e.printStackTrace();
 					}
 					socket = null;
 				}

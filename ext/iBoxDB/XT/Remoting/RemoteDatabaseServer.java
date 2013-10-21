@@ -57,7 +57,7 @@ public abstract class RemoteDatabaseServer extends LocalDatabaseServer {
 						if (!closing) {
 							e.printStackTrace();
 						} else {
-							 
+
 						}
 						break;
 					}
@@ -180,35 +180,8 @@ public abstract class RemoteDatabaseServer extends LocalDatabaseServer {
 					Object result = null;
 					try {
 						if (list.size() > 0) {
-
-							boolean checkOk = (len > 1)
-									&& list.get(list.size() - 1).ActionType
-											.equals(ActionType.Commit);
-
-							boolean isNewID = list.get(0).ActionType
-									.equals(ActionType.NewId) && checkOk;
-
-							long nidv = 0;
 							for (int i = 0; i < list.size(); i++) {
 								result = box.Action(list.get(i));
-
-								if (isNewID && (result instanceof Long)) {
-									nidv = (Long) result;
-								}
-								if (result instanceof Boolean) {
-									boolean bv = (Boolean) result;
-									if (checkOk) {
-										result = CommitResult.ToEBool(bv);
-									}
-
-									if (!bv) {
-										break;
-									}
-								}
-
-							}
-							if (isNewID) {
-								result = nidv;
 							}
 						}
 					} catch (Throwable te) {
@@ -232,7 +205,7 @@ public abstract class RemoteDatabaseServer extends LocalDatabaseServer {
 							len = RemoteConvert.WriteObject(result, buffer);
 						} catch (Throwable te) {
 							te.printStackTrace();
-							len = RemoteConvert.WriteObject( te , buffer);
+							len = RemoteConvert.WriteObject(te, buffer);
 						}
 						socketOut.write(buffer.getBuffer(), 0, len);
 						socketOut.flush();

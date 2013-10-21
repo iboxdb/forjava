@@ -14,8 +14,8 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.Test.Example.Server.*;
 import iBoxDB.Test.Example.Server.Package;
 
-//  iBoxDB.java v1.3
-//  Test.java version 1.2
+//  iBoxDB.java v1.3.1
+//  Test.java
 
 public class Test {
 
@@ -73,17 +73,18 @@ public class Test {
 
 				DB db = new DB(1, "");
 				db.ensureTable(Record.class, "Table", "ID");
-				db.open();
+				
+				AutoBox box = db.open();
 
-				db.insert("Table", new Record(1, "Andy"));
-				Record o1 = db.find(Record.class, "Table", 1);
+				box.insert("Table", new Record(1, "Andy"));
+				Record o1 = box.selectKey(Record.class, "Table", 1);
 
 				sb.append("Name1 " + o1.Name + "\r\n");
 
 				o1.Name = "Kelly";
-				db.update("Table", o1);
+				box.update("Table", o1);
 				o1 = null;
-				Record o2 = db.find(Record.class, "Table", 1);
+				Record o2 =box.selectKey(Record.class, "Table", 1);
 
 				sb.append("Name2 " + o2.Name + "\r\n");
 				db.close();

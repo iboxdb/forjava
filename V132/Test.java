@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.Test.Example.Server.*;
 import iBoxDB.Test.Example.Server.Package;
 
-//  iBoxDB.java v1.3.1
+//  iBoxDB.java v1.3.2
 //  Test.java
 
 public class Test {
@@ -22,14 +22,20 @@ public class Test {
 	private static boolean isAndroid = false;
 
 	// com.example.fapp
-//	public static void initAndroid(String packageName) {
-//		isAndroid = true;
-//		BoxFileStreamConfig.BaseDirectory = android.os.Environment
-//				.getDataDirectory().getAbsolutePath()
-//				+ "/data/"
-//				+ packageName
-//				+ "/";
-//	}
+	/*
+	public static void initAndroid(String packageName) {
+		isAndroid = true;
+		BoxFileStreamConfig.BaseDirectory = android.os.Environment
+				.getDataDirectory().getAbsolutePath()
+				+ "/data/"
+				+ packageName
+				+ "/";
+	}
+	*/
+	
+	public static String run() {
+		return run(false);
+	}
 
 	public static String run(boolean runSpeedTest) {
 
@@ -45,6 +51,9 @@ public class Test {
 
 		if (runSpeedTest) {
 			sb.append(Test.Example.Speed().toString() + "\r\n");
+			sb.append(Test.Example.ReplicationSpeed(10).toString() + "\r\n");
+		} else {
+			sb.append(Test.Example.ReplicationSpeed(1).toString() + "\r\n");
 		}
 
 		TestHelper.DeleteDB();
@@ -73,7 +82,7 @@ public class Test {
 
 				DB db = new DB(1, "");
 				db.ensureTable(Record.class, "Table", "ID");
-				
+
 				AutoBox box = db.open();
 
 				box.insert("Table", new Record(1, "Andy"));
@@ -84,7 +93,7 @@ public class Test {
 				o1.Name = "Kelly";
 				box.update("Table", o1);
 				o1 = null;
-				Record o2 =box.selectKey(Record.class, "Table", 1);
+				Record o2 = box.selectKey(Record.class, "Table", 1);
 
 				sb.append("Name2 " + o2.Name + "\r\n");
 				db.close();
@@ -128,7 +137,7 @@ public class Test {
 					_regTime = value;
 				}
 
-				// 20 chars, just for index
+				// 20 chars, just for index , default 64 chars
 				@BoxLength(20)
 				public String getName() {
 					return _name;
@@ -148,7 +157,7 @@ public class Test {
 					_tags = value;
 				}
 
-				// 40 bytes
+				// 40 bytes , default 64 bytes
 				@BoxLength(40)
 				public BigDecimal getAmount() {
 					return _amount;
@@ -160,7 +169,7 @@ public class Test {
 
 			}
 
-			// document Object , fixed length will faster (1024 bytes)
+			// document Object , fixed length will faster (1024 bytes) [option]
 			@BoxLength(1024)
 			public static class Product extends HashMap<String, Object> {
 
@@ -287,7 +296,6 @@ public class Test {
 				ArrayList<Package> qBuffer;
 
 				public InMemoryBoxRecycler(String name, DatabaseConfig config) {
-					name = QBuffer.GetBufferName(name);
 					qBuffer = new ArrayList<Package>();
 				}
 
@@ -300,6 +308,17 @@ public class Test {
 
 				public ArrayList<Package> getPackage() {
 					return qBuffer;
+				}
+
+				public BoxData[] GetBoxDataAndClear() {
+					synchronized (qBuffer) {
+						ArrayList<BoxData> list = new ArrayList<BoxData>();
+						for (Package p : qBuffer) {
+							list.add(new BoxData(p.OutBox));
+						}
+						qBuffer.clear();
+						return list.toArray(new BoxData[list.size()]);
+					}
 				}
 
 				@Override
@@ -641,23 +660,22 @@ public class Test {
 
 						double sec = (System.currentTimeMillis() - begin) / 1000.0;
 						double avg = (threadCount * objectCount) / sec;
-						sb.append("\r\nElapsed " + (int) sec + ", AVG Insert "
-								+ (int) avg + " o/sec");
+						sb.append("\r\nElapsed " + TestHelper.GetDou(sec)
+								+ ", AVG Insert " + (int) avg + " o/sec");
 						System.gc();
 						System.runFinalization();
 
 						begin = System.currentTimeMillis();
 						pool = Executors.newFixedThreadPool(poolCount);
-						for (int i = 0; i < threadCount; i++) {
-							final int finalI = i;
+						for (int fi = 0; fi < threadCount; fi++) {
+							final int i = fi;
 							pool.execute(new Runnable() {
 								@Override
 								public void run() {
 									Box box = db.cube();
 									try {
 										for (int o = 0; o < objectCount; o++) {
-											long ID = finalI * objectCount + o
-													+ 1;
+											long ID = i * objectCount + o + 1;
 											Member mem = box.bind("TSpeed", ID)
 													.select(Member.class);
 											if (mem.ID != ID) {
@@ -675,8 +693,8 @@ public class Test {
 								TimeUnit.SECONDS);
 						sec = (System.currentTimeMillis() - begin) / 1000.0;
 						avg = (threadCount * objectCount) / sec;
-						sb.append("\r\nElapsed " + (int) sec + ", AVG Lookup "
-								+ (int) avg + " o/sec");
+						sb.append("\r\nElapsed " + TestHelper.GetDou(sec)
+								+ ", AVG Lookup " + (int) avg + " o/sec");
 						System.gc();
 						System.runFinalization();
 
@@ -718,8 +736,8 @@ public class Test {
 							throw new Exception("e " + count.get());
 						}
 
-						sb.append("\r\nElapsed " + (int) sec + ", AVG Query "
-								+ (int) avg + " o/sec");
+						sb.append("\r\nElapsed " + TestHelper.GetDou(sec)
+								+ ", AVG Query " + (int) avg + " o/sec");
 					} finally {
 						db.close();
 					}
@@ -731,6 +749,151 @@ public class Test {
 				sb.append(ex.getMessage());
 			}
 			return sb;
+		}
+
+		public static StringBuilder ReplicationSpeed(int time) {
+			StringBuilder sb = new StringBuilder();
+			try {
+				TestHelper.DeleteDB();
+				ReplicableServer server = new ReplicableServer();
+				try {
+					final LocalDatabase masterA = (LocalDatabase) server
+							.getInstance(ServerID.MasterA_Address);
+					final LocalDatabase masterB = (LocalDatabase) server
+							.getInstance(ServerID.MasterB_Address);
+					final Database slaveA = server
+							.getInstance(ServerID.SlaveA_Address);
+
+					BoxData.slaveReplicate(
+							slaveA,
+							((InMemoryBoxRecycler) ((LocalDatabase) masterA)
+									.getBoxRecycler()).GetBoxDataAndClear())
+							.Assert();
+
+					int threadCount = 200;
+					if (isAndroid) {
+						threadCount = 2;
+						time = time > 2 ? 2 : time;
+					}
+					final int objectCount = 10;
+
+					double slaveSec = 0;
+					double masterSec = 0;
+
+					final int poolCount = isAndroid ? 2 : 8;
+
+					for (int t = 0; t < time; t++) {
+						ExecutorService pool = Executors
+								.newFixedThreadPool(poolCount);
+						for (int i = 0; i < threadCount; i++) {
+							pool.execute(new Runnable() {
+								@Override
+								public void run() {
+									Box box = masterA.cube();
+									try {
+										for (int o = 0; o < objectCount; o++) {
+											Member m = new Member();
+											m.ID = box.newId(0, 1);
+											m.setName(m.ID + "_" + o);
+											m.setAge(1);
+											box.bind("TSpeed").insert(m);
+										}
+										box.commit().Assert();
+									} finally {
+										box.close();
+									}
+								}
+							});
+						}
+						pool.shutdown();
+						pool.awaitTermination(Integer.MAX_VALUE,
+								TimeUnit.SECONDS);
+						BoxData[] data = ((InMemoryBoxRecycler) ((LocalDatabase) masterA)
+								.getBoxRecycler()).GetBoxDataAndClear();
+
+						long begin = System.currentTimeMillis();
+						BoxData.slaveReplicate(slaveA, data).Assert();
+						slaveSec += ((System.currentTimeMillis() - begin) / 1000.0);
+
+						begin = System.currentTimeMillis();
+						BoxData.masterReplicate(masterB, data).Assert();
+						masterSec += ((System.currentTimeMillis() - begin) / 1000.0);
+
+					}
+					sb.append("\r\n\r\nReplicate " + (threadCount * time)
+							+ " transactions, totals "
+							+ (threadCount * objectCount * time) + " objects");
+					double avg = (threadCount * objectCount * time) / slaveSec;
+					sb.append("\r\nSlaveReplicationSpeed "
+							+ TestHelper.GetDou(slaveSec) + "s, AVG "
+							+ (int) avg + " o/sec");
+
+					avg = (threadCount * objectCount * time) / masterSec;
+					sb.append("\r\nMasterReplicationSpeed "
+							+ TestHelper.GetDou(masterSec) + "s, AVG "
+							+ (int) avg + " o/sec");
+
+					final AtomicInteger count = new AtomicInteger(0);
+
+					ExecutorService pool = Executors
+							.newFixedThreadPool(poolCount);
+					long begin = System.currentTimeMillis();
+					final int fthreadCount = threadCount;
+					for (int ft = 0; ft < time; ft++) {
+						final int t = ft;
+						for (int fi = 0; fi < threadCount; fi++) {
+							final int i = fi;
+							pool.execute(new Runnable() {
+								@Override
+								public void run() {
+									for (int dbc = 0; dbc < 2; dbc++) {
+										Box box = dbc == 0 ? slaveA.cube()
+												: masterB.cube();
+										try {
+											for (int o = 0; o < objectCount; o++) {
+												long ID = i * objectCount + o
+														+ 1;
+												ID += (t * fthreadCount * objectCount);
+												Member mem = box.bind("TSpeed",
+														ID)
+														.select(Member.class);
+												if (mem.ID != ID) {
+													throw new RuntimeException();
+												}
+												count.addAndGet(mem.getAge());
+											}
+										} finally {
+											box.close();
+										}
+									}
+								}
+							});
+						}
+					}
+					pool.shutdown();
+					pool.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+					double sec = (System.currentTimeMillis() - begin) / 1000.0;
+					if (count.get() != (threadCount * objectCount * time * 2)) {
+						throw new Exception();
+					}
+					avg = count.get() / sec;
+					sb.append("\r\nLookup just after replication "
+							+ TestHelper.GetDou(sec) + "s, AVG " + (int) avg
+							+ " o/sec");
+
+					if (count.get() != slaveA.get().selectCount("from TSpeed")
+							+ masterB.get().selectCount("from TSpeed")) {
+						throw new Exception();
+					}
+
+				} finally {
+					server.close();
+				}
+			} catch (Exception ex) {
+				sb.append(ex.toString());
+			}
+			return sb;
+
 		}
 
 	}
@@ -749,6 +912,12 @@ public class Test {
 			}
 			return null;
 		}
+
+		public static String GetDou(double d) {
+			long l = (long) (d * 1000);
+			return Double.toString(l / 1000.0);
+		}
+
 	}
 
 }

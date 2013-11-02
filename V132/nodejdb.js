@@ -1,6 +1,6 @@
-
+// npm install java
 var java = require("java");
-java.classpath.push("iBoxDBv131.jar")
+java.classpath.push("iBoxDBv132.jar")
 
 var DB = java.import("iBoxDB.LocalServer.DB");
 
@@ -17,12 +17,15 @@ Object.prototype.jmap = function () {
         return DB.arraySync(this);
     }
     if (this instanceof Array) {
+        /*
         if (this.length == 0) { return DB.arraySync(); }
         var r = DB.arraySync(this[0]);
         for (var i = 1; i < this.length; i++) {
             r = DB.arraySync(r, this[i]);
         }
         return r;
+        */
+        return this;
     }
     var o = java.newInstanceSync("java.util.HashMap");
     for (var f in this) {

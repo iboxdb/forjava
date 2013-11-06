@@ -22,7 +22,7 @@ public class Test {
 	private static boolean isAndroid = false;
 
 	// com.example.fapp
-	/*
+/*
 	public static void initAndroid(String packageName) {
 		isAndroid = true;
 		BoxFileStreamConfig.BaseDirectory = android.os.Environment
@@ -31,8 +31,7 @@ public class Test {
 				+ packageName
 				+ "/";
 	}
-	*/
-	
+*/
 	public static String run() {
 		return run(false);
 	}
@@ -222,7 +221,17 @@ public class Test {
 				}
 			}
 
-			public static class MyConfig extends BoxFileStreamConfig {
+			public static class PlatformConfig extends BoxFileStreamConfig {
+				public PlatformConfig() {
+					// Memory Control, Minimum is 1
+					// this.CachePageCount = 1024 * 5;
+
+					// PreAllocate FileSize, Minimum is 0
+					// this.FileIncSize = ;
+				}
+			}
+
+			public static class MyConfig extends PlatformConfig {
 				public MyConfig(long addr) {
 					this.EnsureTable(Member.class, "Member", "ID");
 					this.EnsureIndex(Member.class, "Member", false, "Name");
@@ -231,11 +240,6 @@ public class Test {
 
 					this.EnsureTable(Member.class, "TSpeed", "ID");
 
-					// Memory Control, Minimum is 1
-					// this.CachePageCount = 1025 * 5;
-
-					// PreAllocate FileSize, Minimum is 0
-					// this.FileIncSize = ;
 				}
 			}
 
@@ -250,7 +254,7 @@ public class Test {
 
 				protected DatabaseConfig BuildDataBaseConfig(long address) {
 					if (address == ServerID.SlaveA_Address) {
-						return new BoxFileStreamConfig();
+						return new PlatformConfig();
 					}
 					if (address == ServerID.MasterA_Address
 							|| address == ServerID.MasterB_Address) {

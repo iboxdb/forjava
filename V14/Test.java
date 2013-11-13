@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.Test.Example.Server.*;
 import iBoxDB.Test.Example.Server.Package;
 
-//  iBoxDB.java v1.3.2
+//  iBoxDB.java v1.4
 //  Test.java
 
 public class Test {
@@ -793,7 +793,8 @@ public class Test {
 							pool.execute(new Runnable() {
 								@Override
 								public void run() {
-									Box box = masterA.cube();
+									Box box = masterA
+											.cube(ServerID.MasterB_Address);
 									try {
 										for (int o = 0; o < objectCount; o++) {
 											Member m = new Member();
@@ -904,10 +905,9 @@ public class Test {
 
 	public static class TestHelper {
 		public static void DeleteDB() {
-			BoxSystem.DBDebug.DeleteDBFiles(1);
-			BoxSystem.DBDebug.DeleteDBFiles(10);
-			BoxSystem.DBDebug.DeleteDBFiles(20);
-			BoxSystem.DBDebug.DeleteDBFiles(-10);
+			if (!BoxSystem.DBDebug.DeleteDBFiles(1, 10, 20, -10)) {
+				System.out.println("delete=false,system locks");
+			}
 		}
 
 		public static <T> T GetFrist(Iterable<T> list) {

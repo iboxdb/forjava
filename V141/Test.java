@@ -49,7 +49,9 @@ public class Test {
 		sb.append(Test.Example.MasterMaster().toString() + "\r\n");
 
 		if (runSpeedTest) {
+			System.gc();
 			sb.append(Test.Example.Speed().toString() + "\r\n");
+			System.gc();
 			sb.append(Test.Example.ReplicationSpeed(10).toString() + "\r\n");
 		} else {
 			sb.append(Test.Example.ReplicationSpeed(1).toString() + "\r\n");

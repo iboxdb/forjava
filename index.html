@@ -1,0 +1,134 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>iBoxDB</title>
+  <meta name="description" content="Fast embeddable transactional  table-style document nosql database resources for java android. pure java, zero configuration, no dependencies,copy and run,save and load Objects easily.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">iBoxDB</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Fast embeddable transactional  table-style document nosql database resources for java android. pure java, zero configuration, no dependencies,copy and run,save and load Objects easily.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/iboxdb/forjava/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/iboxdb/forjava/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/iboxdb/forjava" class="code">View iBoxDB on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="iboxdbjava" class="anchor" href="#iboxdbjava"><span class="octicon octicon-link"></span></a>iBoxDB.Java</h1>
+
+<p>Traditional table with unstructured data, pure java database, not only CURD and QL, but also Hot Replication and MVCC, for both Java and Android, compatible with node.js</p>
+
+<p>features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run.</p>
+
+<p>Examples:</p>
+
+<p>Normal Object</p>
+
+<pre><code>Member m = new Member();
+m.ID = box.newId(Member.IncTableID, 1);
+m.setName("Andy");
+m.setTags(new Object[] { "Nice", "Strong" });
+box.insert("Table", m);
+</code></pre>
+
+<p>Dynamic Object (document database)</p>
+
+<pre><code>game.put("GameType", "ACT");
+box.insert("Table", game);
+</code></pre>
+
+<p>Key-Value Style Query</p>
+
+<pre><code>box.bind("Table", ID).select( Member.class );
+//Composite-Key Supported
+box.bind("Table2",8, "MyID").select(Product.class);
+</code></pre>
+
+<p>SQL like Query</p>
+
+<pre><code>box.select( Member.class, "from Member where Name==?", "MyName" );
+</code></pre>
+
+<p>Custom DatabaseFunction use java</p>
+
+<pre><code>public static class QueryArray implements IFunction {
+        String match;
+
+        public QueryArray(String match) {
+            this.match = match;
+        }
+
+        public Object execute(int argCount, Object[] args) {
+            Object[] tags = (Object[]) args[0];
+            if (tags == null) {
+                return false;
+            }
+            for (Object t : tags) {
+                if (match.equals(t)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+box.select(Member.class, "from Member where [Tags]",  new QueryArray("Strong")
+</code></pre>
+
+<p>Replication Master-Slave , Master-Master</p>
+
+<p><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=iboxdb&amp;DownloadId=581898" alt=""></p>
+
+<p><img src="https://raw.github.com/iboxdb/forjava/master/images/show.png" alt=""></p>
+
+<p><a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB">Benchmark with MongoDB</a>   thanks for starring</p>
+
+<p><a href="https://github.com/iboxdb/forjava">iBoxDB JAVA Version(Current)</a></p>
+
+<p><a href="https://iboxdb.codeplex.com/">iBoxDB NET Version</a></p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/iboxdb" class="avatar"><img src="https://0.gravatar.com/avatar/2d2c6056a29607ea0caa3bdab408dfc7?d=https%3A%2F%2Fidenticons.github.com%2F1989f2bc96c93c9b6f82ab8e189817cf.png&amp;r=x&amp;s=60" width="48" height="48"/></a> <a href="https://github.com/iboxdb">iboxdb</a> maintains <a href="https://github.com/iboxdb/forjava">iBoxDB</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/iboxdb/forjava/tarball/master" class="tar">tar</a><a href="https://github.com/iboxdb/forjava/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>

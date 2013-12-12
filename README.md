@@ -1,8 +1,8 @@
-iBoxDB.java
+iBoxDB.Java
 =======
-Traditional way deal with data, with NoSQL fashional styles, pure java database, not only CURD and QL, but also Replication MVCC, for both Java and Android, compatible with node.js
+Traditional table with unstructured data, pure java database, not only CURD and QL, but also Hot Replication and MVCC, for both Java and Android, compatible with node.js
 
-features: CURD, Index, composite Index, query language, transactions support, concurrency control, replication, in-memory database supported, dynamic columns, NoSQL styles, high performance, zero configuration, copy and run.
+features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run.
 
 
 

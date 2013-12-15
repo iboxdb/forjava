@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.Test.Example.Server.*;
 import iBoxDB.Test.Example.Server.Package;
 
-//  iBoxDB.java v1.4.1
+//  iBoxDB.java v1.4.1 - v1.4.2
 //  Test.java
 
 public class Test {
@@ -32,6 +32,11 @@ public class Test {
 				+ "/";
 	}
 */
+/*
+   v1.4.2 load readonly database from android/assets
+   DB server = new iBoxDB.LocalServer.DB( getAssets().open("db2.ibx") );  
+*/
+	
 	public static String run() {
 		return run(false);
 	}
@@ -228,8 +233,8 @@ public class Test {
 					// Memory Control, Minimum is 1
 					// this.CachePageCount = 1024 * 5;
 
-					// PreAllocate FileSize, Minimum is 0
-					// this.FileIncSize = ;
+					// PreAllocate FileSize, Minimum is 1(*)
+					// this.FileIncSize = 1024*32;
 				}
 			}
 

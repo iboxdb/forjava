@@ -65,7 +65,7 @@ Replication Master-Slave , Master-Master
 
 ![](https://raw.github.com/iboxdb/forjava/master/images/show.png)
 
-[Benchmark with MongoDB](https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB)   thanks for starring
+[Benchmark with MongoDB](https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB)   
 
 
 Dual-Core

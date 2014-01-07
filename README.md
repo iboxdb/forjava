@@ -68,7 +68,7 @@ Replication Master-Slave , Master-Master
 [Benchmark with MongoDB](https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB)   
 
 
-Dual-Core
+Dual Core Application Database
 
 [iBoxDB JAVA Version](https://github.com/iboxdb/forjava)
 

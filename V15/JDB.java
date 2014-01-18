@@ -11,13 +11,13 @@ import iBoxDB.LocalServer.LocalDatabaseServer.LocalDatabase;
 import iBoxDB.LocalServer.IO.*;
 import iBoxDB.LocalServer.Replication.*;
 
-import iBoxDB.Test.Example.Server.*;
-import iBoxDB.Test.Example.Server.Package;
+import iBoxDB.JDB.Example.Server.*;
+import iBoxDB.bytecodes.ab;
+import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.java v1.4.1 - v1.4.2
-//  Test.java
+//  iBoxDB.Java v1.5
 
-public class Test {
+public class JDB {
 
 	private static boolean isAndroid = false;
 
@@ -32,11 +32,6 @@ public class Test {
 				+ "/";
 	}
 */
-/*
-   v1.4.2 load readonly database from android/assets
-   DB server = new iBoxDB.LocalServer.DB( getAssets().open("db2.ibx") );  
-*/
-	
 	public static String run() {
 		return run(false);
 	}
@@ -45,21 +40,23 @@ public class Test {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(Test.Shortcut.Start().toString() + "\r\n");
+		sb.append(JDB.Shortcut.Start().toString() + "\r\n");
 
-		sb.append(Test.Example.Start().toString() + "\r\n");
+		sb.append(JDB.Example.Start().toString() + "\r\n");
 
-		sb.append(Test.Example.MasterSlave().toString() + "\r\n");
+		sb.append(JDB.Example.MasterSlave().toString() + "\r\n");
 
-		sb.append(Test.Example.MasterMaster().toString() + "\r\n");
+		sb.append(JDB.Example.MasterMaster().toString() + "\r\n");
+
+		sb.append(JDB.Example.BeyondSQL().toString() + "\r\n");
 
 		if (runSpeedTest) {
 			System.gc();
-			sb.append(Test.Example.Speed().toString() + "\r\n");
+			sb.append(JDB.Example.Speed().toString() + "\r\n");
 			System.gc();
-			sb.append(Test.Example.ReplicationSpeed(10).toString() + "\r\n");
+			sb.append(JDB.Example.ReplicationSpeed(10).toString() + "\r\n");
 		} else {
-			sb.append(Test.Example.ReplicationSpeed(1).toString() + "\r\n");
+			sb.append(JDB.Example.ReplicationSpeed(1).toString() + "\r\n");
 		}
 
 		TestHelper.DeleteDB();
@@ -108,6 +105,10 @@ public class Test {
 			}
 			return sb;
 		}
+		/*
+		 * load readonly database from android/assets DB server = new
+		 * iBoxDB.LocalServer.DB( getAssets().open("db2.ibx") );
+		 */
 	}
 
 	public static class Example {
@@ -175,7 +176,13 @@ public class Test {
 
 			}
 
-			// document Object , fixed length will faster (1024 bytes) [option]
+			public static class MemberInc extends Member {
+				// increment type is long
+				public long Version;
+			}
+
+			// document Object , fixed length will faster (1024 bytes)
+			// [optional]
 			@BoxLength(1024)
 			public static class Product extends HashMap<String, Object> {
 
@@ -233,7 +240,7 @@ public class Test {
 					// Memory Control, Minimum is 1
 					// this.CachePageCount = 1024 * 5;
 
-					// PreAllocate FileSize, Minimum is 1(*)
+					// PreAllocate FileSize, Minimum is 1
 					// this.FileIncSize = 1024*32;
 				}
 			}
@@ -247,19 +254,24 @@ public class Test {
 
 					this.EnsureTable(Member.class, "TSpeed", "ID");
 
+					this.EnsureTable(MemberInc.class, "MemberInc", "ID");
+					//UpdateIncrement, 'Version' 
+					this.EnsureUpdateIncrementIndex(MemberInc.class,
+							"MemberInc", "Version");
 				}
 			}
 
 			public static class MyServer extends LocalDatabaseServer {
 
-				protected DatabaseConfig BuildDataBaseConfig(long address) {
+				protected DatabaseConfig BuildDatabaseConfig(long address) {
 					return new MyConfig(address);
 				}
 			}
 
 			public static class ReplicableServer extends LocalDatabaseServer {
 
-				protected DatabaseConfig BuildDataBaseConfig(long address) {
+				// Base -> base
+				protected DatabaseConfig BuildDatabaseConfig(long address) {
 					if (address == ServerID.SlaveA_Address) {
 						return new PlatformConfig();
 					}
@@ -624,6 +636,75 @@ public class Test {
 				}
 			} catch (Exception ex) {
 				sb.append(ex.getMessage() + "\r\n");
+			}
+			return sb;
+		}
+
+		public static StringBuilder BeyondSQL() {
+			StringBuilder sb = new StringBuilder();
+			try {
+				TestHelper.DeleteDB();
+				MyServer server = new MyServer();
+				try {
+					final Database db = server.getInstance();
+					try {
+						// UpdateIncrement,version number from box.newId(1024,
+						// 1);
+						sb.append("\r\n*Version Control \r\n");
+						MemberInc m = new MemberInc();
+						m.ID = 1;
+						m.setName("Andy");
+
+						sb.append("number increasing: ");
+						db.get().insert("MemberInc", m);
+						MemberInc mg = db.get().selectKey(MemberInc.class,
+								"MemberInc", 1L);
+						sb.append(mg.Version);
+
+						db.get().update("MemberInc", mg);
+						mg = db.get().selectKey(MemberInc.class, "MemberInc",
+								1L);
+						sb.append(" " + mg.Version);
+						db.get().update("MemberInc", mg);
+						mg = db.get().selectKey(MemberInc.class, "MemberInc",
+								1L);
+						sb.append(" " + mg.Version);
+
+						// Selecting Tracer
+						sb.append("\r\n*Selecting Tracer \r\n");
+						Box boxTracer = db.cube();
+						try {
+							boolean keepTrace = true;
+							Member tra = boxTracer.bind("MemberInc", 1L)
+									.select(Member.class, keepTrace);
+							String currentName = tra.getName();
+
+							MemberInc mm = new MemberInc();
+							mm.ID = 1;
+							mm.setName("Kelly");
+							db.get().update("MemberInc", mm.ID, mm);
+
+							// auto rollback
+							if (boxTracer.commit().equals(CommitResult.OK)) {
+								throw new RuntimeException();
+							} else {
+								sb.append("the name '" + currentName
+										+ "' is changed,");
+							}
+						} finally {
+							boxTracer.close();
+						}
+						Member nm = db.get().selectKey(Member.class,
+								"MemberInc", 1L);
+						sb.append("new name is '" + nm.getName() + "'");
+					} finally {
+						db.close();
+					}
+				} finally {
+					server.close();
+				}
+			} catch (Exception ex) {
+				sb.append(ex.getMessage());
 			}
 			return sb;
 		}

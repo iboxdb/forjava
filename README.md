@@ -70,7 +70,7 @@ Custom DatabaseFunction use java
 |   | Thread | Usage |
 |---|--------|-------|
 | Locker | blocked | read/write same record |
-| *Tracer* | non-blocked | read/write different record |
+| *Tracer* | non-blocked | read/write different records |
     
     
 Replication Master-Slave , Master-Master

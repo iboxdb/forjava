@@ -2,7 +2,7 @@ iBoxDB.Java
 =======
 Traditional table with unstructured data, pure java database, not only CURD and QL, but also Hot Replication and MVCC, for both Java and Android, compatible with node.js
 
-features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run.
+Features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run, no dependencies.
 
 
 
@@ -58,6 +58,20 @@ Custom DatabaseFunction use java
 		
     box.select(Member.class, "from Member where [Tags]",  new QueryArray("Strong")
     
+**UpdateIncrement**
+
+|   |Apply To | Trigger | Type | Value From |
+|---|---------|---------|------|------------|
+| AutoIncrement |  primary key | insert |  number | Table Max(ID)+1 |
+| *UpdateIncrement* | non-primary key | insert/update | long | Database NewId( byte.MaxValue, 1 ) | 
+
+**Selecting Tracer**
+
+|   | Thread | Usage |
+|---|--------|-------|
+| Locker | blocked | read/write same record |
+| *Tracer* | non-blocked | read/write different record |
+    
     
 Replication Master-Slave , Master-Master
 
@@ -68,7 +82,7 @@ Replication Master-Slave , Master-Master
 [Benchmark with MongoDB](https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB)   
 
 
-Dual Core Application Database
+**Dual Core Application Database**
 
 [iBoxDB JAVA Version](https://github.com/iboxdb/forjava)
 

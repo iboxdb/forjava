@@ -62,8 +62,8 @@ Custom DatabaseFunction use java
 
 |   |Apply To | Trigger | Type | Value From |
 |---|---------|---------|------|------------|
-| AutoIncrement |  primary key | insert |  number | Table Max(ID)+1 |
-| *UpdateIncrement* | non-primary key | insert/update | long | Database NewId( byte.MaxValue, 1 ) | 
+| AutoIncrement |  primary key | insert |  number | Table max(ID)+1 |
+| *UpdateIncrement* | non-primary key | insert/update | long | Database newId( 1024, 1 ) | 
 
 **Selecting Tracer**
 

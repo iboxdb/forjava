@@ -8,6 +8,14 @@ Features: CURD, Index, composite Index, query language, transactions support, co
 
 Examples:
 
+Each box is a isolated data's space (Transaction-Based)
+
+     try( Box box = db.cube() ){
+         box.insert( ... );
+         CommitResult r = box.commit();
+     }
+
+
 Normal Object
 
     Member m = new Member();

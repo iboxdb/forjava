@@ -1,6 +1,6 @@
 // npm install java
 var java = require("java");
-java.classpath.push("iBoxDBv15.jar")
+java.classpath.push("iBoxDBv151.jar")
 
 var DB = java.import("iBoxDB.LocalServer.DB");
 
@@ -43,13 +43,13 @@ function printObjectArray( list ){
 
 var server = java.newInstanceSync("iBoxDB.LocalServer.DB", 2);
 server.ensureTableSync("Table", { ID: 0 }.jmap(), null);
-// 1 = autoIncrementID , 2048 bytes=fixed length [option]
+// 1 = autoIncrementID , 2048 bytes=fixed length [optional]
 server.ensureParametersSync("Table", 1, 2048);
 var db = server.openSync();
 
 // supports unstructured data insert and query
 db.insertSync("Table", { value: "hello db" }.jmap());
-db.insertSync("Table", { name: "iBoxDB", version: "1.5 java" }.jmap());
+db.insertSync("Table", { name: "iBoxDB", version: "1.5.1 java" }.jmap());
 db.insertSync("Table", { product: "iBoxDB", size: 200 }.jmap());
 
 console.log("*Find");

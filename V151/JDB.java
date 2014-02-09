@@ -11,10 +11,10 @@ import iBoxDB.LocalServer.LocalDatabaseServer.LocalDatabase;
 import iBoxDB.LocalServer.IO.*;
 import iBoxDB.LocalServer.Replication.*;
 
-import iBoxDB.JDB.Example.Server.*;
+import iBoxDB.JDB.Example.Server.*; 
 import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.Java v1.5
+//  iBoxDB.Java v1.5.1
 
 public class JDB {
 
@@ -269,7 +269,7 @@ public class JDB {
 
 			public static class ReplicableServer extends LocalDatabaseServer {
 
-				// Base -> base
+				 
 				protected DatabaseConfig BuildDatabaseConfig(long address) {
 					if (address == ServerID.SlaveA_Address) {
 						return new PlatformConfig();

@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.JDB.Example.Server.*; 
 import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.Java v1.5.1
+//  iBoxDB.Java v1.5.2
 
 public class JDB {
 

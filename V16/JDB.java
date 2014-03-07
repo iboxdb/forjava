@@ -11,26 +11,26 @@ import iBoxDB.LocalServer.LocalDatabaseServer.LocalDatabase;
 import iBoxDB.LocalServer.IO.*;
 import iBoxDB.LocalServer.Replication.*;
 
-import iBoxDB.JDB.Example.Server.*; 
+import iBoxDB.JDB.Example.Server.*;
 import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.Java v1.5.2
+//  iBoxDB.Java v1.6
 
 public class JDB {
 
 	private static boolean isAndroid = false;
 
 	// com.example.fapp
-/*
-	public static void initAndroid(String packageName) {
-		isAndroid = true;
-		BoxFileStreamConfig.BaseDirectory = android.os.Environment
-				.getDataDirectory().getAbsolutePath()
-				+ "/data/"
-				+ packageName
-				+ "/";
-	}
-*/
+
+//	public static void initAndroid(String packageName) {
+//		isAndroid = true;
+//		BoxFileStreamConfig.BaseDirectory = android.os.Environment
+//				.getDataDirectory().getAbsolutePath()
+//				+ "/data/"
+//				+ packageName
+//				+ "/";
+//	}
+
 	public static String run() {
 		return run(false);
 	}
@@ -143,8 +143,6 @@ public class JDB {
 					_regTime = value;
 				}
 
-				// 20 chars, just for index , default 64 chars
-				@BoxLength(20)
 				public String getName() {
 					return _name;
 				}
@@ -153,8 +151,6 @@ public class JDB {
 					_name = value;
 				}
 
-				// 256 bytes
-				@BoxLength(256)
 				public Object[] getTags() {
 					return _tags;
 				}
@@ -163,8 +159,6 @@ public class JDB {
 					_tags = value;
 				}
 
-				// 40 bytes , default 64 bytes
-				@BoxLength(40)
 				public BigDecimal getAmount() {
 					return _amount;
 				}
@@ -175,14 +169,15 @@ public class JDB {
 
 			}
 
+			public static class MemberVIP extends Member {
+				public int VIP;
+			}
+
 			public static class MemberInc extends Member {
 				// increment type is long
 				public long Version;
 			}
 
-			// document Object , fixed length will faster (1024 bytes)
-			// [optional]
-			@BoxLength(1024)
 			public static class Product extends HashMap<String, Object> {
 
 				public int Type() {
@@ -246,15 +241,22 @@ public class JDB {
 
 			public static class MyConfig extends PlatformConfig {
 				public MyConfig(long addr) {
+					// -----Table Member------//
 					this.EnsureTable(Member.class, "Member", "ID");
-					this.EnsureIndex(Member.class, "Member", false, "Name");
+					// stringColumn(length), default length is 32
+					this.EnsureIndex(Member.class, "Member", "Name(20)");
+					// particular index for 'MemberVIP.VIP' column
+					this.EnsureIndex(MemberVIP.class, "Member", "VIP");
 
+					// ------Table Product------//
 					this.EnsureTable(Product.class, "Product", "Type", "UID");
 
+					// ------Table TSpeed------//
 					this.EnsureTable(Member.class, "TSpeed", "ID");
 
+					// ------Table MemberInc----//
 					this.EnsureTable(MemberInc.class, "MemberInc", "ID");
-					//UpdateIncrement, 'Version' 
+					// *UpdateIncrement index 'Version'
 					this.EnsureUpdateIncrementIndex(MemberInc.class,
 							"MemberInc", "Version");
 				}
@@ -269,7 +271,6 @@ public class JDB {
 
 			public static class ReplicableServer extends LocalDatabaseServer {
 
-				 
 				protected DatabaseConfig BuildDatabaseConfig(long address) {
 					if (address == ServerID.SlaveA_Address) {
 						return new PlatformConfig();
@@ -371,15 +372,19 @@ public class JDB {
 							m.setRegTime((new GregorianCalendar(2013, 1, 2))
 									.getTime());
 							m.setTags(new Object[] { "Nice", "Strong" });
-							box.insert("Member", m);
+							// insert => bind(table).insert(value)
+							box.bind("Member").insert(m);
+							m = null;
 
-							m = new Member();
-							m.ID = box.newId(Member.IncTableID, 1);
-							m.setName("Kelly");
-							m.setRegTime((new GregorianCalendar(2013, 1, 3))
+							MemberVIP mvip = new MemberVIP();
+							mvip.ID = box.newId(Member.IncTableID, 1);
+							mvip.setName("Kelly");
+							mvip.setRegTime((new GregorianCalendar(2013, 1, 3))
 									.getTime());
-							m.setTags(new Object[] { "Gamer" });
-							box.insert("Member", m);
+							mvip.setTags(new Object[] { "Gamer" });
+							mvip.VIP = 3;
+							box.bind("Member").insert(mvip);
+							mvip = null;
 
 							// Dynamic Column
 							Product game = new Product();
@@ -389,7 +394,7 @@ public class JDB {
 							game.Name("MoonFlight");
 
 							game.put("GameType", "ACT");
-							box.insert("Product", game);
+							box.bind("Product").insert(game);
 
 							box.commit().Assert();
 						} finally {
@@ -406,15 +411,14 @@ public class JDB {
 							// Name -> Name , name -> name
 							// getName()->Name , getname()->name
 							// Name()->Name, name()->name
-							Member m = TestHelper.GetFrist(box.select(
-									Member.class, "from Member where Name==?",
-									"Kelly"));
-							sb.append("Kelly RegTime "
-									+ m.getRegTime().toString() + "\r\n");
-							m.setName("Kelly J");
-							m.setAmount(BigDecimal.valueOf(100.0));
-							// Full Update
-							box.bind("Member", m.ID).update(m);
+							MemberVIP mvip = TestHelper.GetFrist(box.select(
+									MemberVIP.class, "from Member where VIP>?",
+									0));
+							sb.append(mvip.getName() + " RegTime "
+									+ mvip.getRegTime().toString() + "\r\n");
+							mvip.setName("Kelly J");
+							mvip.setAmount(BigDecimal.valueOf(100.0));
+							box.bind("Member", mvip.ID).update(mvip);
 							box.commit().Assert();
 						} finally {
 							box.close();
@@ -425,25 +429,10 @@ public class JDB {
 							Member m = TestHelper.GetFrist(box.select(
 									Member.class, "from Member where Name==?",
 									"Kelly J"));
-							sb.append("Updated 1: " + m.getName() + "  "
+							sb.append("Updated : " + m.getName() + "  "
 									+ m.getAmount() + "\r\n");
-
-							m.setAmount(m.getAmount().add(
-									BigDecimal.valueOf(99.99)));
-
-							// Ignore Indexes Update
-							box.bind("Member", m.ID).updateNoIndex(m);
-							box.commit().Assert();
 						} finally {
 							box.close();
-						}
-
-						{
-							Member m = TestHelper.GetFrist(db.get().select(
-									Member.class, "from Member where Name==?",
-									"Kelly J"));
-							sb.append("Updated 2: " + m.getName() + "  "
-									+ m.getAmount() + "\r\n");
 						}
 
 						box = db.cube();
@@ -505,7 +494,7 @@ public class JDB {
 							Member m = new Member();
 							m.ID = box.newId(Member.IncTableID, 1);
 							m.setName("S " + i);
-							box.insert("Member", m);
+							box.bind("Member").insert(m);
 						}
 						box.commit().Assert();
 					} finally {
@@ -571,7 +560,7 @@ public class JDB {
 							m.ID = box.newId(Member.IncTableID, 1) * 1000
 									+ ServerID.MasterA_Address;
 							m.setName("A" + i);
-							box.insert("Member", m);
+							box.bind("Member").insert(m);
 						}
 						box.commit().Assert();
 					} finally {
@@ -585,7 +574,7 @@ public class JDB {
 							m.ID = box.newId(Member.IncTableID, 1) * 1000
 									+ ServerID.MasterB_Address;
 							m.setName("B" + i);
-							box.insert("Member", m);
+							box.bind("Member").insert(m);
 						}
 						box.commit().Assert();
 					} finally {
@@ -605,6 +594,10 @@ public class JDB {
 						recycler.getPackage().clear();
 					}
 					for (Package p : buffer) {
+						if (p.Socket.DestAddress == Long.MAX_VALUE) {
+							// default replicate address
+							continue;
+						}
 						if (p.Socket.DestAddress == ServerID.MasterA_Address) {
 							(new BoxData(p.OutBox)).masterReplicate(masterA);
 						}
@@ -736,7 +729,7 @@ public class JDB {
 											m.setName(o + "_" + m.ID);
 											m.setAge(1);
 
-											box.insert("TSpeed", m);
+											box.bind("TSpeed").insert(m);
 										}
 										box.commit().Assert();
 									} finally {

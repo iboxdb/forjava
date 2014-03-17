@@ -1,6 +1,8 @@
 iBoxDB.Java
 =======
-Traditional table with unstructured data, pure java database, not only CURD and QL, but also Hot Replication and MVCC, for both Java and Android, compatible with node.js
+Traditional table with unstructured data, pure java database, for both Java and Android, compatible with node.js.
+
+iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. 
 
 Features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run, no dependencies.
 
@@ -94,7 +96,7 @@ Replication Master-Slave , Master-Master
 
 [iBoxDB JAVA Version](https://github.com/iboxdb/forjava)
 
-[iBoxDB NET Version](https://iboxdb.codeplex.com/)
+[iBoxDB NET Mono](https://iboxdb.codeplex.com/)
 
 
 

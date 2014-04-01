@@ -9,23 +9,20 @@ import iBoxDB.LocalServer.IO.*;
 
 public class MMapConfig extends BoxFileStreamConfig {
 
-	protected int MaxFile = 1024;
-	protected long FileSize = 1024 * 1024 * 256;
-	protected long MaxPageSize = 1024 * 1024 * 20;
-
-	protected boolean FlushOnChanged = false;
-	private static long maxMemory = Runtime.getRuntime().maxMemory();
+	private int MaxFile = 1024;
+	private long FileSize = 1024 * 1024 * 256;
+	private long maxMemory = FileSize * 4;
 
 	HashMap<String, MManager> map = new HashMap<String, MManager>();
 
 	public MMapConfig() {
-		this.FileIncSize = (int) (MaxPageSize / 2);
-		this.CachePageCount = 1024 * 256;
+		this.StreamCount = 1;
 	}
 
 	@Override
-	public Stream CreateStream(String path, FileAccess access) {
-		if (path.endsWith(".swp")) {
+	public IBStream CreateStream(String path, StreamAccess access) {
+		if (path.endsWith(".swp") || path.endsWith(".buf")
+				|| path.endsWith(".frag")) {
 			return super.CreateStream(path, access);
 		}
 		path = BoxFileStreamConfig.BaseDirectory + path;
@@ -44,6 +41,8 @@ public class MMapConfig extends BoxFileStreamConfig {
 		}
 		map.clear();
 		super.close();
+		System.gc();
+		System.runFinalization();
 	}
 
 	private class MManager {
@@ -59,13 +58,8 @@ public class MMapConfig extends BoxFileStreamConfig {
 			fullPath = fPath;
 
 			length = 0;
-			for (int i = 0; i < MaxFile; i++) {
-				String pfile = i == 0 ? fullPath : fullPath + i;
-				if ((new File(pfile)).exists()) {
-					length += FileSize;
-				} else {
-					break;
-				}
+			if ((new File(fullPath)).exists()) {
+				length += FileSize;
 			}
 		}
 
@@ -96,69 +90,17 @@ public class MMapConfig extends BoxFileStreamConfig {
 						}
 					}
 				}
-				if (files != null) {
-					try {
-						for (RandomAccessFile m : files) {
-							if (m != null) {
-								m.getFD().sync();
-							}
-						}
-					} catch (Throwable e) {
-						files = null;
-						mapWriters = null;
-						mapReaders = null;
-						e.printStackTrace();
-					}
-				}
 			}
 		}
 
-		private void MSetLength(long len) {
-			int i = (int) (len / FileSize);
-			if (files[i] == null || files[i + 1] == null) {
-				synchronized (this) {
-					if (len > maxMemory) {
-						FlushOnChanged = true;
-					}
-					int x = i + 1;
-					for (; i <= x; i++) {
-						if (files[i] == null) {
-							try {
-								String pfile = i == 0 ? fullPath : fullPath + i;
-								files[i] = new RandomAccessFile(pfile, "rw");
-								length += FileSize;
-								mapWriters[i] = files[i].getChannel().map(
-										MapMode.READ_WRITE, 0,
-										FileSize + MaxPageSize);
-								mapReaders[i] = (MappedByteBuffer) mapWriters[i]
-										.duplicate();
-							} catch (Throwable e) {
-								files = null;
-								mapWriters = null;
-								mapReaders = null;
-								e.printStackTrace();
-							}
-						}
-					}
-					if (FlushOnChanged) {
-						flush();
-					}
-				}
-			}
-		}
-
-		private Stream get(FileAccess access) {
-			return new MStream(access == FileAccess.Read ? mapReaders
+		private IBStream get(StreamAccess access) {
+			return new MStream(access == StreamAccess.Read ? mapReaders
 					: mapWriters);
 		}
 
-		private class MStream implements Stream, IPartitionStream {
+		private class MStream implements IPartitionStream {
 
 			MappedByteBuffer[] bufs;
-			long position = 0;
-
-			MappedByteBuffer current;
-			int fileOffset;
 
 			public MStream(MappedByteBuffer[] mappedByteBuffers) {
 				this.bufs = mappedByteBuffers;
@@ -171,7 +113,6 @@ public class MMapConfig extends BoxFileStreamConfig {
 
 			@Override
 			public void Flush() {
-
 			}
 
 			@Override
@@ -181,46 +122,63 @@ public class MMapConfig extends BoxFileStreamConfig {
 
 			@Override
 			public void SetLength(long value) {
-				MSetLength(value);
 			}
 
 			@Override
-			public long Position() {
-				return position;
-			}
-
-			@Override
-			public void Position(long pos) {
-				this.position = pos;
-			}
-
-			@Override
-			public int Read(byte[] buffer, int offset, int count) {
-				BeginPage(position, -1);
-				current.position((int) (position - (fileOffset * FileSize)));
-				current.get(buffer, offset, count);
-				return count;
-			}
-
-			@Override
-			public void Write(byte[] buffer, int offset, int count) {
-				current.position((int) (position - (fileOffset * FileSize)));
-				current.put(buffer, offset, count);
-			}
-
-			@Override
-			public void BeginPage(long pageId, int len) {
-				if (pageId > maxMemory) {
-					FlushOnChanged = true;
+			public int Read(long position, byte[] buffer, int offset, int count) {
+				synchronized (mapReaders) {
+					GetCurrent(position).get(buffer, offset, count);
+					return count;
 				}
-				fileOffset = (int) (pageId / FileSize);
-				current = bufs[fileOffset];
+			}
+
+			@Override
+			public void Write(long position, byte[] buffer, int offset,
+					int count) {
+				GetCurrent(position).put(buffer, offset, count);
+			}
+
+			@Override
+			public boolean Suitable(long position, int len) {
+				int fileOffset = (int) (position / FileSize);
+				int fileOffset1 = (int) ((position + len) / FileSize);
+				return fileOffset == fileOffset1;
+			}
+
+			private MappedByteBuffer GetCurrent(long position) {
+				int fileOffset = (int) (position / FileSize);
+				MappedByteBuffer current = bufs[fileOffset];
 				if (current == null) {
-					MSetLength(pageId);
+					synchronized (mapWriters) {
+						current = bufs[fileOffset];
+						if (current == null) {
+							try {
+								String pfile = fileOffset == 0 ? fullPath
+										: fullPath + fileOffset;
+								files[fileOffset] = new RandomAccessFile(pfile,
+										"rw");
+								length += FileSize;
+								mapWriters[fileOffset] = files[fileOffset]
+										.getChannel().map(MapMode.READ_WRITE,
+												0, FileSize);
+								mapReaders[fileOffset] = (MappedByteBuffer) mapWriters[fileOffset]
+										.duplicate();
+							} catch (Throwable e) {
+								files = null;
+								mapWriters = null;
+								mapReaders = null;
+								e.printStackTrace();
+							}
+							if (position > maxMemory) {
+								flush();
+							}
+						}
+					}
 					current = bufs[fileOffset];
 				}
+				current.position((int) (position - (fileOffset * FileSize)));
+				return current;
 			}
-
 		}
 
 	}

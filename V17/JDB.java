@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.JDB.Example.Server.*;
 import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.Java v1.6
+//  iBoxDB.Java v1.7
 
 public class JDB {
 
@@ -324,6 +324,10 @@ public class JDB {
 
 				public void onReceived(Socket socket, BoxData outBox,
 						boolean normal) {
+					if (socket.DestAddress == Long.MAX_VALUE) {
+						// default replicate address
+						return;
+					}
 					synchronized (qBuffer) {
 						qBuffer.add(new Package(socket, outBox.toBytes()));
 					}
@@ -593,11 +597,7 @@ public class JDB {
 						buffer.addAll(recycler.getPackage());
 						recycler.getPackage().clear();
 					}
-					for (Package p : buffer) {
-						if (p.Socket.DestAddress == Long.MAX_VALUE) {
-							// default replicate address
-							continue;
-						}
+					for (Package p : buffer) {						
 						if (p.Socket.DestAddress == ServerID.MasterA_Address) {
 							(new BoxData(p.OutBox)).masterReplicate(masterA);
 						}

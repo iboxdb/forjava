@@ -1,6 +1,6 @@
 // npm install java
 var java = require("java");
-java.classpath.push("iBoxDBv17.jar")
+java.classpath.push("iBoxDBv171.jar")
 
 var DB = java.import("iBoxDB.LocalServer.DB");
 
@@ -49,7 +49,7 @@ var db = server.openSync();
 
 // supports unstructured data insert and query
 db.insertSync("Table", { value: "hello db" }.jmap());
-db.insertSync("Table", { name: "iBoxDB", version: "1.7 java" }.jmap());
+db.insertSync("Table", { name: "iBoxDB", version: "1.7.1 java" }.jmap());
 db.insertSync("Table", { product: "iBoxDB", size: 200 }.jmap());
 
 console.log("*Find");

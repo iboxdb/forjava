@@ -25,7 +25,7 @@ public class MMapConfig extends BoxFileStreamConfig {
 				|| path.endsWith(".frag")) {
 			return super.CreateStream(path, access);
 		}
-		path = BoxFileStreamConfig.BaseDirectory + path;
+		path = BoxFileStreamConfig.RootPath + path;
 		MManager manager = map.get(path);
 		if (manager == null) {
 			manager = new MManager(path);

@@ -14,7 +14,7 @@ import iBoxDB.LocalServer.Replication.*;
 import iBoxDB.JDB.Example.Server.*;
 import iBoxDB.JDB.Example.Server.Package;
 
-//  iBoxDB.Java v1.7
+//  iBoxDB.Java v1.7.1
 
 public class JDB {
 
@@ -24,7 +24,7 @@ public class JDB {
 
 //	public static void initAndroid(String packageName) {
 //		isAndroid = true;
-//		BoxFileStreamConfig.BaseDirectory = android.os.Environment
+//		BoxFileStreamConfig.RootPath = android.os.Environment
 //				.getDataDirectory().getAbsolutePath()
 //				+ "/data/"
 //				+ packageName
@@ -474,7 +474,7 @@ public class JDB {
 					server.close();
 				}
 			} catch (Exception ex) {
-				sb.append(BoxFileStreamConfig.BaseDirectory + "||"
+				sb.append(BoxFileStreamConfig.RootPath + "||"
 						+ ex.getMessage() + "\r\n");
 			}
 			return sb;

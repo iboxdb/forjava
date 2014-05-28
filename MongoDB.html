@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+div.wikidoc pre,div.wikidoc div.csharpcode{background-color:#ECECEC !important;border:1px solid lightgrey !important;font-family:Consolas,"Courier New",Courier,Monospace !important;font-size:1em !important;margin-top:0;margin-bottom:0;padding:.5em;height:auto;white-space:pre-wrap;overflow:hidden;}p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset{margin-bottom:20px;}
+        .auto-style1 {
+            font-size: 100%;
+            vertical-align: baseline;
+            border-style: none;
+            border-color: inherit;
+            border-width: 0;
+            margin: 0;
+            padding: 0;
+            background:;
+        }
+        .auto-style2 {
+            color: black;
+            font-size: 100%;
+            vertical-align: baseline;
+            border-style: none;
+            border-color: inherit;
+            border-width: 0;
+            margin: 0;
+            padding: 0;
+            background:;
+        }
+        .auto-style3 {
+            color: blue;
+            font-size: 100%;
+            vertical-align: baseline;
+            border-style: none;
+            border-color: inherit;
+            border-width: 0;
+            margin: 0;
+            padding: 0;
+            background:;
+        }
+        .auto-style4 {
+            color: green;
+            font-size: 100%;
+            vertical-align: baseline;
+            border-style: none;
+            border-color: inherit;
+            border-width: 0;
+            margin: 0;
+            padding: 0;
+            background:;
+        }
+        .auto-style5 {
+            color: rgb(163, 21, 21);
+            font-size: 100%;
+            vertical-align: baseline;
+            border-style: none;
+            border-color: inherit;
+            border-width: 0;
+            margin: 0;
+            padding: 0;
+            background:;
+        }
+    </style>
+</head>
+<body>
+
+    MongoDB(Default)<br />
+    Database Transaction Test: None<br />
+    MongoDB Insert&amp;Counting:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">32,702</b> objects/s<br />
+    <br />
+    iBoxDB(File Mode)<br />
+    Database Transaction Test: Succeeded<br />
+    iBoxDB Insert&amp;Counting:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">33,368</b> objects/s<br />
+    iBoxDB Select&amp;Update:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">16,939</b> objects/s<br />
+    iBoxDB Select&amp;UpdateNoIndex:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">25,478</b> objects/s<br />
+    iBoxDB Delete:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">22,504</b> objects/s<br />
+    <br />
+    iBoxDB(MemoryMappedFile Mode)<br />
+    Database Transaction Test: Succeeded<br />
+    iBoxDB Insert&amp;Counting:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">42,236</b> objects/s<br />
+    iBoxDB Select&amp;Update:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">17,765</b> objects/s<br />
+    iBoxDB Select&amp;UpdateNoIndex:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">26,688</b> objects/s<br />
+    iBoxDB Delete:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">23,147</b> objects/s<br />
+    <br />
+    iBoxDB(InMemory Mode)<br />
+    Database Transaction Test: Succeeded<br />
+    iBoxDB Insert&amp;Counting:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">47,382</b> objects/s<br />
+    iBoxDB Select&amp;Update:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">26,806</b> objects/s<br />
+    iBoxDB Select&amp;UpdateNoIndex:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">30,969</b> objects/s<br />
+    iBoxDB Delete:1,000,000 AVG: <b class="auto-style1" style="outline: 0;">35,092</b> objects/s<br />
+    <br />
+    <br />
+    <b class="auto-style1" style="outline: 0;">Code</b><br />
+    <div class="auto-style2" style="outline-width: 0; outline-style: none; outline-color: invert;">
+        <pre class="auto-style1" style="outline: 0;"><span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Collections.Generic;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Linq;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Text;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.IO;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Threading;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Diagnostics;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> System.Threading.Tasks;
+
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> iBoxDB.LocalServer;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> iBoxDB.LocalServer.IO;
+
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> MongoDB.Driver;
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> MongoDB.Bson;
+
+
+
+<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">namespace</span> iTesting
+{
+    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> MongoDBProgram
+    {
+        <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">// iBoxDB v1.5</span>
+        <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">// MongoDB.Driver v1.8.2.34  Server: mongodb-win32-x86_64-2008plus-2.4.5</span>
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> threadCount = 100000;
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> batchCount = 10;
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">long</span> idbFile = 1;
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">bool</span> UseMMAP = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">false</span>;
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">bool</span> UseMem = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">false</span>;
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">void</span> Main(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">string</span>[] args)
+        {
+
+            Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;MongoDB(Default)&quot;</span>);
+            Console.WriteLine();
+            TestMongoDB();
+
+            System.GC.Collect();
+            System.GC.WaitForFullGCComplete();
+            Thread.Sleep(1000 * 10);
+
+            UseMMAP = UseMem = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">false</span>;
+            Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;\r\niBoxDB(File Mode)&quot;</span>);
+            TestiBoxDB();
+
+            System.GC.Collect();
+            System.GC.WaitForFullGCComplete();
+            Thread.Sleep(1000 * 10);
+            UseMMAP = UseMem = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">false</span>;
+            UseMMAP = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">true</span>;
+            Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;\r\niBoxDB(MemoryMappedFile Mode)&quot;</span>);
+            TestiBoxDB();
+
+            System.GC.Collect();
+            System.GC.WaitForFullGCComplete();
+            Thread.Sleep(1000 * 10);
+            UseMMAP = UseMem = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">false</span>;
+            UseMem = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">true</span>;
+            Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;\r\niBoxDB(InMemory Mode)&quot;</span>);
+            TestiBoxDB();
+
+            System.GC.Collect();
+            System.GC.WaitForFullGCComplete();
+
+            Console.ReadLine();
+        }
+
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">void</span> TestiBoxDB()
+        {
+            iBoxDB.DBDebug.DDebug.DeleteDBFiles(idbFile);
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> (iBoxDBServer server = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> iBoxDBServer())
+            {
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> db = server.GetInstance(idbFile);
+                Console.Write(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;Database Transaction Test: &quot;</span>);
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box1 = db.Cube();
+                box1.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>).Insert(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = -1, S = (-1).ToString() });
+
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box2 = db.Cube();
+                box2.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>).Insert(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = -2, S = (-2).ToString() });
+
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> transaction1 = box1.Select&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;from T1&quot;</span>).ToArray();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> transaction2 = box2.Select&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;from T1&quot;</span>).ToArray();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (transaction1.Length == 1 &amp;&amp; transaction1[0]._id == -1 &amp;&amp;
+                     transaction2.Length == 1 &amp;&amp; transaction2[0]._id == -2)
+                {
+                    Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;Succeeded&quot;</span>);
+                }
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+                {
+                    Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;Failed&quot;</span>);
+                }
+                box1.Commit().Assert();
+                box2.Commit().Assert();
+
+
+                Stopwatch watch = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Stopwatch();
+                watch.Start();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> count = 0;
+                Parallel.For(0, threadCount, (p) =&gt;
+                {
+                    List&lt;IOPEntity&gt; list = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> List&lt;IOPEntity&gt;();
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> binder = db.Get().Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>);
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">for</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> i = 0; i &lt; batchCount; i++)
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> id = (p * batchCount) + i;
+                        list.Add(binder.MakeInsert(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = id, S = id.ToString() }));
+                    }
+                    binder.Batch(list.ToArray()).Assert();
+
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box = db.Cube())
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> minId = p * batchCount + 0;
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> maxId = p * batchCount + batchCount;
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> reader = box.Select&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;from T1 where _id&gt;=? &amp; _id&lt;? order by _id&quot;</span>, minId, maxId).GetEnumerator();
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> ti = minId;
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">while</span> (reader.MoveNext())
+                        {
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> iv = reader.Current._id;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (ti != iv)
+                            {
+                                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(ti + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + iv);
+                            }
+                            ti++;
+                            Interlocked.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">ref</span> count, 1);
+                        }
+                        reader.Dispose();
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (ti != maxId)
+                        {
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                        }
+                    }
+                }
+                );
+                watch.Stop();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (count != (batchCount * threadCount)) { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(count + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + (batchCount * threadCount)); }
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> avg = (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span>)(count / watch.Elapsed.TotalSeconds);
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;iBoxDB Insert&amp;Counting:&quot;</span> + count.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  AVG: &quot;</span> + avg.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot; objects/s&quot;</span>);
+
+                <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">//---------Update-----------------</span>
+                watch = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Stopwatch();
+                watch.Start();
+                count = 0;
+                Parallel.For(0, threadCount, (p) =&gt;
+                {
+                    List&lt;IOPEntity&gt; list = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> List&lt;IOPEntity&gt;();
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box = db.Cube())
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">for</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> i = 0; i &lt; batchCount; i++)
+                        {
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> id = (p * batchCount) + i;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> t = box.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>,id).Select&lt;T1&gt;();
+                            t.S = t.S;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (box.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, id).Update(t))
+                            {
+                                Interlocked.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">ref</span> count, 1);
+                            }
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+                            {
+                                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                            }
+                        }
+                        box.Commit().Assert();
+                    }
+                }
+                );
+                watch.Stop();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (count != (batchCount * threadCount)) { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(count + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + (batchCount * threadCount)); }
+                avg = (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span>)(count / watch.Elapsed.TotalSeconds);
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;iBoxDB Select&amp;Update:&quot;</span> + count.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  AVG: &quot;</span> + avg.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot; objects/s&quot;</span>);
+
+                <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">//-------------- UpdateNoIndex-------------</span>
+                watch = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Stopwatch();
+                watch.Start();
+                count = 0;
+                Parallel.For(0, threadCount, (p) =&gt;
+                {
+                    List&lt;IOPEntity&gt; list = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> List&lt;IOPEntity&gt;();
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box = db.Cube())
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">for</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> i = 0; i &lt; batchCount; i++)
+                        {
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> id = (p * batchCount) + i;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> t = box.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, id).Select&lt;T1&gt;();
+                            t.S = t.S;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (box.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, id).UpdateNoIndex(t))
+                            {
+                                Interlocked.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">ref</span> count, 1);
+                            }
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+                            {
+                                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                            }
+                        }
+                        box.Commit().Assert();
+                    }
+                }
+                );
+                watch.Stop();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (count != (batchCount * threadCount)) { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(count + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + (batchCount * threadCount)); }
+                avg = (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span>)(count / watch.Elapsed.TotalSeconds);
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;iBoxDB Select&amp;UpdateNoIndex:&quot;</span> + count.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  AVG: &quot;</span> + avg.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot; objects/s&quot;</span>);
+
+
+                <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">//-------------- Delete ------------</span>
+                watch = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Stopwatch();
+                watch.Start();
+                count = 0;
+                Parallel.For(0, threadCount, (p) =&gt;
+                {
+                    List&lt;IOPEntity&gt; list = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> List&lt;IOPEntity&gt;();
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">using</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> box = db.Cube())
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">for</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> i = 0; i &lt; batchCount; i++)
+                        {
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> id = (p * batchCount) + i;
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (box.Bind(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, id).Delete())
+                            {
+                                Interlocked.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">ref</span> count, 1);
+                            }
+                            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+                            {
+                                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                            }
+                        }
+                        box.Commit().Assert();
+                    }
+                }
+                );
+                watch.Stop();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (count != (batchCount * threadCount)) { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(count + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + (batchCount * threadCount)); }
+                avg = (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span>)(count / watch.Elapsed.TotalSeconds);
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;iBoxDB Delete:&quot;</span> + count.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  AVG: &quot;</span> + avg.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot; objects/s&quot;</span>);
+
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (db.Get().SelectCount(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;from T1&quot;</span>) != 2)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                }
+            }
+
+            iBoxDB.DBDebug.DDebug.DeleteDBFiles(idbFile);
+        }
+
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">static</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">void</span> TestMongoDB()
+        {
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> mongo = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> MongoClient().GetServer();
+            mongo.Connect();
+            mongo.DropDatabase(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;test&quot;</span>);
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> db = mongo.GetDatabase(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;test&quot;</span>);
+            Console.Write(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;Database Transaction Test: &quot;</span>);
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> coll1 = db.GetCollection&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>);
+            coll1.Insert(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = -1, S = (-1).ToString() });
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> coll2 = db.GetCollection&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>);
+            coll2.Insert(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = -2, S = (-2).ToString() });
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> transaction1 = coll1.FindAllAs&lt;T1&gt;().ToArray();
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> transaction2 = coll2.FindAllAs&lt;T1&gt;().ToArray();
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (transaction1.Length == 1 &amp;&amp; transaction1[0]._id == -1 &amp;&amp;
+                 transaction2.Length == 1 &amp;&amp; transaction2[0]._id == -2)
+            {
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;Succeeded&quot;</span>);
+            }
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+            {
+                Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;None&quot;</span>);
+            }
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> coll = db.GetCollection&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>);
+            Stopwatch watch = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Stopwatch();
+            watch.Start();
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> count = 0;
+            Parallel.For(0, threadCount, (p) =&gt;
+            {
+                List&lt;T1&gt; list = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> List&lt;T1&gt;(batchCount);
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">for</span> (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> i = 0; i &lt; batchCount; i++)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> id = (p * batchCount) + i;
+                    list.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> T1 { _id = id, S = id.ToString() });
+                }
+                coll.InsertBatch(list);
+
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> minId = p * batchCount + 0;
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> maxId = p * batchCount + batchCount;
+                BsonDocument bd = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> BsonDocument();
+                bd.Add(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;$gte&quot;</span>, minId);
+                bd.Add(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;$lt&quot;</span>, maxId);
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> q = <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> QueryDocument();
+                q.Add(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;_id&quot;</span>, bd);
+
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> reader = coll.FindAs&lt;T1&gt;(q).GetEnumerator();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> ti = minId;
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">while</span> (reader.MoveNext())
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> iv = reader.Current._id;
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (ti != iv)
+                    {
+                        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(ti + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + iv);
+                    }
+                    ti++;
+                    Interlocked.Add(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">ref</span> count, 1);
+                }
+                reader.Dispose();
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (ti != maxId)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception();
+                }
+            }
+            );
+            watch.Stop();
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (count != (batchCount * threadCount)) { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">throw</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> Exception(count + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  &quot;</span> + (batchCount * threadCount)); }
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">var</span> avg = (<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span>)(count / watch.Elapsed.TotalSeconds);
+            Console.WriteLine(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;MongoDB Insert&amp;Counting:&quot;</span> + count.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;  AVG: &quot;</span> + avg.ToString(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;N0&quot;</span>) + <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot; objects/s&quot;</span>);
+
+            mongo.Disconnect();
+        }
+
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> T1
+        {
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> T1() { }
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">int</span> _id { <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">get</span>; <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">set</span>; }
+            <span class="auto-style4" style="outline-width: 0; outline-style: none; outline-color: invert;">//[BoxLength(typeof(char),5)]</span>
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">string</span> S;
+        }
+
+        <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> iBoxDBServer : LocalDatabaseServer
+        {
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> C1Config : BoxFileStreamConfig
+            {
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> C1Config()
+                    : <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">base</span>()
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.EnsureTable&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;_id&quot;</span>);
+                }
+            }
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> C1ConfigInMemory : BoxMemoryStreamConfig
+            {
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> C1ConfigInMemory()
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.EnsureTable&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;_id&quot;</span>);
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.FileIncSize = 1024 * 1024 * 256;
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.CachePageCount = 1024 * 512;
+                }
+            }
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">class</span> C1ConfigMMAP : BoxMemoryMappedViewStreamConfig
+            {
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">public</span> C1ConfigMMAP(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">string</span> name)
+                    : <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">base</span>(name)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.EnsureTable&lt;T1&gt;(<span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;T1&quot;</span>, <span class="auto-style5" style="outline-width: 0; outline-style: none; outline-color: invert;">&quot;_id&quot;</span>);
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">this</span>.FileIncSize = 1024 * 1024 * 256; 
+                }
+            }
+
+            <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">protected</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">override</span> DatabaseConfig BuildDatabaseConfig(<span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">long</span> addr)
+            {
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (UseMem)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">return</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> C1ConfigInMemory();
+                }
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">if</span> (UseMMAP)
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">return</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> C1ConfigMMAP(GetNameByAddr(addr));
+                }
+                <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">else</span>
+                {
+                    <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">return</span> <span class="auto-style3" style="outline-width: 0; outline-style: none; outline-color: invert;">new</span> C1Config();
+                }
+            }
+        }
+
+    }
+}
+
+</pre>
+    </div>
+
+</body>
+</html>

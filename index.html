@@ -1,138 +1,627 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Document,Application Database,SQL,Agile Development,Mono,Java,UpdateIncrement,Embedded">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database">
 
-  <title>iBoxDB Fast embeddable transactional table-style document nosql database resources zero configuration, no dependencies,copy and run,save and load objects easily.</title>
-  <meta name="description" content="Fast embeddable transactional  table-style document nosql database resources for java android. pure java, zero configuration, no dependencies,copy and run,save and load Objects easily.">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>iBoxDB Fast Transactional NoSQL Application Database</title>
+    <style type="text/css">
+        /*******************************************************************************
+MeyerWeb Reset
+*******************************************************************************/
 
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /*******************************************************************************
+Theme Styles
+*******************************************************************************/
+
+        body {
+            box-sizing: border-box;
+            color: #373737;
+            background: #212121;
+            font-size: 16px;
+            font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 10px 0;
+            font-weight: 700;
+            color: #222222;
+            font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+            letter-spacing: -1px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        h2 {
+            padding-bottom: 10px;
+            font-size: 32px;
+            background: url('../images/bg_hr.png') repeat-x bottom;
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        h4 {
+            font-size: 21px;
+        }
+
+        h5 {
+            font-size: 18px;
+        }
+
+        h6 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px 0 15px 0;
+        }
+
+        footer p {
+            color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007edf;
+            text-shadow: none;
+            transition: color 0.5s ease;
+            transition: text-shadow 0.5s ease;
+            -webkit-transition: color 0.5s ease;
+            -webkit-transition: text-shadow 0.5s ease;
+            -moz-transition: color 0.5s ease;
+            -moz-transition: text-shadow 0.5s ease;
+            -o-transition: color 0.5s ease;
+            -o-transition: text-shadow 0.5s ease;
+            -ms-transition: color 0.5s ease;
+            -ms-transition: text-shadow 0.5s ease;
+        }
+
+            a:hover, a:focus {
+                text-decoration: underline;
+            }
+
+        footer a {
+            color: #F2F2F2;
+            text-decoration: underline;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        img {
+            position: relative;
+            margin: 0 auto;
+            max-width: 739px;
+            padding: 5px;
+            margin: 10px 0 10px 0;
+            border: 1px solid #ebebeb;
+            box-shadow: 0 0 5px #ebebeb;
+            -webkit-box-shadow: 0 0 5px #ebebeb;
+            -moz-box-shadow: 0 0 5px #ebebeb;
+            -o-box-shadow: 0 0 5px #ebebeb;
+            -ms-box-shadow: 0 0 5px #ebebeb;
+        }
+
+        p img {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+            text-align: center;
+            border: none;
+        }
+
+        pre, code {
+            width: 100%;
+            color: #222;
+            background-color: #fff;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 14px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+        }
+
+        pre {
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            overflow: auto;
+        }
+
+        code {
+            padding: 3px;
+            margin: 0 3px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+
+        pre code {
+            display: block;
+            box-shadow: none;
+        }
+
+        blockquote {
+            color: #666;
+            margin-bottom: 20px;
+            padding: 0 0 0 20px;
+            border-left: 3px solid #bbb;
+        }
+
+
+        ul, ol, dl {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: inside;
+            padding-left: 20px;
+        }
+
+        ol {
+            list-style: decimal inside;
+            padding-left: 20px;
+        }
+
+        dl dt {
+            font-weight: bold;
+        }
+
+        dl dd {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        dl p {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        hr {
+            height: 1px;
+            margin-bottom: 5px;
+            border: none;
+            background: url('../images/bg_hr.png') repeat-x center;
+        }
+
+        table {
+            border: 1px solid #373737;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        th {
+            font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 10px;
+            background: #373737;
+            color: #fff;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #373737;
+        }
+
+        form {
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        /*******************************************************************************
+Full-Width Styles
+*******************************************************************************/
+
+        .outer {
+            width: 100%;
+        }
+
+        .inner {
+            position: relative;
+            max-width: 640px;
+            padding: 20px 10px;
+            margin: 0 auto;
+        }
+
+        #forkme_banner {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            z-index: 10;
+            padding: 10px 50px 10px 10px;
+            color: #fff;
+            background: url('../images/blacktocat.png') #0090ff no-repeat 95% 50%;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(0,0,0,.5);
+            border-bottom-left-radius: 2px;
+            border-bottom-right-radius: 2px;
+        }
+
+        #header_wrap {
+            background: #212121;
+            background: -moz-linear-gradient(top, #373737, #212121);
+            background: -webkit-linear-gradient(top, #373737, #212121);
+            background: -ms-linear-gradient(top, #373737, #212121);
+            background: -o-linear-gradient(top, #373737, #212121);
+            background: linear-gradient(top, #373737, #212121);
+        }
+
+            #header_wrap .inner {
+                padding: 50px 10px 30px 10px;
+            }
+
+        #project_title {
+            margin: 0;
+            color: #fff;
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #project_tagline {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+            background: none;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #downloads {
+            position: absolute;
+            width: 210px;
+            z-index: 10;
+            bottom: -40px;
+            right: 0;
+            height: 70px;
+            background: url('../images/icon_download.png') no-repeat 0% 90%;
+        }
+
+        .zip_download_link {
+            display: block;
+            float: right;
+            width: 90px;
+            height: 70px;
+            text-indent: -5000px;
+            overflow: hidden;
+            background: url(../images/sprite_download.png) no-repeat bottom left;
+        }
+
+        .tar_download_link {
+            display: block;
+            float: right;
+            width: 90px;
+            height: 70px;
+            text-indent: -5000px;
+            overflow: hidden;
+            background: url(../images/sprite_download.png) no-repeat bottom right;
+            margin-left: 10px;
+        }
+
+        .zip_download_link:hover {
+            background: url(../images/sprite_download.png) no-repeat top left;
+        }
+
+        .tar_download_link:hover {
+            background: url(../images/sprite_download.png) no-repeat top right;
+        }
+
+        #main_content_wrap {
+            background: #f2f2f2;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
+        }
+
+        #main_content {
+            padding-top: 40px;
+        }
+
+        #footer_wrap {
+            background: #212121;
+        }
+
+
+
+        /*******************************************************************************
+Small Device Styles
+*******************************************************************************/
+
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            #downloads {
+                display: none;
+            }
+
+            .inner {
+                min-width: 320px;
+                max-width: 480px;
+            }
+
+            #project_title {
+                font-size: 32px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 21px;
+            }
+
+            h4 {
+                font-size: 18px;
+            }
+
+            h5 {
+                font-size: 14px;
+            }
+
+            h6 {
+                font-size: 12px;
+            }
+
+            code, pre {
+                min-width: 320px;
+                max-width: 480px;
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">iBoxDB</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Fast embeddable transactional  table-style document nosql database resources for java android. pure java, zero configuration, no dependencies,copy and run,save and load objects easily.</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/iboxdb/forjava/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/iboxdb/forjava/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/iboxdb/forjava" class="code">View iBoxDB on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h1>
-<a name="iboxdbjava" class="anchor" href="#iboxdbjava"><span class="octicon octicon-link"></span></a>iBoxDB.Java</h1>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
+        <header class="inner">
+            <!--  
+     <a id="forkme_banner" href="https://github.com/iboxdb/nosql-database">View on GitHub</a> 
+-->
 
-<p>Traditional table with unstructured data, pure java database, not only CURD and QL, but also Hot Replication and MVCC, for both Java and Android, compatible with node.js</p>
+            <h1 id="project_title">iBoxDB</h1>
+            <h2 id="project_tagline">Fast Transactional Table-Style Document NoSQL Application Database</h2>
 
-<p>features: CURD, Index, composite Index, query language, transactions support, concurrency control, memory management, hot replication, file and in-memory database, dynamic columns, NoSQL ORM, high performance, zero configuration, copy and run.</p>
-
-<p>Examples:</p>
-
-<p>Normal Object</p>
-
-<pre><code>Member m = new Member();
-m.ID = box.newId(Member.IncTableID, 1);
-m.setName("Andy");
-m.setTags(new Object[] { "Nice", "Strong" });
-box.insert("Table", m);
-</code></pre>
-
-<p>Dynamic Object (document database)</p>
-
-<pre><code>game.put("GameType", "ACT");
-box.insert("Table", game);
-</code></pre>
-
-<p>Key-Value Style Query</p>
-
-<pre><code>box.bind("Table", ID).select( Member.class );
-//Composite-Key Supported
-box.bind("Table2",8, "MyID").select(Product.class);
-</code></pre>
-
-<p>SQL like Query</p>
-
-<pre><code>box.select( Member.class, "from Member where Name==?", "MyName" );
-</code></pre>
-
-<p>Custom DatabaseFunction use java</p>
-
-<pre><code>public static class QueryArray implements IFunction {
-        String match;
-
-        public QueryArray(String match) {
-            this.match = match;
-        }
-
-        public Object execute(int argCount, Object[] args) {
-            Object[] tags = (Object[]) args[0];
-            if (tags == null) {
-                return false;
-            }
-            for (Object t : tags) {
-                if (match.equals(t)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-box.select(Member.class, "from Member where [Tags]",  new QueryArray("Strong")
-</code></pre>
-
-<p>Replication Master-Slave , Master-Master</p>
-
-<p><img src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=iboxdb&amp;DownloadId=581898" alt=""></p>
-
-<p><img src="https://raw.github.com/iboxdb/forjava/master/images/show.png" alt=""></p>
-
-<p><a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB">Benchmark with MongoDB</a>   thanks for starring</p>
-
-<p>Dual Core</p>
-
-<p><a href="https://github.com/iboxdb/forjava">iBoxDB JAVA Version</a></p>
-
-<p><a href="https://iboxdb.codeplex.com/">iBoxDB NET Version</a></p>
-        </article>
-      </div>
+        </header>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/iboxdb" class="avatar"><img src="https://0.gravatar.com/avatar/2d2c6056a29607ea0caa3bdab408dfc7?d=https%3A%2F%2Fidenticons.github.com%2F1989f2bc96c93c9b6f82ab8e189817cf.png&amp;r=x&amp;s=60" width="48" height="48"/></a> <a href="https://github.com/iboxdb">iboxdb</a> maintains <a href="https://github.com/iboxdb/forjava">iBoxDB</a></p>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+            <h3>
+                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description</h3>
+
+            <p>iBoxDB is a fast transactional table-style document nosql application database, easily process objects and documents,traditional table with unstructured data, zero configuration, pure java/.net database, no dependencies.</p>
+
+            <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
+
+            <h3>
+                <a name="features" class="anchor" href="http://www.iboxdb.com/#features"><span class="octicon octicon-link"></span></a>Features</h3>
+
+            <ul>
+                <li>CURD</li>
+                <li>Primary key</li>
+                <li>Unique and non-unique indexes.</li>
+                <li>Unique and non-unique composite indexes.</li>
+                <li>SQL-like query language</li>
+                <li>Transactions support</li>
+                <li>Concurrency control, thread safe</li>
+                <li>Memory management</li>
+                <li>Hot MasterSlave and MasterMaster replications</li>
+                <li>File and in-memory database supported</li>
+                <li>Automatically creating databases when it is needed</li>
+                <li>Zero configuration, copy and run, full of managed code</li>
+                <li>Dynamic columns</li>
+                <li>Different types with different indexes can be stored in same table</li>
+                <li>NoSQL ORM</li>
+                <li>ResultSet compatible with LINQ</li>
+                <li>High performance, no dependencies.</li>
+            </ul>
+
+            <div>
 
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/iboxdb/forjava/tarball/master" class="tar">tar</a><a href="https://github.com/iboxdb/forjava/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+                <h3>
+                    <a name="examples" class="anchor"><span class="octicon octicon-link"></span></a>Examples</h3>
 
-<div style="visibility: hidden; display: none;">
-<a href="logs.html">logs</a>
-</div>  
+                <b>Each box is an isolated data&#39;s space (Transaction-Based)</b><br />
+                <div>
+                    <pre>  <span>using</span> (<span>var</span> box = database.Cube())
+  {                            
+     <span>//select, insert, update, delete ...</span>
+     <span>var</span> result = box.Commit();
+  }
+</pre>
+                </div>
+                <br />
+                <b>Normal Object</b><br />
+                <div>
+                    <pre> box.Bind(<span>&quot;Member&quot;</span>).Insert(
+       <span>new</span> Member() {  
+             ID=box.NewId( Member.IncTableID,1) ,
+             LoginName = <span>&quot;Andy&quot;</span>,
+             Password = Member.EncodePassowrd( <span>&quot;123&quot;</span> ),
+             Tags = <span>new</span> <span>string</span>[]{ <span>&quot;Nice&quot;</span> , <span>&quot;Strong&quot;</span> }
+        }
+      );
+</pre>
+                </div>
+                <br />
+                <b>Dynamic Object (document database)</b><br />
+                <div>
+                    <pre>game[<span>&quot;GameType&quot;</span>] = <span>&quot;ACT&quot;</span>;
+box.Bind(<span>&quot;Product&quot;</span>).Insert( game);
+</pre>
+                </div>
+                <br />
+                <b>Key-Value Style Query</b><br />
+                <div>
+                    <pre>box.Bind(<span>&quot;Table&quot;</span>, 2L).Select&lt;AClass&gt;();
+ <span>//Composite Key</span>
+box.Bind(<span>&quot;Table2&quot;</span>, 99, <span>&quot;ABC&quot;</span>).Select&lt;BClass&gt;();
+</pre>
+                </div>
+                <br />
+                <b>SQL like</b>
+                <br />
+                <div>
+                    <pre><span>// from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10</span>
+box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>, <span>&quot;MyName&quot;</span>));
+</pre>
+                </div>
+                <br />
+                <b>Custom QueryFunction</b><br />
+                <div>
+                    <pre>box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
+</pre>
+                </div>
+                <br />
+                <b>Compatible with LINQ</b><br />
+                <div>
+                    <pre><span>from</span> o <span>in</span> box.Select&lt;Class&gt;(<span>&quot;from Class&quot;</span>)
+<span>where</span> o.Text.Contains(text)
+<span>select</span> o;
+</pre>
+                </div>
+                <br />
+                <b>Update Increment</b><br />
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Apply To </th>
+                        <th>Trigger </th>
+                        <th>Type </th>
+                        <th>Value From </th>
+                    </tr>
+                    <tr>
+                        <td>AutoIncrement </td>
+                        <td>primary key </td>
+                        <td>insert </td>
+                        <td>number </td>
+                        <td>Table Max(ID)+1 </td>
+                    </tr>
+                    <tr>
+                        <td><i>UpdateIncrement</i> </td>
+                        <td>non-primary key </td>
+                        <td>insert/update </td>
+                        <td>long </td>
+                        <td>Database NewId( byte.MaxValue, 1 ) </td>
+                    </tr>
+                </table>
+                <br />
+                <b>Selecting Tracer</b><br />
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Thread </th>
+                        <th>Usage </th>
+                    </tr>
+                    <tr>
+                        <td>Locker </td>
+                        <td>blocked </td>
+                        <td>read/write same record </td>
+                    </tr>
+                    <tr>
+                        <td><i>Tracer</i> </td>
+                        <td>non-blocked </td>
+                        <td>read/write different records </td>
+                    </tr>
+                </table>
+                <br />
+                <b>Replication Master-Slave , Master-Master</b><br />
+                <img src="images/p1.png" /><br />
+                <br />
+                <img src="images/p2.png" /><br />
+            </div>
+
+            <h5>
+                <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank">Dual Core Application Database 
+                <br />
+                    FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js. (Download)
+                </a>
+            </h5>
+
+
+        </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
+        <footer class="inner">
+            <p class="copyright">iBoxDB An Application Database </p>
+        </footer>
+    </div>
+
+    <!-- changed -->
+    <div style="z-index: 2147483645; visibility: hidden; display: none;">
+        <a href="http://www.iboxdb.com/logs.html">logs</a>
+
+        iBoxDB,Windows,Linux,OS X,Windows Phone,Android,iPhone,
+        Java,.NET,Mono,ASP.NET,JSP,WEB,HTML5,JavaScript,CSharp,
+        X86,ARM,
+        Xamarin,Unity3D,
+        Database,NoSQL Database,Application Database,Embedded Database,Document Database,Object Database,Mobile Database,
+        SQL,Agile Development,Update Increment,Selecting Tracer,
+
+    </div>
+
+
 </body>
 </html>

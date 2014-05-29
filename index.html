@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Document,Application Database,SQL,Agile Development,Mono,Java,UpdateIncrement,Embedded">
+    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Document,Application Database,SQL,Agile Development,Mono,Java,Update Increment,Embedded">
 
     <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database">
 
@@ -273,20 +273,6 @@ Full-Width Styles
             margin: 0 auto;
         }
 
-        #forkme_banner {
-            display: block;
-            position: absolute;
-            top: 0;
-            right: 10px;
-            z-index: 10;
-            padding: 10px 50px 10px 10px;
-            color: #fff;
-            background: url('../images/blacktocat.png') #0090ff no-repeat 95% 50%;
-            font-weight: 700;
-            box-shadow: 0 0 10px rgba(0,0,0,.5);
-            border-bottom-left-radius: 2px;
-            border-bottom-right-radius: 2px;
-        }
 
         #header_wrap {
             background: #212121;
@@ -319,42 +305,15 @@ Full-Width Styles
 
         #downloads {
             position: absolute;
-            width: 210px;
+            width: 200px;
             z-index: 10;
-            bottom: -40px;
+            bottom: -50px;
             right: 0;
-            height: 70px;
-            background: url('../images/icon_download.png') no-repeat 0% 90%;
+            height: 100px;
+            background-image: url( "images/ico.png");
         }
 
-        .zip_download_link {
-            display: block;
-            float: right;
-            width: 90px;
-            height: 70px;
-            text-indent: -5000px;
-            overflow: hidden;
-            background: url(../images/sprite_download.png) no-repeat bottom left;
-        }
 
-        .tar_download_link {
-            display: block;
-            float: right;
-            width: 90px;
-            height: 70px;
-            text-indent: -5000px;
-            overflow: hidden;
-            background: url(../images/sprite_download.png) no-repeat bottom right;
-            margin-left: 10px;
-        }
-
-        .zip_download_link:hover {
-            background: url(../images/sprite_download.png) no-repeat top left;
-        }
-
-        .tar_download_link:hover {
-            background: url(../images/sprite_download.png) no-repeat top right;
-        }
 
         #main_content_wrap {
             background: #f2f2f2;
@@ -438,7 +397,10 @@ Small Device Styles
 
             <h1 id="project_title">iBoxDB</h1>
             <h2 id="project_tagline">Fast Transactional Table-Style Document NoSQL Application Database</h2>
-
+            <div id="downloads">
+                <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
+                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
+            </div>
         </header>
     </div>
 
@@ -446,9 +408,11 @@ Small Device Styles
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
             <h3>
-                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description</h3>
+                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description
 
-            <p>iBoxDB is a fast transactional table-style document nosql application database, easily process objects and documents,traditional table with unstructured data, zero configuration, pure java/.net database, no dependencies.</p>
+            </h3>
+
+            <p>iBoxDB is a fast transactional table-style document NoSQL Application Database, easily process objects and documents,traditional table with unstructured data, zero configuration, pure Java/.NET database, no dependencies.</p>
 
             <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
 
@@ -472,7 +436,7 @@ Small Device Styles
                 <li>Different types with different indexes can be stored in same table</li>
                 <li>NoSQL ORM</li>
                 <li>ResultSet compatible with LINQ</li>
-                <li>High performance, no dependencies.</li>
+                <li>High performance, no dependencies, embeddable.</li>
             </ul>
 
             <div>
@@ -481,7 +445,7 @@ Small Device Styles
                 <h3>
                     <a name="examples" class="anchor"><span class="octicon octicon-link"></span></a>Examples</h3>
 
-                <b>Each box is an isolated data&#39;s space (Transaction-Based)</b><br />
+                <h5>Each box is an isolated data&#39;s space (Transaction-Based)</h5>
                 <div>
                     <pre>  <span>using</span> (<span>var</span> box = database.Cube())
   {                            
@@ -489,9 +453,16 @@ Small Device Styles
      <span>var</span> result = box.Commit();
   }
 </pre>
+                    <pre>
+  try( Box box = db.cube() ){
+     box.insert( ... );
+     CommitResult r = box.commit();
+  }
+                    </pre>
+
                 </div>
-                <br />
-                <b>Normal Object</b><br />
+
+                <h5>Normal Object</h5>
                 <div>
                     <pre> box.Bind(<span>&quot;Member&quot;</span>).Insert(
        <span>new</span> Member() {  
@@ -502,46 +473,70 @@ Small Device Styles
         }
       );
 </pre>
+                    <pre>
+  Member m = new Member();
+  m.ID = box.newId(Member.IncTableID, 1);
+  m.setName("Andy");
+  m.setTags(new Object[] { "Nice", "Strong" });
+  box.insert("Table", m);
+                    </pre>
                 </div>
-                <br />
-                <b>Dynamic Object (document database)</b><br />
+
+                <h5>Dynamic Object (document database)</h5>
                 <div>
-                    <pre>game[<span>&quot;GameType&quot;</span>] = <span>&quot;ACT&quot;</span>;
-box.Bind(<span>&quot;Product&quot;</span>).Insert( game);
+                    <pre>  game[<span>&quot;GameType&quot;</span>] = <span>&quot;ACT&quot;</span>;
+  box.Bind(<span>&quot;Product&quot;</span>).Insert( game);
 </pre>
+                    <pre>
+  game.put("GameType", "ACT");
+  box.insert("Table", game);
+                    </pre>
                 </div>
-                <br />
-                <b>Key-Value Style Query</b><br />
+
+                <h5>Key-Value Style Query</h5>
                 <div>
-                    <pre>box.Bind(<span>&quot;Table&quot;</span>, 2L).Select&lt;AClass&gt;();
- <span>//Composite Key</span>
-box.Bind(<span>&quot;Table2&quot;</span>, 99, <span>&quot;ABC&quot;</span>).Select&lt;BClass&gt;();
+                    <pre>  box.Bind(<span>&quot;Table&quot;</span>, 2L).Select&lt;AClass&gt;();
+ <span>  //Composite Key</span>
+  box.Bind(<span>&quot;Table2&quot;</span>, 99, <span>&quot;ABC&quot;</span>).Select&lt;BClass&gt;();
 </pre>
+                    <pre>
+  box.bind("Table", ID).select( Member.class );
+  //Composite-Key Supported
+  box.bind("Table2",8, "MyID").select(Product.class);
+                    </pre>
                 </div>
-                <br />
-                <b>SQL like</b>
-                <br />
+
+                <h5>SQL like</h5>
+
                 <div>
-                    <pre><span>// from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10</span>
-box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>, <span>&quot;MyName&quot;</span>));
+                    <pre><span>  // from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10</span>
+  box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>, <span>&quot;MyName&quot;</span>));
 </pre>
+                    <pre>
+  //from [table] where [condition] 
+  //                    order by [field1] desc,[field2] limit [0,10]
+  //[Condition:] == != < <= > >= & | ( )
+  //[IFunction:] =[F1,F2,F3]
+  box.select( Member.class, "from Member where Name==?", "MyName" );
+                    </pre>
                 </div>
-                <br />
-                <b>Custom QueryFunction</b><br />
+
+                <h5>Custom QueryFunction</h5>
                 <div>
                     <pre>box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
 </pre>
                 </div>
-                <br />
-                <b>Compatible with LINQ</b><br />
+
+                <h5>Compatible with LINQ</h5>
                 <div>
                     <pre><span>from</span> o <span>in</span> box.Select&lt;Class&gt;(<span>&quot;from Class&quot;</span>)
 <span>where</span> o.Text.Contains(text)
 <span>select</span> o;
 </pre>
                 </div>
-                <br />
-                <b>Update Increment</b><br />
+
+                <h5>Update Increment</h5>
+
                 <table>
                     <tr>
                         <th></th>
@@ -551,22 +546,23 @@ box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>
                         <th>Value From </th>
                     </tr>
                     <tr>
-                        <td>AutoIncrement </td>
-                        <td>primary key </td>
-                        <td>insert </td>
-                        <td>number </td>
-                        <td>Table Max(ID)+1 </td>
+                        <td>AutoIncrement</td>
+                        <td>primary key</td>
+                        <td>insert</td>
+                        <td>number</td>
+                        <td>Table Max(ID)+1</td>
                     </tr>
                     <tr>
-                        <td><i>UpdateIncrement</i> </td>
-                        <td>non-primary key </td>
-                        <td>insert/update </td>
-                        <td>long </td>
-                        <td>Database NewId( byte.MaxValue, 1 ) </td>
+                        <td><i>UpdateIncrement</i></td>
+                        <td>non-primary key</td>
+                        <td>insert/update</td>
+                        <td>long</td>
+                        <td>Database NewId(MaxPos, 1)</td>
                     </tr>
                 </table>
-                <br />
-                <b>Selecting Tracer</b><br />
+
+                <h5>Selecting Tracer</h5>
+
                 <table>
                     <tr>
                         <th></th>
@@ -584,19 +580,274 @@ box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>
                         <td>read/write different records </td>
                     </tr>
                 </table>
+
+
+                <h5>Supported Types</h5>
+                <table style="margin: 0px; padding: 0px; width: 90%">
+                    <tr>
+                        <th>.NET </th>
+                        <th>JAVA </th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ bool
+ char
+ byte
+ sbyte
+ short 
+ ushort
+ int
+ uint
+ long
+ ulong              
+ float
+ double        
+ decimal
+ DateTime
+ Guid
+         
+ bool? 
+ char? 
+ byte? 
+ sbyte? 
+ short?
+ ushort? 
+ int? 
+ uint? 
+ long? 
+ ulong?      
+ float? 
+ double? 
+ decimal?
+ DateTime?
+ Guid? 
+ string 
+       
+ //non-indexable
+ MemoryStream STREAM ;
+ Dictionary&lt;string, object&gt;
+ bool[] 
+ char[] 
+ byte[]
+ sbyte[] 
+ short[]
+ ushort[] 
+ int[] 
+ uint[] 
+ long[]
+ ulong[]
+ float[]
+ double[] 
+ decimal[] 
+ DateTime[] 
+ Guid[]
+             </pre>
+                        </td>
+
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ boolean 
+ Boolean
+ byte 
+ Byte
+ char 
+ Character
+ short 
+ Short
+ int 
+ Integer
+ long 
+ Long
+ float
+ Float
+ double
+ Double
+ UUID
+ Date
+ //dynamic length @BoxLength(len)
+ BigDecimal
+ BigInteger
+ String
+ 
+ //Non-Indexable
+ byte[]
+ HashMap<String,Object>
+ Object[]
+                            </pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h5>IO</h5>
+                <table style="margin: 0px; padding: 0px; width: 90%">
+                    <tr>
+                        <th>.NET </th>
+                        <th>JAVA </th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ class BoxFileStreamConfig
+ class BoxIsolatedStorageFileStreamConfig
+ class BoxMemoryStreamConfig
+ class ReadonlyResourceStreamConfig
+                                </pre>
+                        </td>
+
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ class BoxFileStreamConfig 
+ class BoxMemoryStreamConfig
+                                
+                                 
+                                </pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h5>Database Path</h5>
+
+                WebSite
+                <pre>
+BoxFileStreamConfig.RootPath =
+    HttpContext.Current.Server.MapPath("~/App_Data/");
+                      </pre>
+                Xamarin
+                <pre>
+BoxFileStreamConfig.RootPath =
+   System.Environment.GetFolderPath( 
+                   System.Environment.SpecialFolder.Personal ) + "/";
+                          </pre>
+                'Link all assemblies' will strip out some codes that reflecting needs,
                 <br />
-                <b>Replication Master-Slave , Master-Master</b><br />
+                'Link SDK assemblies only' is safer.<br />
+                Windows + VS
+                <br />
+                if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
+                <br />
+                JSP WebApplication
+                <pre>
+import iBoxDB.LocalServer.*;
+import iBoxDB.LocalServer.IO.*;
+import java.io.File; 
+@WebListener()
+public class StartListener implements ServletContextListener {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+      String path = sce.getServletContext().getRealPath("/") 
+                   + "DB" + File.separatorChar;
+      BoxFileStreamConfig.RootPath = path;
+      File f = new File(BoxFileStreamConfig.RootPath );
+      if (!f.exists()) {
+         f.mkdir();
+      }
+      System.out.println("DBPath=" + f.getPath());
+    }
+}
+               </pre>
+
+                <h5>Query</h5>
+                <pre>
+//query
+box.Select("from Member");
+//query, load to memory first, startwith '*'
+box.Select("*from Member");
+//query, selecting tracer, startwith '!'
+box.Select("!from Member")
+                </pre>
+
+                <h5>Getting Started</h5>
+                <pre>
+ var server = new DB(1, "", IsWP);
+ server.EnsureTable&lt;Record&gt;("Table1", "ID");
+ var db = server.Open();
+ //insert
+ db.Insert("Table1", new Record { ID = 1, Name = "Andy" });
+ //select
+ var o1 = db.SelectKey&lt;Record&gt;("Table1", 1);
+ //update
+ o1.Name = "Kelly";
+ db.Update("Table1", o1);
+                    </pre>
+                <pre>
+ DB db = new DB(1, "");
+ db.ensureTable(Record.class, "Table", "ID");
+ AutoBox box = db.open();
+ //insert
+ box.insert("Table", new Record(1, "Andy"));
+ //select
+ Record o1 = box.selectKey(Record.class, "Table", 1);
+ //update
+ o1.Name = "Kelly";
+ box.update("Table", o1);
+                </pre>
+
+                <h5>Benchmark with MongoDB</h5>
+                iBoxDB.Java 32bit System Low Memory
+                <br />
+                iBoxDB.java v1.4.1 
+  mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
+                <pre>
+Results:
+threadCount=100000 , batchCount=10
+MongoDB(Default)
+Database Transaction Test: None
+MongoDB Insert&Counting:1000000  AVG:10521 objects/s
+
+iBoxDB(File Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:17981 objects/s
+iBoxDB Update:1000000  AVG:12397 objects/s 
+iBoxDB Delete:1000000  AVG:22869 objects/s
+
+iBoxDB(MemoryMappedFile Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:38458 objects/s
+iBoxDB Update:1000000  AVG:20200 objects/s 
+iBoxDB Delete:1000000  AVG:33342 objects/s
+
+iBoxDB(InMemory Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:39132 objects/s
+iBoxDB Update:1000000  AVG:20226 objects/s 
+iBoxDB Delete:1000000  AVG:33658 objects/s
+                </pre>
+                <br />
+                iBoxDB.NET 64bit System<br />
+                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34 
+                <pre>
+MongoDB(Default)
+Database Transaction Test: None
+MongoDB Insert&Counting:1,000,000 AVG: 32,702 objects/s
+
+iBoxDB(File Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 33,368 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 16,939 objects/s 
+iBoxDB Delete:1,000,000 AVG: 22,504 objects/s
+
+iBoxDB(MemoryMappedFile Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 42,236 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 17,765 objects/s 
+iBoxDB Delete:1,000,000 AVG: 23,147 objects/s
+
+iBoxDB(InMemory Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 47,382 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 26,806 objects/s 
+iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
+                </pre>
+
+                <br />
+                <h5>Replication Master-Slave , Master-Master</h5>
                 <img src="images/p1.png" /><br />
-                <br />
+
                 <img src="images/p2.png" /><br />
             </div>
-
-            <h5>
-                <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank">Download Dual Core Application Database 
-                <br />
-                    FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js. 
-                </a>
-            </h5>
 
 
         </section>
@@ -605,14 +856,17 @@ box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
         <footer class="inner">
-            <p class="copyright">iBoxDB An Application Database </p>
+            <p class="copyright">
+                Dual Core Application Database 
+                <br />
+                FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows   
+            </p>
+            <p><a href="mailto:iboxdb@hotmail.com">E-Mail</a>&nbsp; Database Version: iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</p>
         </footer>
     </div>
 
     <!-- changed -->
     <div style="z-index: 2147483645; visibility: hidden; display: none;">
-      
-
         iBoxDB,Windows,Linux,OS X,Windows Phone,Android,iPhone,
         Java,.NET,Mono,ASP.NET,JSP,WEB,HTML5,JavaScript,CSharp,
         X86,ARM,
@@ -620,6 +874,7 @@ box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>
         Database,NoSQL Database,Application Database,Embedded Database,Document Database,Object Database,Mobile Database,
         SQL,Agile Development,Update Increment,Selecting Tracer,
 
+        <a href="http://iboxdb.github.io/forjava/">backup address</a>
     </div>
 
 

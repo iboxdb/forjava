@@ -85,7 +85,7 @@ Custom DatabaseFunction use java
     
 Replication Master-Slave , Master-Master
 
-![](http://download-codeplex.sec.s-msft.com/Download?ProjectName=iboxdb&DownloadId=581898)
+
 
 ![](https://raw.github.com/iboxdb/forjava/master/images/show.png)
 

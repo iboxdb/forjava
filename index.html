@@ -416,9 +416,11 @@ Small Device Styles
 
             <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
 
-            <p> Dual Core Application Database 
+            <p>
+                Dual Core Application Database 
                 <br />
-                FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows </p>
+                FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows
+            </p>
             <h3>
                 <a name="features" class="anchor" href="http://www.iboxdb.com/#features"><span class="octicon octicon-link"></span></a>Features</h3>
 
@@ -440,6 +442,8 @@ Small Device Styles
                 <li>NoSQL ORM</li>
                 <li>ResultSet compatible with LINQ</li>
                 <li>High performance, no dependencies, embeddable.</li>
+                <li>Update Increment</li>
+                <li>Selecting Tracer</li>
             </ul>
 
             <div>
@@ -556,7 +560,7 @@ Small Device Styles
                         <td>Table Max(ID)+1</td>
                     </tr>
                     <tr>
-                        <td><i>UpdateIncrement</i></td>
+                        <td style="font-weight: bold">UpdateIncrement</td>
                         <td>non-primary key</td>
                         <td>insert/update</td>
                         <td>long</td>
@@ -578,7 +582,7 @@ Small Device Styles
                         <td>read/write same record </td>
                     </tr>
                     <tr>
-                        <td><i>Tracer</i> </td>
+                        <td style="font-weight: bold">Tracer</td>
                         <td>non-blocked </td>
                         <td>read/write different records </td>
                     </tr>
@@ -718,6 +722,11 @@ Small Device Styles
 BoxFileStreamConfig.RootPath =
     HttpContext.Current.Server.MapPath("~/App_Data/");
                       </pre>
+                Unity3D
+                <pre>
+ DB.Root(Application.persistentDataPath);
+                </pre>
+
                 Xamarin
                 <pre>
 BoxFileStreamConfig.RootPath =
@@ -845,11 +854,15 @@ iBoxDB Select&Update:1,000,000 AVG: 26,806 objects/s
 iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
                 </pre>
 
-                <br />
+
                 <h5>Replication Master-Slave , Master-Master</h5>
                 <img src="images/p1.png" /><br />
 
-                <img src="images/p2.png" /><br />
+                <img src="images/p2.png" />
+
+                <h5>License</h5>
+                FreeSoftware Redistributable <br />
+                The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
             </div>
 
 
@@ -864,7 +877,7 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
                 <br />
                 FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows   
             </p>
-            <p><a href="mailto:iboxdb@hotmail.com">E-Mail</a>&nbsp; Database Version: iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</p>
+            <p><a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; Database Version: iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</p>
         </footer>
     </div>
 

@@ -5,88 +5,889 @@
     <meta name="keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Application Database,SQL,Agile Development,Mono,Java"/>
     <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database for Android Windows Phone Xamarin Unity3D Linux Java NET">
     <title>NoSQL Application Database Resources</title>
+
+    <style type="text/css">
+        /*******************************************************************************
+MeyerWeb Reset
+*******************************************************************************/
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /*******************************************************************************
+Theme Styles
+*******************************************************************************/
+
+        body {
+            box-sizing: border-box;
+            color: #373737;
+            background: #212121;
+            font-size: 16px;
+            font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 10px 0;
+            font-weight: 700;
+            color: #222222;
+            font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+            letter-spacing: -1px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        h2 {
+            padding-bottom: 10px;
+            font-size: 32px; 
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        h4 {
+            font-size: 21px;
+        }
+
+        h5 {
+            font-size: 18px;
+        }
+
+        h6 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px 0 15px 0;
+        }
+
+        footer p {
+            color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007edf;
+            text-shadow: none;
+            transition: color 0.5s ease;
+            transition: text-shadow 0.5s ease;
+            -webkit-transition: color 0.5s ease;
+            -webkit-transition: text-shadow 0.5s ease;
+            -moz-transition: color 0.5s ease;
+            -moz-transition: text-shadow 0.5s ease;
+            -o-transition: color 0.5s ease;
+            -o-transition: text-shadow 0.5s ease;
+            -ms-transition: color 0.5s ease;
+            -ms-transition: text-shadow 0.5s ease;
+        }
+
+            a:hover, a:focus {
+                text-decoration: underline;
+            }
+
+        footer a {
+            color: #F2F2F2;
+            text-decoration: underline;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        img {
+            position: relative;
+            margin: 0 auto;
+            max-width: 739px;
+            padding: 5px;
+            margin: 10px 0 10px 0;
+            border: 1px solid #ebebeb;
+            box-shadow: 0 0 5px #ebebeb;
+            -webkit-box-shadow: 0 0 5px #ebebeb;
+            -moz-box-shadow: 0 0 5px #ebebeb;
+            -o-box-shadow: 0 0 5px #ebebeb;
+            -ms-box-shadow: 0 0 5px #ebebeb;
+        }
+
+        p img {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+            text-align: center;
+            border: none;
+        }
+
+        pre, code {
+            width: 100%;
+            color: #222;
+            background-color: #fff;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 14px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+        }
+
+        pre {
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            overflow: auto;
+        }
+
+        code {
+            padding: 3px;
+            margin: 0 3px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+
+        pre code {
+            display: block;
+            box-shadow: none;
+        }
+
+        blockquote {
+            color: #666;
+            margin-bottom: 20px;
+            padding: 0 0 0 20px;
+            border-left: 3px solid #bbb;
+        }
+
+
+        ul, ol, dl {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: inside;
+            padding-left: 20px;
+        }
+
+        ol {
+            list-style: decimal inside;
+            padding-left: 20px;
+        }
+
+        dl dt {
+            font-weight: bold;
+        }
+
+        dl dd {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        dl p {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        hr {
+            height: 1px;
+            margin-bottom: 5px;
+            border: none; 
+        }
+
+        table {
+            border: 1px solid #373737;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        th {
+            font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 10px;
+            background: #373737;
+            color: #fff;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #373737;
+        }
+
+        form {
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        /*******************************************************************************
+Full-Width Styles
+*******************************************************************************/
+
+        .outer {
+            width: 100%;
+        }
+
+        .inner {
+            position: relative;
+            max-width: 640px;
+            padding: 20px 10px;
+            margin: 0 auto;
+        }
+
+
+        #header_wrap {
+            background: #212121;
+            background: -moz-linear-gradient(top, #373737, #212121);
+            background: -webkit-linear-gradient(top, #373737, #212121);
+            background: -ms-linear-gradient(top, #373737, #212121);
+            background: -o-linear-gradient(top, #373737, #212121);
+            background: linear-gradient(top, #373737, #212121);
+        }
+
+            #header_wrap .inner {
+                padding: 50px 10px 30px 10px;
+            }
+
+        #project_title {
+            margin: 0;
+            color: #fff;
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #project_tagline {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+            background: none;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #downloads {
+            position: absolute;
+            width: 200px;
+            z-index: 10;
+            bottom: -50px;
+            right: 0;
+            height: 100px;
+            background-image: url( "images/ico.png");
+        }
+
+
+
+        #main_content_wrap {
+            background: #f2f2f2;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
+        }
+
+        #main_content {
+            padding-top: 40px;
+        }
+
+        #footer_wrap {
+            background: #212121;
+        }
+
+
+
+        /*******************************************************************************
+Small Device Styles
+*******************************************************************************/
+
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            #downloads {
+               
+            }
+
+            .inner {
+                min-width: 320px;
+                max-width: 480px;
+            }
+
+            #project_title {
+                font-size: 32px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 21px;
+            }
+
+            h4 {
+                font-size: 18px;
+            }
+
+            h5 {
+                font-size: 14px;
+            }
+
+            h6 {
+                font-size: 12px;
+            }
+
+            code, pre {
+                min-width: 320px;
+                max-width: 480px;
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div>fast embedded transactional table-style document nosql application database, dual core java/.net. 
-zero configuration, no dependencies,copy and run,save and load objects easily,
-traditional table with unstructured data.
-</div>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
+        <header class="inner">
+            <!--  
+     <a id="forkme_banner" href="https://github.com/iboxdb/nosql-database">View on GitHub</a> 
+-->
 
-<a href="https://github.com/iboxdb/forjava">iBoxDB.JAVA</a><br>
-<a href="https://iboxdb.codeplex.com">iBoxDB.NET</a><br>
-<hr />
+            <h1 id="project_title">iBoxDB</h1>
+            <h2 id="project_tagline">Fast Transactional Table-Style Document NoSQL Application Database</h2>
+            <div id="downloads">
+                <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
+                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
+            </div>
+        </header>
+    </div>
 
-<a href="http://iboxdb.github.io/nosql-database/">NOSQL Database</a><br>
-<a href="http://www.iboxdb.com/">Fast NET Java NOSQL Application Database</a><br>
-<a href="https://github.com/iboxdb/nosql-database">Java CSharp NOSQL Application Database</a><br>
-<a href="https://sourceforge.net/projects/application-database/">Fast NOSQL Application Database</a><br>
-<a href="https://sourceforge.net/projects/iboxdb/">iBoxDB NOSQL Database</a><br>
-<a href="http://www.nuget.org/packages/iBoxDB/">iBoxDB Fast NoSQL Application Database </a><br>
-<hr />
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+            <h3>
+                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description
 
-<a href="https://github.com/iboxdb/forjava/releases">iBoxDB.JAVA</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.7.1">iBoxDB.JAVA Fast NoSQL Application Database v1.7.1</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.7">iBoxDB.JAVA Fast NoSQL Application Database v1.7</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.6">iBoxDB.JAVA Fast NoSQL Application Database v1.6</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.5.1">iBoxDB.JAVA Fast NoSQL Application Database v1.5.1</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.5.0">iBoxDB Fast embeddable transactional table-style document nosql application database for java android. pure java, zero configuration, no dependencies v1.5</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.4.2">iBoxDB Fast embeddable transactional table-style document nosql database for java android. pure java, zero configuration, no dependencies v1.4.2</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.4.1">iBoxDB.JAVA Fast Embeddable Transactional Table-Style Document NoSQL Database v1.4.1</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.3.2">iBoxDB.java fast embeddable transactional document nosql database v1.3.2</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.3.1">iBoxDB.java fast embeddable transactional document nosql database v1.3.1</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.2">iBoxDB Lightweight NoSQL for Java Android v1.2</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.1">iBoxDB for Java Android v1.1</a><br>
-<a href="https://github.com/iboxdb/forjava/releases/tag/v1.0">iBoxDB for Java</a><br>
-<hr />
+            </h3>
 
-<a href="https://iboxdb.codeplex.com/releases/view/121576">iBoxDB.NET Fast Transactional NoSQL Database v2.0</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/121409">iBoxDB.NET Fast Transactional NoSQL Database v1.9.2</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/121045">iBoxDB.NET Fast NoSQL Application Database v1.9.1</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/120349">iBoxDB.NET Fast NoSQL Application Database v1.9</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/119503">iBoxDB.NET Fast NoSQL Application Database v1.8</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/118326">iBoxDB.NET Fast NoSQL Application Database v1.7.1</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/117509">iBoxDB.NET Fast Transactional NoSQL Database 1.7</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/116294">iBoxDB.NET Fast Transactional NoSQL Database 1.6.5</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/116206">iBoxDB.NET Fast Transactional NoSQL Database 1.6.3</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/115041">iBoxDB.NET Fast Transactional NoSQL Database 1.6.1</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/114373">iBoxDB.net fast transactional nosql database 1.5.4</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/113475">iBoxDB.net fast transactional nosql database 1.5.2</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/112858">iBoxDB.net fast transactional nosql database 1.5.1</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/111604">iBoxDB lightweight mobile noSQL database .net 2.0</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/111106">iBoxDB.net Lightweight Mobile NoSQL database1.5.0.1</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/110683">iBoxDB v1.5 csharp mobile NoSQL database</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/103977">iBoxDB csharp nosql database v1.4.2</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/103549">iBoxDB CSharp NoSQL Object Database v1.4</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/102883">iBoxDB CSharp NoSQL Object Database v1.3.2</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/100822">iBoxDB v1.3 Fast Transactional Object Database</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/99495">iBoxDB v1.2 Replicable NoSQL Embedded Database</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/96145">iBoxDB v1.1 NoSQL Embedded Multi-Style Database</a><br>
-<a href="https://iboxdb.codeplex.com/releases/view/90444">iBoxDB_V1.0.1 OODB NoSQL .NET4 WP Embedded</a><br>
-<hr />
+            <p>iBoxDB is a fast transactional table-style document NoSQL Application Database, easily process objects and documents,traditional table with unstructured data, zero configuration, pure Java/.NET database, no dependencies.</p>
 
+            <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
 
-<a href="http://www.nuget.org/packages/iBoxDB/1.9.2">
-iBoxDB Fast NoSQL Application Database NET Mono Windows Phone 1.9.2 for .net , mono, windows phone.</a><br>
-<a href="http://www.nuget.org/packages/iBoxDB/1.9.1">
-iBoxDB Fast NoSQL Application Database NET Mono Windows Phone 1.9.1 for .net , mono, windows phone.</a><br>
-<a href="http://www.nuget.org/packages/iBoxDB/1.9.0">
-iBoxDB Fast NoSQL Application Database NET Mono Windows Phone 1.9</a><br>
-<hr />
+            <p>
+                Dual Core Application Database 
+                <br />
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows
+            </p>
+            <h3>
+                <a name="features" class="anchor" href="http://www.iboxdb.com/#features"><span class="octicon octicon-link"></span></a>Features</h3>
+
+            <ul>
+                <li>CURD</li>
+                <li>Primary key</li>
+                <li>Unique and non-unique indexes.</li>
+                <li>Unique and non-unique composite indexes.</li>
+                <li>SQL-like query language</li>
+                <li>Transactions support</li>
+                <li>Concurrency control, thread safe</li>
+                <li>Memory management</li>
+                <li>Hot MasterSlave and MasterMaster replications</li>
+                <li>File and in-memory database supported</li>
+                <li>Automatically creating databases when it is needed</li>
+                <li>Zero configuration, copy and run, full of managed code</li>
+                <li>Dynamic columns</li>
+                <li>Different types with different indexes can be stored in same table</li>
+                <li>NoSQL ORM</li>
+                <li>ResultSet compatible with LINQ</li>
+                <li>High performance, no dependencies, embeddable.</li>
+                <li>Update Increment</li>
+                <li>Selecting Tracer</li>
+            </ul>
+
+            <div>
 
 
-<a href="http://www.iboxdb.com/Embeddable-NoSQL-SQL-Lightweight.html">Embeddable Lightweight NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Embeddable-NoSQL-SQL-log.html">Embeddable NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/ACID-Transaction-NoSQL-log.html">ACID NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Application-NoSQL-Database.html">NOSQL Application Database </a><br>
-<a href="http://www.iboxdb.com/Embedded-NoSQL-Database-ACID.html">NOSQL Fast Database </a><br>
-<a href="http://www.iboxdb.com/Embedded-Transaction-Database-ACID.html">NOSQL Transaction Database </a><br>
-<a href="http://www.iboxdb.com/Embedded-Android-Unity-Database.html">Android Unity NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Embedded-Xamarin-Unity-Database.html">Xamarin Unity NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Java-Embedded-Database.html">Java NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Fast-Embedded-Database.html">Fast NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Fast-Embedded-Transaction-Database.html">Fast Transaction NOSQL Database </a><br>
-<a href="http://www.iboxdb.com/Fast-Mono-Database.html">Fast Mono NOSQL Database </a><br>
+                <h3>
+                    <a name="examples" class="anchor"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+                <h5>Each box is an isolated data&#39;s space (Transaction-Based)</h5>
+                <div>
+                    <pre>  <span>using</span> (<span>var</span> box = database.Cube())
+  {                            
+     <span>//select, insert, update, delete ...</span>
+     <span>var</span> result = box.Commit();
+  }
+</pre>
+                    <pre>
+  try( Box box = db.cube() ){
+     box.insert( ... );
+     CommitResult r = box.commit();
+  }
+                    </pre>
+
+                </div>
+
+                <h5>Normal Object</h5>
+                <div>
+                    <pre> box.Bind(<span>&quot;Member&quot;</span>).Insert(
+       <span>new</span> Member() {  
+             ID=box.NewId( Member.IncTableID,1) ,
+             LoginName = <span>&quot;Andy&quot;</span>,
+             Password = Member.EncodePassowrd( <span>&quot;123&quot;</span> ),
+             Tags = <span>new</span> <span>string</span>[]{ <span>&quot;Nice&quot;</span> , <span>&quot;Strong&quot;</span> }
+        }
+      );
+</pre>
+                    <pre>
+  Member m = new Member();
+  m.ID = box.newId(Member.IncTableID, 1);
+  m.setName("Andy");
+  m.setTags(new Object[] { "Nice", "Strong" });
+  box.insert("Table", m);
+                    </pre>
+                </div>
+
+                <h5>Dynamic Object (document database)</h5>
+                <div>
+                    <pre>  game[<span>&quot;GameType&quot;</span>] = <span>&quot;ACT&quot;</span>;
+  box.Bind(<span>&quot;Product&quot;</span>).Insert( game);
+</pre>
+                    <pre>
+  game.put("GameType", "ACT");
+  box.insert("Table", game);
+                    </pre>
+                </div>
+
+                <h5>Key-Value Style Query</h5>
+                <div>
+                    <pre>  box.Bind(<span>&quot;Table&quot;</span>, 2L).Select&lt;AClass&gt;();
+ <span>  //Composite Key</span>
+  box.Bind(<span>&quot;Table2&quot;</span>, 99, <span>&quot;ABC&quot;</span>).Select&lt;BClass&gt;();
+</pre>
+                    <pre>
+  box.bind("Table", ID).select( Member.class );
+  //Composite-Key Supported
+  box.bind("Table2",8, "MyID").select(Product.class);
+                    </pre>
+                </div>
+
+                <h5>SQL like</h5>
+
+                <div>
+                    <pre><span>  // from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10</span>
+  box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>, <span>&quot;MyName&quot;</span>));
+</pre>
+                    <pre>
+  //from [table] where [condition] 
+  //                    order by [field1] desc,[field2] limit [0,10]
+  //[Condition:] == != < <= > >= & | ( )
+  //[IFunction:] =[F1,F2,F3]
+  box.select( Member.class, "from Member where Name==?", "MyName" );
+                    </pre>
+                </div>
+
+                <h5>Custom QueryFunction</h5>
+                <div>
+                    <pre>box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
+</pre>
+                </div>
+
+                <h5>Compatible with LINQ</h5>
+                <div>
+                    <pre><span>from</span> o <span>in</span> box.Select&lt;Class&gt;(<span>&quot;from Class&quot;</span>)
+<span>where</span> o.Text.Contains(text)
+<span>select</span> o;
+</pre>
+                </div>
+
+                <h5>Update Increment</h5>
+
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Apply To </th>
+                        <th>Trigger </th>
+                        <th>Type </th>
+                        <th>Value From </th>
+                    </tr>
+                    <tr>
+                        <td>AutoIncrement</td>
+                        <td>primary key</td>
+                        <td>insert</td>
+                        <td>number</td>
+                        <td>Table Max(ID)+1</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">UpdateIncrement</td>
+                        <td>non-primary key</td>
+                        <td>insert/update</td>
+                        <td>long</td>
+                        <td>Database NewId(MaxPos, 1)</td>
+                    </tr>
+                </table>
+
+                <h5>Selecting Tracer</h5>
+
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Thread </th>
+                        <th>Usage </th>
+                    </tr>
+                    <tr>
+                        <td>Locker </td>
+                        <td>blocked </td>
+                        <td>read/write same record </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">Tracer</td>
+                        <td>non-blocked </td>
+                        <td>read/write different records </td>
+                    </tr>
+                </table>
+
+
+                <h5>Supported Types</h5>
+                <table style="margin: 0px; padding: 0px; width: 90%">
+                    <tr>
+                        <th>.NET </th>
+                        <th>JAVA </th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ bool
+ char
+ byte
+ sbyte
+ short 
+ ushort
+ int
+ uint
+ long
+ ulong              
+ float
+ double        
+ decimal
+ DateTime
+ Guid
+         
+ bool? 
+ char? 
+ byte? 
+ sbyte? 
+ short?
+ ushort? 
+ int? 
+ uint? 
+ long? 
+ ulong?      
+ float? 
+ double? 
+ decimal?
+ DateTime?
+ Guid? 
+ string 
+       
+ //non-indexable
+ MemoryStream STREAM ;
+ Dictionary&lt;string, object&gt;
+ bool[] 
+ char[] 
+ byte[]
+ sbyte[] 
+ short[]
+ ushort[] 
+ int[] 
+ uint[] 
+ long[]
+ ulong[]
+ float[]
+ double[] 
+ decimal[] 
+ DateTime[] 
+ Guid[]
+             </pre>
+                        </td>
+
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ boolean 
+ Boolean
+ byte 
+ Byte
+ char 
+ Character
+ short 
+ Short
+ int 
+ Integer
+ long 
+ Long
+ float
+ Float
+ double
+ Double
+ UUID
+ Date
+ //dynamic length @BoxLength(len)
+ BigDecimal
+ BigInteger
+ String
  
+ //Non-Indexable
+ byte[]
+ HashMap<String,Object>
+ Object[]
+                            </pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h5>IO</h5>
+                <table style="margin: 0px; padding: 0px; width: 90%">
+                    <tr>
+                        <th>.NET </th>
+                        <th>JAVA </th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ class BoxFileStreamConfig
+ class BoxIsolatedStorageFileStreamConfig
+ class BoxMemoryStreamConfig
+ class ReadonlyResourceStreamConfig
+                                </pre>
+                        </td>
+
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+ class BoxFileStreamConfig 
+ class BoxMemoryStreamConfig
+                                
+                                 
+                                </pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h5>Database Path</h5>
+
+                WebSite
+                <pre>
+BoxFileStreamConfig.RootPath =
+    HttpContext.Current.Server.MapPath("~/App_Data/");
+                      </pre>
+                Unity3D
+                <pre>
+ DB.Root(Application.persistentDataPath);
+                </pre>
+
+                Xamarin
+                <pre>
+BoxFileStreamConfig.RootPath =
+   System.Environment.GetFolderPath( 
+                   System.Environment.SpecialFolder.Personal ) + "/";
+                          </pre>
+                'Link all assemblies' will strip out some codes that reflecting needs,
+                <br />
+                'Link SDK assemblies only' is safer.<br />
+                Windows + VS
+                <br />
+                if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
+                <br />
+                JSP WebApplication
+                <pre>
+import iBoxDB.LocalServer.*;
+import iBoxDB.LocalServer.IO.*;
+import java.io.File; 
+@WebListener()
+public class StartListener implements ServletContextListener {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+      String path = sce.getServletContext().getRealPath("/") 
+                   + "DB" + File.separatorChar;
+      BoxFileStreamConfig.RootPath = path;
+      File f = new File(BoxFileStreamConfig.RootPath );
+      if (!f.exists()) {
+         f.mkdir();
+      }
+      System.out.println("DBPath=" + f.getPath());
+    }
+}
+               </pre>
+
+                <h5>Query</h5>
+                <pre>
+//query
+box.Select("from Member");
+//query, load to memory first, startwith '*'
+box.Select("*from Member");
+//query, selecting tracer, startwith '!'
+box.Select("!from Member")
+                </pre>
+
+                <h5>Getting Started</h5>
+                <pre>
+ var server = new DB(1, "", IsWP);
+ server.EnsureTable&lt;Record&gt;("Table1", "ID");
+ var db = server.Open();
+ //insert
+ db.Insert("Table1", new Record { ID = 1, Name = "Andy" });
+ //select
+ var o1 = db.SelectKey&lt;Record&gt;("Table1", 1);
+ //update
+ o1.Name = "Kelly";
+ db.Update("Table1", o1);
+                    </pre>
+                <pre>
+ DB db = new DB(1, "");
+ db.ensureTable(Record.class, "Table", "ID");
+ AutoBox box = db.open();
+ //insert
+ box.insert("Table", new Record(1, "Andy"));
+ //select
+ Record o1 = box.selectKey(Record.class, "Table", 1);
+ //update
+ o1.Name = "Kelly";
+ box.update("Table", o1);
+                </pre>
+
+                <h5>Benchmark with MongoDB</h5>
+                iBoxDB.Java 32bit System Low Memory
+                <br />
+                iBoxDB.java v1.4.1 
+  mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
+                <pre>
+Results:
+threadCount=100000 , batchCount=10
+MongoDB(Default)
+Database Transaction Test: None
+MongoDB Insert&Counting:1000000  AVG:10521 objects/s
+
+iBoxDB(File Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:17981 objects/s
+iBoxDB Update:1000000  AVG:12397 objects/s 
+iBoxDB Delete:1000000  AVG:22869 objects/s
+
+iBoxDB(MemoryMappedFile Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:38458 objects/s
+iBoxDB Update:1000000  AVG:20200 objects/s 
+iBoxDB Delete:1000000  AVG:33342 objects/s
+
+iBoxDB(InMemory Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1000000  AVG:39132 objects/s
+iBoxDB Update:1000000  AVG:20226 objects/s 
+iBoxDB Delete:1000000  AVG:33658 objects/s
+                </pre>
+                <br />
+                iBoxDB.NET 64bit System<br />
+                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34 
+                <pre>
+MongoDB(Default)
+Database Transaction Test: None
+MongoDB Insert&Counting:1,000,000 AVG: 32,702 objects/s
+
+iBoxDB(File Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 33,368 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 16,939 objects/s 
+iBoxDB Delete:1,000,000 AVG: 22,504 objects/s
+
+iBoxDB(MemoryMappedFile Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 42,236 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 17,765 objects/s 
+iBoxDB Delete:1,000,000 AVG: 23,147 objects/s
+
+iBoxDB(InMemory Mode)
+Database Transaction Test: Succeeded
+iBoxDB Insert&Counting:1,000,000 AVG: 47,382 objects/s
+iBoxDB Select&Update:1,000,000 AVG: 26,806 objects/s 
+iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
+                </pre>
+
+
+                <h5>Replication Master-Slave , Master-Master</h5>
+                <img src="images/p1.png" /><br />
+
+                <img src="images/p2.png" />
+
+                <h5>License</h5>
+                FreeSoftware Redistributable <br />
+                The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
+            </div>
+
+
+        </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
+        <footer class="inner">
+            <p class="copyright">
+                Dual Core Application Database 
+                <br />
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows   
+            </p>
+            <p><a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; Database Version: iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</p>
+        </footer>
+    </div>
+
+    <!-- changed -->
+    <div style="z-index: 2147483645; visibility: hidden; display: none;">
+        iBoxDB,Windows,Linux,OS X,Windows Phone,Android,iPhone,
+        Java,.NET,Mono,ASP.NET,JSP,WEB,HTML5,JavaScript,CSharp,
+        X86,ARM,
+        Xamarin,Unity3D,
+        Database,NoSQL Database,Application Database,Embedded Database,Document Database,Object Database,Mobile Database,
+        SQL,Agile Development,Update Increment,Selecting Tracer,
+
+        <a href="http://iboxdb.github.io/forjava/">backup address</a>
+    </div>
+
+
 </body>
 </html>
+

@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Document,Application Database,SQL,Agile Development,Mono,Java,Update Increment,Embedded">
+    <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database DualCore">
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
+
+    <title>iBoxDB Fast Transactional NoSQL Application Database</title>
+
+
+    <style type="text/css">
+        /*******************************************************************************
+MeyerWeb Reset
+*******************************************************************************/
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /*******************************************************************************
+Theme Styles
+*******************************************************************************/
+
+        body {
+            box-sizing: border-box;
+            color: #373737;
+            background: #212121;
+            font-size: 16px;
+            font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 10px 0;
+            font-weight: 700;
+            color: #222222;
+            font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+            letter-spacing: -1px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        h2 {
+            padding-bottom: 10px;
+            font-size: 32px;
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        h4 {
+            font-size: 21px;
+        }
+
+        h5 {
+            font-size: 18px;
+        }
+
+        h6 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px 0 15px 0;
+        }
+
+        footer p {
+            color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007edf;
+            text-shadow: none;
+            transition: color 0.5s ease;
+            transition: text-shadow 0.5s ease;
+            -webkit-transition: color 0.5s ease;
+            -webkit-transition: text-shadow 0.5s ease;
+            -moz-transition: color 0.5s ease;
+            -moz-transition: text-shadow 0.5s ease;
+            -o-transition: color 0.5s ease;
+            -o-transition: text-shadow 0.5s ease;
+            -ms-transition: color 0.5s ease;
+            -ms-transition: text-shadow 0.5s ease;
+        }
+
+            a:hover, a:focus {
+                text-decoration: underline;
+            }
+
+        footer a {
+            color: #F2F2F2;
+            text-decoration: underline;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        img {
+            position: relative;
+            margin: 0 auto;
+            max-width: 739px;
+            padding: 5px;
+            margin: 10px 0 10px 0;
+            border: 1px solid #ebebeb;
+            box-shadow: 0 0 5px #ebebeb;
+            -webkit-box-shadow: 0 0 5px #ebebeb;
+            -moz-box-shadow: 0 0 5px #ebebeb;
+            -o-box-shadow: 0 0 5px #ebebeb;
+            -ms-box-shadow: 0 0 5px #ebebeb;
+        }
+
+        p img {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            vertical-align: middle;
+            text-align: center;
+            border: none;
+        }
+
+        pre, code {
+            width: 100%;
+            color: #222;
+            background-color: #fff;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 14px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+        }
+
+        pre {
+            width: 100%;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            overflow: auto;
+        }
+
+        code {
+            padding: 3px;
+            margin: 0 3px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+
+        pre code {
+            display: block;
+            box-shadow: none;
+        }
+
+        blockquote {
+            color: #666;
+            margin-bottom: 20px;
+            padding: 0 0 0 20px;
+            border-left: 3px solid #bbb;
+        }
+
+
+        ul, ol, dl {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: inside;
+            padding-left: 20px;
+        }
+
+        ol {
+            list-style: decimal inside;
+            padding-left: 20px;
+        }
+
+        dl dt {
+            font-weight: bold;
+        }
+
+        dl dd {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        dl p {
+            padding-left: 20px;
+            font-style: italic;
+        }
+
+        hr {
+            height: 1px;
+            margin-bottom: 5px;
+            border: none;
+        }
+
+        table {
+            border: 1px solid #373737;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        th {
+            font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 10px;
+            background: #373737;
+            color: #fff;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #373737;
+        }
+
+        form {
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        /*******************************************************************************
+Full-Width Styles
+*******************************************************************************/
+
+        .outer {
+            width: 100%;
+        }
+
+        .inner {
+            position: relative;
+            max-width: 640px;
+            padding: 20px 10px;
+            margin: 0 auto;
+        }
+
+
+        #header_wrap {
+            background: #212121;
+            background: -moz-linear-gradient(top, #373737, #212121);
+            background: -webkit-linear-gradient(top, #373737, #212121);
+            background: -ms-linear-gradient(top, #373737, #212121);
+            background: -o-linear-gradient(top, #373737, #212121);
+            background: linear-gradient(top, #373737, #212121);
+        }
+
+            #header_wrap .inner {
+                padding: 50px 10px 30px 10px;
+            }
+
+        #project_title {
+            margin: 0;
+            color: #fff;
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #project_tagline {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+            background: none;
+            text-shadow: #111 0px 0px 10px;
+        }
+
+        #downloads {
+            position: absolute;
+            width: 200px;
+            z-index: 10;
+            bottom: -50px;
+            right: 0;
+            height: 100px;
+            background-image: url( "images/ico.png");
+        }
+
+
+
+        #main_content_wrap {
+            background: #f2f2f2;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
+        }
+
+        #main_content {
+            padding-top: 40px;
+        }
+
+        #footer_wrap {
+            background: #212121;
+        }
+
+
+
+        /*******************************************************************************
+Small Device Styles
+*******************************************************************************/
+
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            #downloads {
+            }
+
+            .inner {
+                min-width: 320px;
+                max-width: 480px;
+            }
+
+            #project_title {
+                font-size: 32px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 21px;
+            }
+
+            h4 {
+                font-size: 18px;
+            }
+
+            h5 {
+                font-size: 14px;
+            }
+
+            h6 {
+                font-size: 12px;
+            }
+
+            code, pre {
+                min-width: 320px;
+                max-width: 480px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
+        <header class="inner">
+
+
+            <h1 id="project_title"><a href="index.html" style="color: #FFFFFF">iBoxDB</a> History</h1>
+            <h2 id="project_tagline">Fast Transactional Table-Style Document NoSQL Application Database</h2>
+            <div id="downloads">
+                <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
+                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
+            </div>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+        <section id="main_content" class="inner">
+            <h3>
+                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description
+
+            </h3>
+
+            <p>iBoxDB is a fast transactional table-style document NoSQL Application Database, easily process objects and documents,traditional table with unstructured data, zero configuration, pure Java/.NET database, no dependencies.</p>
+
+            <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
+
+            <p>
+                Dual Core Application Database 
+                <br />
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows
+            </p>
+
+            <h3>
+                <a name="features" class="anchor"><span class="octicon octicon-link"></span></a>iBoxDB.NET v2.1&nbsp;&nbsp; iBoxDB.Java v1.8</h3>
+            What's New
+            <br />
+            Removed AutoIncrement and AutoConvertType , use (long)newId() , (int)id(),  DB.Convert() manually. 
+            <br />
+            <a href="http://sourceforge.net/projects/application-database/files/iBoxDBv210_180.zip/download">Download</a>
+            <h3>
+                <a name="features" class="anchor"><span class="octicon octicon-link"></span></a>iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</h3>
+
+            <a href="http://sourceforge.net/projects/application-database/files/iBoxDBv20_171S.zip/download">Download</a>
+        </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
+        <footer class="inner">
+            <p class="copyright">
+                Dual Core Application Database 
+                <br />
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows   
+            </p>
+        </footer>
+    </div>
+
+    <!-- changed -->
+    <div style="z-index: 2147483645; visibility: hidden; display: none;">
+        iBoxDB,Windows,Linux,OS X,Windows Phone,Android,iPhone,
+        Java,.NET,Mono,ASP.NET,JSP,WEB,HTML5,JavaScript,CSharp,
+        X86,ARM,
+        Xamarin,Unity3D,
+        Database,NoSQL Database,Application Database,Embedded Database,Document Database,Object Database,Mobile Database,
+        SQL,Agile Development,Update Increment,Selecting Tracer,
+
+        <a href="http://iboxdb.github.io/forjava/">backup address</a>
+        <a href="logs.html">Logs</a>
+    </div>
+
+
+</body>
+</html>

@@ -16,7 +16,7 @@ public class MMapConfig extends BoxFileStreamConfig {
 	HashMap<String, MManager> map = new HashMap<String, MManager>();
 
 	public MMapConfig() {
-		this.StreamCount = 1;
+		this.ReadStreamCount = 1;
 	}
 
 	@Override
@@ -111,6 +111,18 @@ public class MMapConfig extends BoxFileStreamConfig {
 				bufs = null;
 			}
 
+			@Override
+            public void BeginWrite(long appID, int maxLen)
+            {
+
+            }
+
+			@Override
+            public void EndWrite()
+            {
+
+            }
+			
 			@Override
 			public void Flush() {
 			}

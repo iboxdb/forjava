@@ -7,15 +7,23 @@ import iBoxDB.LocalServer.IO.StreamAccess;
 // in-memory config
 public class NoIOConfig extends DatabaseConfig {
 
+	private final boolean isMaster;
+
 	public NoIOConfig() {
-		// depend on '-Xmx*m 
-		this(1024 * 1024 * 16);
+		this(true);
 	}
 
-	public NoIOConfig(int pageCount) {
+	public NoIOConfig(boolean _isMaster) {
+		// isMaster = address > 0;
+		// size depends on '-Xmx*m
+		this(1024 * 1024 * 16, _isMaster);
+	}
+
+	public NoIOConfig(int pageCount, boolean _isMaster) {
 		this.ReadStreamCount = 64;
 		this.CachePageCount = pageCount;
 		this.FileIncSize = Integer.MAX_VALUE - 10240;
+		this.isMaster = _isMaster;
 	}
 
 	@Override
@@ -28,7 +36,7 @@ public class NoIOConfig extends DatabaseConfig {
 		return false;
 	}
 
-	private static class BStream implements IBStream {
+	private class BStream implements IBStream {
 
 		@Override
 		public void BeginWrite(long arg0, int arg1) {
@@ -62,7 +70,10 @@ public class NoIOConfig extends DatabaseConfig {
 
 		@Override
 		public int Read(long arg0, byte[] arg1, int arg2, int arg3) {
-			// TODO Auto-generated method stub
+			if (isMaster) {
+				throw new RuntimeException("Over CachePageCount "
+						+ CachePageCount);
+			}
 			return 0;
 		}
 

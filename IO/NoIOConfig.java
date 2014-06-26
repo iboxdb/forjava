@@ -1,42 +1,35 @@
 package iBoxDB.XT.IO;
 
 import iBoxDB.LocalServer.DatabaseConfig;
+import iBoxDB.LocalServer.SwapType;
 import iBoxDB.LocalServer.IO.IBStream;
 import iBoxDB.LocalServer.IO.StreamAccess;
 
-// in-memory config
+// In-Memory Config 
 public class NoIOConfig extends DatabaseConfig {
 
-	private final boolean isMaster;
-
 	public NoIOConfig() {
-		this(true);
-	}
-
-	public NoIOConfig(boolean _isMaster) {
-		// isMaster = address > 0;
-		// size depends on '-Xmx*m
-		this(1024 * 1024 * 16, _isMaster);
-	}
-
-	public NoIOConfig(int pageCount, boolean _isMaster) {
 		this.ReadStreamCount = 64;
-		this.CachePageCount = pageCount;
-		this.FileIncSize = Integer.MAX_VALUE - 10240;
-		this.isMaster = _isMaster;
+		this.CachePageCount = Integer.MAX_VALUE;
+		this.FileIncSize = Integer.MAX_VALUE;
 	}
 
 	@Override
-	public IBStream CreateStream(String arg0, StreamAccess arg1) {
+	public IBStream CreateStream(String path, StreamAccess arg1) {
 		return new BStream();
 	}
 
 	@Override
-	public boolean ExistsStream(String arg0) {
+	public boolean ExistsStream(String path) {
 		return false;
 	}
 
-	private class BStream implements IBStream {
+	@Override
+	public SwapType GetSwapType() {
+		return SwapType.None;
+	}
+
+	private final class BStream implements IBStream {
 
 		@Override
 		public void BeginWrite(long arg0, int arg1) {
@@ -70,10 +63,6 @@ public class NoIOConfig extends DatabaseConfig {
 
 		@Override
 		public int Read(long arg0, byte[] arg1, int arg2, int arg3) {
-			if (isMaster) {
-				throw new RuntimeException("Over CachePageCount "
-						+ CachePageCount);
-			}
 			return 0;
 		}
 

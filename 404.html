@@ -4,12 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Document,Application Database,SQL,Agile Development,Mono,Java,Update Increment,Embedded">
+    <meta name="Keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,NoSQL,Database,NET,Java,JavaScript,Mono,Nashorn,jjs,Document,Application Database,SQL,Agile Development,Update Increment,Embedded">
+    <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database DualCore">
 
-    <meta name="description" content="iBoxDB Fast Transactional NoSQL Application Database">
-
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
 
     <title>iBoxDB Fast Transactional NoSQL Application Database</title>
+
+
     <style type="text/css">
         /*******************************************************************************
 MeyerWeb Reset
@@ -80,7 +83,6 @@ Theme Styles
         h2 {
             padding-bottom: 10px;
             font-size: 32px;
-            background: url('../images/bg_hr.png') repeat-x bottom;
         }
 
         h3 {
@@ -232,7 +234,6 @@ Theme Styles
             height: 1px;
             margin-bottom: 5px;
             border: none;
-            background: url('../images/bg_hr.png') repeat-x center;
         }
 
         table {
@@ -341,7 +342,6 @@ Small Device Styles
             }
 
             #downloads {
-                display: none;
             }
 
             .inner {
@@ -391,9 +391,7 @@ Small Device Styles
     <!-- HEADER -->
     <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
         <header class="inner">
-            <!--  
-     <a id="forkme_banner" href="https://github.com/iboxdb/nosql-database">View on GitHub</a> 
--->
+
 
             <h1 id="project_title">iBoxDB</h1>
             <h2 id="project_tagline">Fast Transactional Table-Style Document NoSQL Application Database</h2>
@@ -408,7 +406,7 @@ Small Device Styles
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
             <h3>
-                <a name="project-description" class="anchor" href="http://www.iboxdb.com/#project-description"><span class="octicon octicon-link"></span></a>Project Description
+                <a name="project-description" class="anchor"><span class="octicon octicon-link"></span></a>Project Description
 
             </h3>
 
@@ -419,10 +417,10 @@ Small Device Styles
             <p>
                 Dual Core Application Database 
                 <br />
-                FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Nashorn, Linux, Windows
             </p>
             <h3>
-                <a name="features" class="anchor" href="http://www.iboxdb.com/#features"><span class="octicon octicon-link"></span></a>Features</h3>
+                <a name="features" class="anchor"><span class="octicon octicon-link"></span></a>Features</h3>
 
             <ul>
                 <li>CURD</li>
@@ -452,7 +450,7 @@ Small Device Styles
                 <h3>
                     <a name="examples" class="anchor"><span class="octicon octicon-link"></span></a>Examples</h3>
 
-                <h5>Each box is an isolated data&#39;s space (Transaction-Based)</h5>
+                <h5>Each box is an isolated data space (Transaction-Based)</h5>
                 <div>
                     <pre>  <span>using</span> (<span>var</span> box = database.Cube())
   {                            
@@ -462,7 +460,7 @@ Small Device Styles
 </pre>
                     <pre>
   try( Box box = db.cube() ){
-     box.insert( ... );
+     ...
      CommitResult r = box.commit();
   }
                     </pre>
@@ -485,7 +483,7 @@ Small Device Styles
   m.ID = box.newId(Member.IncTableID, 1);
   m.setName("Andy");
   m.setTags(new Object[] { "Nice", "Strong" });
-  box.insert("Table", m);
+  box.bind("Table").insert(m);
                     </pre>
                 </div>
 
@@ -496,7 +494,7 @@ Small Device Styles
 </pre>
                     <pre>
   game.put("GameType", "ACT");
-  box.insert("Table", game);
+  box.bind("Table").insert(game);
                     </pre>
                 </div>
 
@@ -856,12 +854,13 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
 
 
                 <h5>Replication Master-Slave , Master-Master</h5>
-                <img src="images/p1.png" /><br />
+                <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" /><br />
 
-                <img src="images/p2.png" />
+                <img src="images/p3.png" alt="iBoxDB Fast Transactional NoSQL Application Database For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Nashorn, Node.js, Linux, Windows" />
 
                 <h5>License</h5>
-                FreeSoftware Redistributable <br />
+                FreeSoftware Redistributable
+                <br />
                 The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
             </div>
 
@@ -875,9 +874,13 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
             <p class="copyright">
                 Dual Core Application Database 
                 <br />
-                FREE for Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Node.js, Linux, Windows   
+                For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Nashorn, Linux, Windows   
             </p>
-            <p><a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; Database Version: iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</p>
+            <p>
+                Database Version: iBoxDB.NET v2.1.1&nbsp; iBoxDB.Java v1.8.1   &nbsp;&nbsp;
+               <a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; <a href="history.html">History</a>&nbsp;
+            </p>
+
         </footer>
     </div>
 
@@ -889,8 +892,10 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
         Xamarin,Unity3D,
         Database,NoSQL Database,Application Database,Embedded Database,Document Database,Object Database,Mobile Database,
         SQL,Agile Development,Update Increment,Selecting Tracer,
+        Nashorn,
 
         <a href="http://iboxdb.github.io/forjava/">backup address</a>
+
     </div>
 
 

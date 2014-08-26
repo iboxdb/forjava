@@ -420,37 +420,24 @@ Small Device Styles
 
             <!-- key words -->
             <div style="width: 1px; height: 1px; overflow: hidden">
-                iBoxDB  Windows  Linux  OS X  Windows Phone  Android  iPhone  
-        Java  .NET  Mono  ASP.NET  JSP  WEB  HTML5  JavaScript  CSharp  
+                iBoxDB  Windows  Linux  OS X  Windows Phone  Android  iPhone Java  .NET  Mono  ASP.NET  JSP  WEB  HTML5  JavaScript  CSharp  
         X86  ARM  Xamarin  Unity3D  ORM Professional Transactional Thread Safe Multi-Threaded
         Database  NoSQL Database  Application Database  Embedded Database  Document Database  Object Database  Mobile Database  
         Fast Lightweight Database JavaScript NoSQL Database
-                 C# Java Serverless Table-Style Server-Free Schema-Less Key-Value
-                 SQL  Agile Development  Update Increment  Selecting Tracer  
-        Nashorn  ACID  Transaction  NoSQL Graph Lightweight 
+                 C# Java Serverless Table-Style Server-Free Schema-Less Key-Value SQL  Agile Development  Update Increment  Selecting Tracer  
+        Nashorn  ACID  Transaction  NoSQL Graph Lightweight  Smart Small JSON Database
         03. iBoxDB  Android  Windows Phone  Xamarin  Unity3D  Linux  ACID  Transaction  NoSQL  Database  NET  Java  JavaScript  Mono  Nashorn  jjs  Embedded  Document  Application Database  SQL  Agile Development  Update Increment
-        FREE C# MVCC ACID NoSQL Embedded Document Database Engine Comparison
-        FREE Java MVCC ACID NoSQL Embedded Document Database Engine
-        C# NoSQL Embedded Document Database Comparison Android NoSQL Database
-        Java NoSQL Embedded Document Database Comparison Mono NoSQL Database Comparison     
+        FREE C# MVCC ACID NoSQL Embedded Document Database Engine Comparison FREE Java MVCC ACID NoSQL Embedded Document Database Engine
+        C# NoSQL Embedded Document Database Comparison Android NoSQL Database Java NoSQL Embedded Document Database Comparison Mono NoSQL Database Comparison     
         Unity NoSQL Database 
         
-                  Base de datos 数据库  データベース  Bases de 
-        敏捷开发  敏捷開発 La agilidad 
-        数据库事务 データベースの事務 取引 De base trato
+        Base de datos 数据库  データベース  Bases de 敏捷开发  敏捷開発 La agilidad 数据库事务 データベースの事務 取引 De base trato
         嵌入式数据库 组み込み式のデータベース Rodeado de bases de Встроенную базу данных
-        文档数据库  ドキュメントデータベース Base de datos de documentos
-        对象数据库 対象のデータベース  Base de objetos
+        文档数据库  ドキュメントデータベース Base de datos de documentos 对象数据库 対象のデータベース  Base de objetos
         移动数据库 モバイルデータベース Datos móviles
    
-        c# embeddable database
-                java embeddable nosql database
-        embedded nosql java
-        simple nosql database
-        embedded nosql db
-        java embedded nosql database
-        embedded nosql database net
-        best nosql database java c#
+        c# embeddable database java embeddable nosql database embedded nosql java
+        simple nosql database embedded nosql db java embedded nosql database embedded nosql database net best nosql database java c#
         
             </div>
 
@@ -563,15 +550,23 @@ Small Device Styles
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre>box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
+                    <pre>  box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
 </pre>
                 </div>
 
-                <h5>Compatible with LINQ</h5>
+                <h5>Compatible with LINQ (.NET)</h5>
                 <div>
-                    <pre><span>from</span> o <span>in</span> box.Select&lt;Class&gt;(<span>&quot;from Class&quot;</span>)
-<span>where</span> o.Text.Contains(text)
-<span>select</span> o;
+                    <pre>  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
+  where o.Text.Contains(text)
+  select o;
+</pre>
+                </div>
+
+                <h5>Compatible with Stream (Java8)</h5>
+                <div>
+                    <pre>  StreamSupport.stream(db.select("from Table").spliterator(), true)
+  .collect(Collectors.groupingBy((l) -> l.get("GroupID"),
+   Collectors.summingLong((l) -> (Long) l.get("Value"))));
 </pre>
                 </div>
 
@@ -730,8 +725,8 @@ Small Device Styles
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
                             <pre style="margin: 0px; padding: 0px;">
  class BoxFileStreamConfig
- class BoxIsolatedStorageFileStreamConfig
  class BoxMemoryStreamConfig
+ class BoxIsolatedStorageFileStreamConfig
  class ReadonlyResourceStreamConfig
                                 </pre>
                         </td>
@@ -757,7 +752,7 @@ BoxFileStreamConfig.RootPath =
                       </pre>
                 Unity3D
                 <pre>
- DB.Root(Application.persistentDataPath);
+DB.Root(Application.persistentDataPath);
                 </pre>
 
                 Xamarin
@@ -766,13 +761,6 @@ BoxFileStreamConfig.RootPath =
    System.Environment.GetFolderPath( 
                    System.Environment.SpecialFolder.Personal ) + "/";
                           </pre>
-                'Link all assemblies' will strip out some codes that reflecting needs,
-                <br />
-                'Link SDK assemblies only' is safer.<br />
-                Windows + VS
-                <br />
-                if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
-                <br />
                 JSP WebApplication
                 <pre>
 import iBoxDB.LocalServer.*;
@@ -914,31 +902,24 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
             </p>
             <p>
                 Database Version: iBoxDB.NET v2.1.1&nbsp; iBoxDB.Java v1.8.1   &nbsp;&nbsp;
-               <a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; <a href="history.html">History</a>&nbsp;
+               <a href="mailto:iboxdb@hotmail.com">Support</a> &nbsp; &nbsp;<a href="history.html">History</a>&nbsp;
             </p>
 
         </footer>
     </div>
 
-    <!-- changed -->
+    <!-- key words -->
     <div style="z-index: 2147483645; visibility: hidden; display: none;">
-        iBoxDB  Windows  Linux  OS X  Windows Phone  Android  iPhone  
-        Java  .NET  Mono  ASP.NET  JSP  WEB  HTML5  JavaScript  CSharp  
-        X86  ARM  
-        Xamarin  Unity3D  
+        iBoxDB  Windows  Linux  OS X  Windows Phone  Android  iPhone Java  .NET  Mono  ASP.NET  JSP  WEB  HTML5  JavaScript  CSharp X86  ARM  
+        Xamarin  Unity3D Unity Lightweight Smart Small JSON Database
         Database  NoSQL Database  Application Database  Embedded Database  Document Database  Object Database  Mobile Database  
-        SQL  Agile Development  Update Increment  Selecting Tracer  
-        Nashorn  ACID  Transaction  NoSQL
+        SQL  Agile Development  Update Increment  Selecting Tracer Nashorn  ACID  Transaction  NoSQL
 
     02. iBoxDB  Android  Windows Phone  Xamarin  Unity3D  Linux  ACID  Transaction  NoSQL  Database  NET  Java  JavaScript  Mono  Nashorn  jjs  Embedded  Document  Application Database  SQL  Agile Development  Update Increment
   
-        数据库  データベース  Bases de 
-        敏捷开发  敏捷開発 La agilidad 
-        数据库事务 データベースの事務 取引 De base trato
-        嵌入式数据库 组み込み式のデータベース Rodeado de bases de Встроенную базу данных
-        文档数据库  ドキュメントデータベース Base de datos de documentos
-        对象数据库 対象のデータベース  Base de objetos
-        移动数据库 モバイルデータベース Datos móviles
+        数据库  データベース  Bases de 敏捷开发  敏捷開発 La agilidad 数据库事务 データベースの事務 取引 De base trato
+        组み込み式のデータベース Rodeado de bases de Встроенную базу данных 嵌入式数据库 文档数据库  ドキュメントデータベース Base de datos de documentos 对象数据库 対象のデータベース  Base de objetos
+        移动数据库 モバイルデータベース Datos móviles Free .NET Java NoSQL Embedded
 
 
         <a href="http://iboxdb.github.io/forjava/">backup address</a>

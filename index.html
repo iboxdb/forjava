@@ -420,7 +420,7 @@ Small Device Styles
 
             <!-- key words -->
             <div style="width: 1px; height: 1px; overflow: hidden">
-        iBoxDB Windows Linux OS X Windows Phone Android iPhone Java .NET Mono ASP.NET JSP WEB HTML5 JavaScript CSharp  
+                iBoxDB Windows Linux OS X Windows Phone Android iPhone Java .NET Mono ASP.NET JSP WEB HTML5 JavaScript CSharp  
         X86 ARM Xamarin Unity3D ORM Professional Transactional Thread Safe Multi-Threaded Caching NoSQL DB 
         Database NoSQL Database Application Database Embedded Database Document Database Object Database Mobile Database  
         Fast Lightweight Database JavaScript NoSQL Database SQL Agile Development Update Increment Selecting Tracer  
@@ -429,7 +429,7 @@ Small Device Styles
         04. FREE C# MVCC ACID NoSQL Embedded Document Database Engine Comparison FREE Java MVCC ACID NoSQL Embedded Document Database Engine Embeddable
         05. C# NoSQL Embedded Document Database Comparison Android NoSQL Database Java NoSQL Embedded Document Database Comparison Mono NoSQL Database Comparison     
         Unity NoSQL Database C# Java Serverless Table-Style Server-Free Schema-Less Key-Value
-        Best NoSQL Database Java C# Simple NoSQL Database CRUD 
+        Best NoSQL Database Java C# Simple NoSQL Database CRUD Smart Small JSON Database
         
         <a href="iBoxDB-Fast-Transactional-Table-Style-Document-NoSQL-Application-Database.html">iBoxDB-Fast-Transactional-Table-Style-Document-NoSQL-Application-Database</a>
 
@@ -543,15 +543,23 @@ Small Device Styles
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre>box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
+                    <pre>  box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
 </pre>
                 </div>
 
-                <h5>Compatible with LINQ</h5>
+                <h5>Compatible with LINQ (.NET)</h5>
                 <div>
-                    <pre><span>from</span> o <span>in</span> box.Select&lt;Class&gt;(<span>&quot;from Class&quot;</span>)
-<span>where</span> o.Text.Contains(text)
-<span>select</span> o;
+                    <pre>  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
+  where o.Text.Contains(text)
+  select o;
+</pre>
+                </div>
+
+                <h5>Compatible with Stream (Java8)</h5>
+                <div>
+                    <pre>  StreamSupport.stream(db.select("from Table").spliterator(), true)
+  .collect(Collectors.groupingBy((l) -> l.get("GroupID"),
+   Collectors.summingLong((l) -> (Long) l.get("Value"))));
 </pre>
                 </div>
 
@@ -710,8 +718,8 @@ Small Device Styles
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
                             <pre style="margin: 0px; padding: 0px;">
  class BoxFileStreamConfig
- class BoxIsolatedStorageFileStreamConfig
  class BoxMemoryStreamConfig
+ class BoxIsolatedStorageFileStreamConfig
  class ReadonlyResourceStreamConfig
                                 </pre>
                         </td>
@@ -737,7 +745,7 @@ BoxFileStreamConfig.RootPath =
                       </pre>
                 Unity3D
                 <pre>
- DB.Root(Application.persistentDataPath);
+DB.Root(Application.persistentDataPath);
                 </pre>
 
                 Xamarin
@@ -746,11 +754,9 @@ BoxFileStreamConfig.RootPath =
    System.Environment.GetFolderPath( 
                    System.Environment.SpecialFolder.Personal ) + "/";
                           </pre>
-                'Link all assemblies' will strip out some codes that reflecting needs,
-                <br />
+                tip: Xamarin, 'Link all assemblies' will strip out some codes that reflecting needs,
                 'Link SDK assemblies only' is safer.<br />
-                Windows + VS
-                <br />
+                tip: Windows + VS,
                 if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
                 <br />
                 JSP WebApplication
@@ -893,7 +899,7 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
             </p>
             <p>
                 Database Version: iBoxDB.NET v2.1.1&nbsp; iBoxDB.Java v1.8.1   &nbsp;&nbsp;
-               <a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp; <a href="history.html">History</a>&nbsp;
+               <a href="mailto:iboxdb@hotmail.com">Support</a> &nbsp; &nbsp;<a href="history.html">History</a>&nbsp;
             </p>
         </footer>
     </div>
@@ -907,8 +913,8 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
         03. iBoxDB Android Windows Phone Xamarin Unity3D Linux ACID Transaction NoSQL Database .NET C# Java JavaScript Mono Nashorn jjs Embedded Document Application Database SQL Agile Development Update Increment
         04. FREE C# MVCC ACID NoSQL Embedded Document Database Engine Comparison FREE Java MVCC ACID NoSQL Embedded Document Database Engine Embeddable
         05. C# NoSQL Embedded Document Database Comparison Android NoSQL Database Java NoSQL Embedded Document Database Comparison Mono NoSQL Database Comparison     
-        Unity NoSQL Database C# Java Serverless Table-Style Server-Free Schema-Less Key-Value
-        Best NoSQL Database Java C# Simple NoSQL Database CRUD 
+        Unity NoSQL Database C# Java Serverless Table-Style Server-Free Schema-Less Key-Value  Smart Small JSON Database
+        Best NoSQL Database Java C# Simple NoSQL Database CRUD DB
        
         Fast Lightweight Database JavaScript NoSQL Database SQL Agile Development Update Increment Selecting Tracer  
         Nashorn ACID NoSQL Database Transaction NoSQL Graph Lightweight Serverless Database 

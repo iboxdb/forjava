@@ -441,8 +441,7 @@ Small Device Styles
         
             </div>
 
-            <h3>
-                <a name="features" class="anchor"><span class="octicon octicon-link"></span></a>Features</h3>
+            <h3>Features</h3>
 
             <ul>
                 <li>CRUD</li>
@@ -469,15 +468,14 @@ Small Device Styles
             <div>
 
 
-                <h3>
-                    <a name="examples" class="anchor"><span class="octicon octicon-link"></span></a>Examples</h3>
+                <h3>Examples</h3>
 
-                <h5>Each box is an isolated data space (Transaction-Based)</h5>
+                <h5>Each box is an ISOLATED data space (transaction-based)</h5>
                 <div>
-                    <pre>  <span>using</span> (<span>var</span> box = database.Cube())
+                    <pre>  using (var box = database.Cube())
   {                            
-     <span>//select, insert, update, delete ...</span>
-     <span>var</span> result = box.Commit();
+     //select, insert, update, delete ...
+     var result = box.Commit();
   }
 </pre>
                     <pre>
@@ -522,35 +520,34 @@ Small Device Styles
 
                 <h5>Key-Value Style Query</h5>
                 <div>
-                    <pre>  box.Bind(<span>&quot;Table&quot;</span>, 2L).Select&lt;AClass&gt;();
- <span>  //Composite Key</span>
-  box.Bind(<span>&quot;Table2&quot;</span>, 99, <span>&quot;ABC&quot;</span>).Select&lt;BClass&gt;();
+                    <pre>  box.Bind(&quot;Table&quot;, 2L).Select&lt;AClass&gt;();
+   //Composite Key
+  box.Bind(&quot;Table2&quot;, 99, &quot;ABC&quot;).Select&lt;BClass&gt;();
 </pre>
                     <pre>
-  box.bind("Table", ID).select( Member.class );
+  box.bind(&quot;Table&quot;, ID).select( Member.class );
   //Composite-Key Supported
-  box.bind("Table2",8, "MyID").select(Product.class);
+  box.bind(&quot;Table2&quot;,8, &quot;MyID&quot;).select(Product.class);
                     </pre>
                 </div>
 
                 <h5>SQL like</h5>
 
                 <div>
-                    <pre><span>  // from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10</span>
-  box.Select&lt;Member&gt;(<span>&quot;from Member where LoginName==?&quot;</span>, <span>&quot;MyName&quot;</span>));
+                    <pre>  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
+  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;));
 </pre>
-                    <pre>
-  //from [table] where [condition] 
+                    <pre>  //from [table] where [condition] 
   //                    order by [field1] desc,[field2] limit [0,10]
-  //[Condition:] == != < <= > >= & | ( )
+  //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
   //[IFunction:] =[F1,F2,F3]
-  box.select( Member.class, "from Member where Name==?", "MyName" );
+  box.select( Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot; );
                     </pre>
                 </div>
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre>  box.Select&lt;Member&gt;(<span>&quot;from Member where [Tags]&quot;</span>, <span>new</span> QueryArray(<span>&quot;Strong&quot;</span>));
+                    <pre>  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Strong&quot;));
 </pre>
                 </div>
 
@@ -565,8 +562,8 @@ Small Device Styles
                 <h5>Compatible with Stream (Java8)</h5>
                 <div>
                     <pre>  StreamSupport.stream(db.select("from Table").spliterator(), true)
-  .collect(Collectors.groupingBy((l) -> l.get("GroupID"),
-   Collectors.summingLong((l) -> (Long) l.get("Value"))));
+  .collect(Collectors.groupingBy((l) -&gt; l.get("GroupID"),
+   Collectors.summingLong((l) -&gt; (Long) l.get("Value"))));
 </pre>
                 </div>
 
@@ -700,14 +697,14 @@ Small Device Styles
  Double
  UUID
  Date
- //dynamic length @BoxLength(len)
+ //dynamic length
  BigDecimal
  BigInteger
  String
  
  //Non-Indexable
  byte[]
- HashMap<String,Object>
+ HashMap&lt;String,Object&gt;
  Object[]
                             </pre>
                         </td>

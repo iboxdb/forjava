@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="keywords" content="iBoxDB,Android,Windows Phone,Xamarin,Unity3D,Linux,ACID,Transaction,NoSQL,Database,NET,Java,JavaScript,Mono,Nashorn,jjs,Embedded,Document,Application Database,SQL,Agile Development,Update Increment">
-    <meta name="description" content="iBoxDB Fast Transactional Table Style Document NoSQL Application Database Engines for Java .NET C# Android Mono Unity3D Xamarin Nashorn Linux Windows Windows Phone">
+    <meta name="description" content="iBoxDB Fast Transactional TableStyle Document NoSQL Application Database Engines for C# Java .NET Android Mono Unity3D Xamarin Nashorn Linux Windows Windows Phone">
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="bookmark" href="favicon.ico" />
@@ -463,21 +463,21 @@ Small Device Styles
                 <li>Selecting Tracer</li>
             </ul>
 
-            <div>
+            <div id="details">
 
 
                 <h3>Examples</h3>
 
                 <h5>Each box is an ISOLATED data space (transaction-based)</h5>
                 <div>
-                    <pre>  using (var box = database.Cube())
+                    <pre>  using(var box = db.Cube())
   {                            
      //select, insert, update, delete ...
      var result = box.Commit();
   }
 </pre>
                     <pre>
-  try( Box box = db.cube() ){
+  try(Box box = db.cube()){
      ...
      CommitResult r = box.commit();
   }
@@ -487,32 +487,32 @@ Small Device Styles
 
                 <h5>Normal Object</h5>
                 <div>
-                    <pre> box.Bind(<span>&quot;Member&quot;</span>).Insert(
-       <span>new</span> Member() {  
-             ID=box.NewId( Member.IncTableID,1) ,
-             LoginName = <span>&quot;Andy&quot;</span>,
-             Password = Member.EncodePassowrd( <span>&quot;123&quot;</span> ),
-             Tags = <span>new</span> <span>string</span>[]{ <span>&quot;Nice&quot;</span> , <span>&quot;Strong&quot;</span> }
+                    <pre> box.Bind(&quot;Member&quot;).Insert(
+       new Member() {  
+             ID=box.NewId(Member.IncTableID, 1) ,
+             LoginName = &quot;Andy&quot;,
+             Password = Member.EncodePassowrd(&quot;123&quot;),
+             Tags = new string[]{ &quot;Nice&quot; , &quot;Strong&quot; }
         }
       );
 </pre>
                     <pre>
   Member m = new Member();
   m.ID = box.newId(Member.IncTableID, 1);
-  m.setName("Andy");
-  m.setTags(new Object[] { "Nice", "Strong" });
-  box.bind("Table").insert(m);
+  m.setName(&quot;Andy&quot;);
+  m.setTags(new Object[] { &quot;Nice&quot;, &quot;Strong&quot; });
+  box.bind(&quot;Table&quot;).insert(m);
                     </pre>
                 </div>
 
                 <h5>Dynamic Object (document database)</h5>
                 <div>
-                    <pre>  game[<span>&quot;GameType&quot;</span>] = <span>&quot;ACT&quot;</span>;
-  box.Bind(<span>&quot;Product&quot;</span>).Insert( game);
+                    <pre>  game[&quot;GameType&quot;] = &quot;ACT&quot;;
+  box.Bind(&quot;Product&quot;).Insert(game);
 </pre>
                     <pre>
-  game.put("GameType", "ACT");
-  box.bind("Table").insert(game);
+  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
+  box.bind(&quot;Table&quot;).insert(game);
                     </pre>
                 </div>
 
@@ -523,8 +523,8 @@ Small Device Styles
   box.Bind(&quot;Table2&quot;, 99, &quot;ABC&quot;).Select&lt;BClass&gt;();
 </pre>
                     <pre>
-  box.bind(&quot;Table&quot;, ID).select( Member.class );
-  //Composite-Key Supported
+  box.bind(&quot;Table&quot;, ID).select(Member.class);
+  //Composite Key
   box.bind(&quot;Table2&quot;,8, &quot;MyID&quot;).select(Product.class);
                     </pre>
                 </div>
@@ -535,7 +535,8 @@ Small Device Styles
                     <pre>  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
   box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;));
 </pre>
-                    <pre>  //from [table] where [condition] 
+                    <pre>
+  //from [table] where [condition] 
   //                    order by [field1] desc,[field2] limit [0,10]
   //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
   //[IFunction:] =[F1,F2,F3]
@@ -545,7 +546,7 @@ Small Device Styles
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre>  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Strong&quot;));
+                    <pre>  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Value&quot;));
 </pre>
                 </div>
 
@@ -559,9 +560,9 @@ Small Device Styles
 
                 <h5>Compatible with Stream (Java8)</h5>
                 <div>
-                    <pre>  StreamSupport.stream(db.select("from Table").spliterator(), true)
-  .collect(Collectors.groupingBy((l) -&gt; l.get("GroupID"),
-   Collectors.summingLong((l) -&gt; (Long) l.get("Value"))));
+                    <pre>  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
+  .collect(Collectors.groupingBy((l) -&gt; l.get(&quot;GroupID&quot;),
+   Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));
 </pre>
                 </div>
 
@@ -584,10 +585,10 @@ Small Device Styles
                     </tr>
                     <tr>
                         <td style="font-weight: bold">UpdateIncrement</td>
-                        <td>non-primary key</td>
+                        <td style="white-space: nowrap">non-primary key</td>
                         <td>insert/update</td>
                         <td>long</td>
-                        <td>Database NewId(MaxPos, 1)</td>
+                        <td style="white-space: nowrap">Database NewId(MaxPos,1)</td>
                     </tr>
                 </table>
 
@@ -740,22 +741,26 @@ Small Device Styles
 
                 <h5>Database Path</h5>
 
-                WebSite
+                ASP.NET
                 <pre>
 BoxFileStreamConfig.RootPath =
-    HttpContext.Current.Server.MapPath("~/App_Data/");
+    HttpContext.Current.Server.MapPath(&quot;~/App_Data/&quot;);
                       </pre>
-                Unity3D
-                <pre>
-DB.Root(Application.persistentDataPath);
-                </pre>
 
                 Xamarin
                 <pre>
 BoxFileStreamConfig.RootPath =
    System.Environment.GetFolderPath( 
-                   System.Environment.SpecialFolder.Personal ) + "/";
+                   System.Environment.SpecialFolder.Personal ) + &quot;/&quot;;
                           </pre>
+
+                Android
+                <pre>
+BoxFileStreamConfig.RootPath = 
+   android.os.Environment.getDataDirectory().getAbsolutePath()
+	  + &quot;/data/&quot; + packageName + &quot;/&quot;;
+                </pre>
+
                 JSP WebApplication
                 <pre>
 import iBoxDB.LocalServer.*;
@@ -765,51 +770,53 @@ import java.io.File;
 public class StartListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-      String path = sce.getServletContext().getRealPath("/") 
-                   + "DB" + File.separatorChar;
+      String path = sce.getServletContext().getRealPath(&quot;/&quot;) 
+                   + &quot;DB&quot; + File.separatorChar;
       BoxFileStreamConfig.RootPath = path;
-      File f = new File(BoxFileStreamConfig.RootPath );
-      if (!f.exists()) {
-         f.mkdir();
-      }
-      System.out.println("DBPath=" + f.getPath());
+      File f = new File(BoxFileStreamConfig.RootPath);
+      f.mkdir();     
     }
 }
                </pre>
 
+                Unity3D
+                <pre>
+DB.Root(Application.persistentDataPath);
+                </pre>
+
                 <h5>Query</h5>
                 <pre>
 //query
-box.Select("from Member");
+box.Select(&quot;from Member&quot;);
 //query, load to memory first, startwith '*'
-box.Select("*from Member");
+box.Select(&quot;*from Member&quot;);
 //query, selecting tracer, startwith '!'
-box.Select("!from Member")
+box.Select(&quot;!from Member&quot;)
                 </pre>
 
                 <h5>Getting Started</h5>
                 <pre>
- var server = new DB(1, "", IsWP);
- server.EnsureTable&lt;Record&gt;("Table1", "ID");
+ var server = new DB(1, &quot;&quot;, IsWP);
+ server.EnsureTable&lt;Record&gt;("Table1", &quot;ID&quot;);
  var db = server.Open();
  //insert
- db.Insert("Table1", new Record { ID = 1, Name = "Andy" });
+ db.Insert(&quot;Table1&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
  //select
- var o1 = db.SelectKey&lt;Record&gt;("Table1", 1);
+ var o1 = db.SelectKey&lt;Record&gt;(&quot;Table1&quot;, 1);
  //update
- o1.Name = "Kelly";
- db.Update("Table1", o1);
+ o1.Name = &quot;Kelly&quot;;
+ db.Update(&quot;Table1&quot;, o1);
                     </pre>
                 <pre>
- DB db = new DB(1, "");
- db.ensureTable(Record.class, "Table", "ID");
+ DB db = new DB(1, &quot;&quot;);
+ db.ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox box = db.open();
  //insert
- box.insert("Table", new Record(1, "Andy"));
+ box.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
  //select
- Record o1 = box.selectKey(Record.class, "Table", 1);
+ Record o1 = box.selectKey(Record.class, &quot;Table&quot;, 1);
  //update
- o1.Name = "Kelly";
+ o1.Name = &quot;Kelly&quot;;
  box.update("Table", o1);
                 </pre>
 
@@ -823,23 +830,23 @@ Results:
 threadCount=100000 , batchCount=10
 MongoDB(Default)
 Database Transaction Test: None
-MongoDB Insert&Counting:1000000  AVG:10521 objects/s
+MongoDB Insert&amp;Counting:1000000  AVG:10521 objects/s
 
 iBoxDB(File Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1000000  AVG:17981 objects/s
+iBoxDB Insert&amp;Counting:1000000  AVG:17981 objects/s
 iBoxDB Update:1000000  AVG:12397 objects/s 
 iBoxDB Delete:1000000  AVG:22869 objects/s
 
 iBoxDB(MemoryMappedFile Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1000000  AVG:38458 objects/s
+iBoxDB Insert&amp;Counting:1000000  AVG:38458 objects/s
 iBoxDB Update:1000000  AVG:20200 objects/s 
 iBoxDB Delete:1000000  AVG:33342 objects/s
 
 iBoxDB(InMemory Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1000000  AVG:39132 objects/s
+iBoxDB Insert&amp;Counting:1000000  AVG:39132 objects/s
 iBoxDB Update:1000000  AVG:20226 objects/s 
 iBoxDB Delete:1000000  AVG:33658 objects/s
                 </pre>
@@ -849,24 +856,24 @@ iBoxDB Delete:1000000  AVG:33658 objects/s
                 <pre>
 MongoDB(Default)
 Database Transaction Test: None
-MongoDB Insert&Counting:1,000,000 AVG: 32,702 objects/s
+MongoDB Insert&amp;Counting:1,000,000 AVG: 32,702 objects/s
 
 iBoxDB(File Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1,000,000 AVG: 33,368 objects/s
-iBoxDB Select&Update:1,000,000 AVG: 16,939 objects/s 
+iBoxDB Insert&amp;Counting:1,000,000 AVG: 33,368 objects/s
+iBoxDB Select&amp;Update:1,000,000 AVG: 16,939 objects/s 
 iBoxDB Delete:1,000,000 AVG: 22,504 objects/s
 
 iBoxDB(MemoryMappedFile Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1,000,000 AVG: 42,236 objects/s
-iBoxDB Select&Update:1,000,000 AVG: 17,765 objects/s 
+iBoxDB Insert&amp;Counting:1,000,000 AVG: 42,236 objects/s
+iBoxDB Select&amp;Update:1,000,000 AVG: 17,765 objects/s 
 iBoxDB Delete:1,000,000 AVG: 23,147 objects/s
 
 iBoxDB(InMemory Mode)
 Database Transaction Test: Succeeded
-iBoxDB Insert&Counting:1,000,000 AVG: 47,382 objects/s
-iBoxDB Select&Update:1,000,000 AVG: 26,806 objects/s 
+iBoxDB Insert&amp;Counting:1,000,000 AVG: 47,382 objects/s
+iBoxDB Select&amp;Update:1,000,000 AVG: 26,806 objects/s 
 iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
                 </pre>
 
@@ -876,12 +883,8 @@ iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
 
                 <img src="images/p3.png" alt="iBoxDB Fast Transactional NoSQL Application Database For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Nashorn, Node.js, Linux, Windows" />
 
-                <h5>License</h5>
-                FreeSoftware Redistributable
-                <br />
-                The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
-            </div>
 
+            </div>
 
         </section>
     </div>

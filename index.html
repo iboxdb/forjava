@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="keywords" content="iBoxDB,Android,Xamarin,Unity3D,Linux,ACID,Transaction,NoSQL,Database,Java,JavaScript,Mono,Nashorn,jjs,Embedded,Document,SQL,C#,.NET,MVCC,Application Database,Agile Development,Update Increment,Windows Phone">
-    <meta name="description" content="iBoxDB Fast Transactional NoSQL Table Style Document Application Database Resources For Java .NET C# Android Mono Unity3D Xamarin Nashorn Linux Windows Windows Phone">
+    <meta name="description" content="iBoxDB Fast Transactional NoSQL Table Style Document Application Database Engines For Java .NET C# Android Mono Unity3D Xamarin Nashorn Linux Windows Windows Phone">
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="bookmark" href="favicon.ico" />
 
-    <title>iBoxDB Fast Transactional NoSQL Application Database Resources</title>
+    <title>iBoxDB Fast Transactional NoSQL Application Database Engines</title>
 
 
     <style type="text/css">
@@ -509,7 +509,7 @@ Small Device Styles
                     </pre>
                 </div>
 
-                <h5>Key-Value Style Query</h5>
+                <h5>Key Value Style Query</h5>
                 <div>
                     <pre>  box.Bind(&quot;Table&quot;, 2L).Select&lt;AClass&gt;();
    //Composite Key
@@ -522,18 +522,18 @@ Small Device Styles
                     </pre>
                 </div>
 
-                <h5>SQL like</h5>
+                <h5>SQL Like</h5>
 
                 <div>
                     <pre>  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
-  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;));
+  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;);
 </pre>
                     <pre>
   //from [table] where [condition] 
   //                    order by [field1] desc,[field2] limit [0,10]
   //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
   //[IFunction:] =[F1,F2,F3]
-  box.select( Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot; );
+  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;);
                     </pre>
                 </div>
 

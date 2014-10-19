@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="keywords" content="iBoxDB, Android, Xamarin, Unity3D, Java, NoSQL, Database, Embedded, Mono, ACID, MVCC, C#, .NET, Nashorn, NoSQL Database, Document Database, Java Database, C# Database, Update Increment">
+    <meta name="keywords" content="iBoxDB,NoSQL,Android,Xamarin,Unity3D,Java,Database,Embeddable,Mono,ACID,MVCC,C#,.NET,Nashorn,Document Database,Java Database,C# Database,Update Increment">
     <meta name="description" content="iBoxDB Fast Transactional TableStyle Document NoSQL Database Embedded Servers for Java .NET C# Android Mono Unity3D Xamarin Nashorn Linux Windows Phone">
 
     <link rel="shortcut icon" href="favicon.ico" />
@@ -12,395 +12,15 @@
 
     <title>iBoxDB Fast Transactional NoSQL Application Database Embedded Servers</title>
 
-
-    <style type="text/css">
-        /*******************************************************************************
-MeyerWeb Reset
-*******************************************************************************/
-
-        html, body, div, span, applet, object, iframe,
-        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-        a, abbr, acronym, address, big, cite, code,
-        del, dfn, em, img, ins, kbd, q, s, samp,
-        small, strike, strong, sub, sup, tt, var,
-        b, u, i, center,
-        dl, dt, dd, ol, ul, li,
-        fieldset, form, label, legend,
-        table, caption, tbody, tfoot, thead, tr, th, td,
-        article, aside, canvas, details, embed,
-        figure, figcaption, footer, header, hgroup,
-        menu, nav, output, ruby, section, summary,
-        time, mark, audio, video {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font: inherit;
-            vertical-align: baseline;
-        }
-
-        /* HTML5 display-role reset for older browsers */
-        article, aside, details, figcaption, figure,
-        footer, header, hgroup, menu, nav, section {
-            display: block;
-        }
-
-        ol, ul {
-            list-style: none;
-        }
-
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-
-        /*******************************************************************************
-Theme Styles
-*******************************************************************************/
-
-        body {
-            box-sizing: border-box;
-            color: #373737;
-            background: #212121;
-            font-size: 16px;
-            font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            margin: 10px 0;
-            font-weight: 700;
-            color: #222222;
-            font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
-            letter-spacing: -1px;
-        }
-
-        h1 {
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        h2 {
-            padding-bottom: 10px;
-            font-size: 32px;
-        }
-
-        h3 {
-            font-size: 24px;
-        }
-
-        h4 {
-            font-size: 21px;
-        }
-
-        h5 {
-            font-size: 18px;
-        }
-
-        h6 {
-            font-size: 16px;
-        }
-
-        p {
-            margin: 10px 0 15px 0;
-        }
-
-        footer p {
-            color: #f2f2f2;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007edf;
-            text-shadow: none;
-            transition: color 0.5s ease;
-            transition: text-shadow 0.5s ease;
-            -webkit-transition: color 0.5s ease;
-            -webkit-transition: text-shadow 0.5s ease;
-            -moz-transition: color 0.5s ease;
-            -moz-transition: text-shadow 0.5s ease;
-            -o-transition: color 0.5s ease;
-            -o-transition: text-shadow 0.5s ease;
-            -ms-transition: color 0.5s ease;
-            -ms-transition: text-shadow 0.5s ease;
-        }
-
-            a:hover, a:focus {
-                text-decoration: underline;
-            }
-
-        footer a {
-            color: #F2F2F2;
-        }
-
-        em {
-            font-style: italic;
-        }
-
-        strong {
-            font-weight: bold;
-        }
-
-        img {
-            position: relative;
-            margin: 0 auto;
-            max-width: 739px;
-            padding: 5px;
-            margin: 10px 0 10px 0;
-            border: 1px solid #ebebeb;
-            box-shadow: 0 0 5px #ebebeb;
-            -webkit-box-shadow: 0 0 5px #ebebeb;
-            -moz-box-shadow: 0 0 5px #ebebeb;
-            -o-box-shadow: 0 0 5px #ebebeb;
-            -ms-box-shadow: 0 0 5px #ebebeb;
-        }
-
-        p img {
-            display: inline;
-            margin: 0;
-            padding: 0;
-            vertical-align: middle;
-            text-align: center;
-            border: none;
-        }
-
-        pre, code {
-            width: 100%;
-            color: #222;
-            background-color: #fff;
-            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-            font-size: 14px;
-            border-radius: 2px;
-            -moz-border-radius: 2px;
-            -webkit-border-radius: 2px;
-        }
-
-        pre {
-            width: 100%;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
-            overflow: auto;
-        }
-
-        code {
-            padding: 3px;
-            margin: 0 3px;
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
-        }
-
-        pre code {
-            display: block;
-            box-shadow: none;
-        }
-
-        blockquote {
-            color: #666;
-            margin-bottom: 20px;
-            padding: 0 0 0 20px;
-            border-left: 3px solid #bbb;
-        }
-
-
-        ul, ol, dl {
-            margin-bottom: 15px;
-        }
-
-        ul {
-            list-style: inside;
-            padding-left: 20px;
-        }
-
-        ol {
-            list-style: decimal inside;
-            padding-left: 20px;
-        }
-
-        dl dt {
-            font-weight: bold;
-        }
-
-        dl dd {
-            padding-left: 20px;
-            font-style: italic;
-        }
-
-        dl p {
-            padding-left: 20px;
-            font-style: italic;
-        }
-
-        hr {
-            height: 1px;
-            margin-bottom: 5px;
-            border: none;
-        }
-
-        table {
-            border: 1px solid #373737;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        th {
-            font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            padding: 10px;
-            background: #373737;
-            color: #fff;
-        }
-
-        td {
-            padding: 10px;
-            border: 1px solid #373737;
-        }
-
-        form {
-            background: #f2f2f2;
-            padding: 20px;
-        }
-
-        /*******************************************************************************
-Full-Width Styles
-*******************************************************************************/
-
-        .outer {
-            width: 100%;
-        }
-
-        .inner {
-            position: relative;
-            max-width: 640px;
-            padding: 20px 10px;
-            margin: 0 auto;
-        }
-
-
-        #header_wrap {
-            background: #212121;
-            background: -moz-linear-gradient(top, #373737, #212121);
-            background: -webkit-linear-gradient(top, #373737, #212121);
-            background: -ms-linear-gradient(top, #373737, #212121);
-            background: -o-linear-gradient(top, #373737, #212121);
-            background: linear-gradient(top, #373737, #212121);
-        }
-
-            #header_wrap .inner {
-                padding: 50px 10px 30px 10px;
-            }
-
-        #project_title {
-            margin: 0;
-            color: #fff;
-            font-size: 42px;
-            font-weight: 700;
-            text-shadow: #111 0px 0px 10px;
-        }
-
-        #project_tagline {
-            color: #fff;
-            font-size: 24px;
-            font-weight: 300;
-            background: none;
-            text-shadow: #111 0px 0px 10px;
-        }
-
-        #downloads {
-            position: absolute;
-            width: 200px;
-            z-index: 10;
-            bottom: -50px;
-            right: 0;
-            height: 100px;
-            background-image: url( "images/ico.png");
-        }
-
-
-
-        #main_content_wrap {
-            background: #f2f2f2;
-            border-top: 1px solid #111;
-            border-bottom: 1px solid #111;
-        }
-
-        #main_content {
-            padding-top: 40px;
-        }
-
-        #footer_wrap {
-            background: #212121;
-        }
-
-
-
-        /*******************************************************************************
-Small Device Styles
-*******************************************************************************/
-
-        @media screen and (max-width: 480px) {
-            body {
-                font-size: 14px;
-            }
-
-            #downloads {
-            }
-
-            .inner {
-                min-width: 320px;
-                max-width: 480px;
-            }
-
-            #project_title {
-                font-size: 32px;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            h3 {
-                font-size: 21px;
-            }
-
-            h4 {
-                font-size: 18px;
-            }
-
-            h5 {
-                font-size: 14px;
-            }
-
-            h6 {
-                font-size: 12px;
-            }
-
-            code, pre {
-                min-width: 320px;
-                max-width: 480px;
-                font-size: 11px;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
-        <header class="inner">
-
-            <h1 id="project_title">iBoxDB <span style="display: inline-block; width: 1px; height: 1px; overflow: hidden">Flexible Document NoSQL Database Transactional Embeddable Servers</span> <span style="font-size: large">Version History</span></h1>
-
-            <h2 id="project_tagline">Fast Transactional TableStyle Document NoSQL Application Database</h2>
-
-            <div id="downloads">
-                <a href="http://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
-                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
-            </div>
-        </header>
-    </div>
+    <h4>http://www.iboxdb.com</h4>
+    <p>
+        <a href="http://www.iboxdb.com">iBoxDB Fast Transactional Table Style Document NoSQL Application Database For Java .NET Android Mono Unity3D Xamarin Nashorn Linux Windows Phone 
+        </a>
+    </p>
 
     <!-- key words -->
     <div style="width: 1px; height: 1px; overflow: hidden">
@@ -414,80 +34,11 @@ Small Device Styles
         C# Embeddable Database Java Embeddable NoSQL Database Embedded NoSQL Java Best NoSQL Database Java C# KeyValue Simple NoSQL Database Embedded NoSQL DB Java Embedded nosql Document database Simple Embedded nosql database NET Free Fast JSON DB
         ACID NoSQL Data Storage solution nosql Document Versioning NoSQL Isolation Fast Data kingdom of Isolation Lightweight Java Database Framework .NET In-Memory NoSQL Mobile JSON Database Fast
         Android Mono Java Database C# Database .NET Databae Document Database Engine C# Java ACID NoSQL embedded object database Java C# Lightweight Object Database NoSQL embedded database for .NET Java object-oriented embedded database
+        
         iBoxDB Android Xamarin Mono Java .NET Multipurpose Best Lightweight General Purpose Stable Standalone Self Contained Simple Small C# Fast Embedded Local Transactional Document NoSQL Object Database ACID            
         NoSQL Database Document Database Tiny Java Embedded Database nosql storage engines .NET C# small fast multithreaded engine and server with memory and disk tables transaction isolation powerful cross platform NoSQL database system SaaS IaaS PaaS Database Services
         embedded .NET database engine has zero deployment costs NoSQL embedded database for .NET Java C# in memory database software for real time and embedded applications best game database
         Android NoSQL SQL Lite Lightweight Object Relational Mapping ORM Database Java Databae Windows Phone C# .NET Database. 
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-        <section id="main_content" class="inner">
-            <h3>Project Description</h3>
-
-            <p>iBoxDB is a fast transactional table style document NoSQL Application Database, easily store, process objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and .NET engines, no dependencies.</p>
-
-            <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
-
-            <p>
-                Dual Core Application Database 
-                <br />
-                For &nbsp; Java &nbsp; .NET &nbsp; Android &nbsp; Mono &nbsp; Unity3D &nbsp; Xamarin &nbsp; Nashorn &nbsp; Linux &nbsp; Windows Phone  
-           
-            </p>
-
-            <h3>Features</h3>
-
-            <ul>
-                <li>CRUD</li>
-                <li>Primary key</li>
-                <li>Unique and non-unique indexes.</li>
-                <li>Unique and non-unique composite indexes.</li>
-                <li>SQL-like query language</li>
-                <li>Transactions support</li>
-                <li>Concurrency control, thread safe</li>
-                <li>Memory management</li>
-                <li>Hot MasterSlave and MasterMaster replications</li>
-                <li>File and in-memory database supported</li>
-                <li>Automatically create databases</li>
-                <li>Zero configuration, copy and run, purely managed code</li>
-                <li>Dynamic columns</li>
-                <li>Different types with different indexes can be stored in same table</li>
-                <li>Persistence + ORM + Cache + Embeddable, ONE STOP solution</li>
-                <li>ResultSet compatible with LINQ</li>
-                <li>High performance, no dependencies</li>
-                <li>Update Increment</li>
-                <li>Selecting Tracer</li>
-            </ul>
-
-            <h3>History</h3>
-
-            <h4>iBoxDB.NET v2.1.1&nbsp;&nbsp; iBoxDB.Java v1.8.1</h4>
-
-            <a href="http://sourceforge.net/projects/application-database/files/iBoxDBv211_181.zip/download">Download</a>
-
-
-            <br />
-
-            <h4>iBoxDB.NET v2.0&nbsp;&nbsp; iBoxDB.Java v1.7.1</h4>
-
-            <a href="http://sourceforge.net/projects/application-database/files/iBoxDBv20_171S.zip/download">Download</a>
-
-
-        </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
-        <footer class="inner">
-            <p class="copyright">
-                Dual Core Application Database Express
-                <br />
-                For &nbsp; Java &nbsp; .NET &nbsp; Android &nbsp; Mono &nbsp; Unity3D &nbsp; Xamarin &nbsp; Nashorn &nbsp; Linux &nbsp; Windows Phone   
-                <br />
-                NoSQL Storage Engine &nbsp; <a href="http://www.iboxdb.com/" style="color: #FFFFFF; text-decoration: underline;" title="MORE">www.iBoxDB.com</a>
-            </p>
-        </footer>
     </div>
 
     <!-- key Words -->
@@ -497,12 +48,17 @@ Small Device Styles
         SQL Agile Development Update Increment Selecting Tracer Nashorn Transactional Transaction Database Android JSON Database Small Footprint Free .NET NoSQL Embedded Document DB Java Database Embeddable
         NoSql db Performance Database small footprint Mono DB ACID Transaction Xamarin Database NoSQL .NET C# NoSQL Database Java Embedded Database DB C# Document Database
         NoSQL Software Java Database In Memory Database NoSQL Lightweight Java Database Java Embedded Document Database NoSQL Transaction ACID Document Database Asp.NET NoSQL
+        
         Android Xamarin Mono Java C# .NET Multipurpose Best Lightweight Mono General Purpose Stable Standalone Self Contained Simple Small Fast Embedded Local Java Transactional Document NoSQL Object Database ACID iBoxDB           
         .NET Mono Android NoSQL Database Document Database Tiny Java C# Embedded Database nosql storage engines Android NoSQL SQL Lite Object Relational Mapping ORM 
-        lightweight database local server Lightweight self-contained database fast database local server nosql databases java c# local database
-        <a href="http://iboxdb.wix.com/nosql-database">iBoxDB Fast Document Database NoSQL</a>
+        lightweight database local server Lightweight self-contained database fast database local server nosql databases java c# local database    
     </div>
 
 
+    <script type="text/javascript" language="javascript">
+        setTimeout(function () {
+            window.location.href = "http://www.iboxdb.com";
+        }, 100);
+    </script>
 </body>
 </html>

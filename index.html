@@ -397,7 +397,7 @@
             <h2 id="project_tagline">Fast Transactional TableStyle Document NoSQL Application Database</h2>
             <div id="downloads">
                 <a href="http://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
-                   style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
+                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">DOWNLOAD</a>
             </div>
         </header>
     </div>
@@ -811,26 +811,20 @@ box.Select(&quot;!from Member&quot;)
 
                 <h5>Getting Started</h5>
                 <pre>
- var server = new DB(1, &quot;&quot;, IsWP);
+ var server = new DB();
  server.EnsureTable&lt;Record&gt;("Table1", &quot;ID&quot;);
  var db = server.Open();
- //insert
  db.Insert(&quot;Table1&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
- //select
  var o1 = db.SelectKey&lt;Record&gt;(&quot;Table1&quot;, 1);
- //update
  o1.Name = &quot;Kelly&quot;;
  db.Update(&quot;Table1&quot;, o1);
                     </pre>
                 <pre>
- DB db = new DB(1, &quot;&quot;);
+ DB db = new DB();
  db.ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox box = db.open();
- //insert
  box.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
- //select
  Record o1 = box.selectKey(Record.class, &quot;Table&quot;, 1);
- //update
  o1.Name = &quot;Kelly&quot;;
  box.update("Table", o1);
                 </pre>
@@ -838,6 +832,43 @@ box.Select(&quot;!from Member&quot;)
                 tip: Windows + VS,
                 if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
                 <br />
+                tip: Console Script can open the DB
+                <br />
+
+                <h5>Console FSharp</h5>
+                <pre>
+ //set PATH=%Path%;c:\Program Files\Microsoft SDKs\F#\3.1\Framework\v4.0 
+ //F# fsi 
+ #r &quot;iBoxDB.dll&quot;
+ iBoxDB.LocalServer.DB.Root(&quot;C:\\DB&quot;)
+ let server = new iBoxDB.LocalServer.DB(1L)
+ let db = server.Open()
+ let box = db.Cube()
+ let service = box :?&gt; iBoxDB.LocalServer.IBoxModifier
+ service.GetSchemas()
+ for v in box.Select(&quot;from OT limit 0 , 2&quot;) do
+   let s = iBoxDB.LocalServer.DB.ToString(v)
+   System.Console.WriteLine(s)
+ box.Dispose()
+ server.Dispose()
+                </pre>
+
+                <h5>Shell JavaScript</h5>
+                <pre>
+ //jjs -cp iBoxDBv181.jar 
+ var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
+ DB.root(&quot;/db/&quot;) 
+ var server = new DB(1) 
+ var db = server.open() 
+ var box = db.cube() 
+ var schemas = box.GetSchemas(); 
+ for (var table_name in schemas) { print(table_name) } 
+ box.select(&quot;from table1 limit 0,3&quot;) 
+    .forEach(function(v){ print(v) })
+ box.close()
+ server.close()
+                </pre>
+
                 <h5>Benchmark with MongoDB</h5>
                 iBoxDB.Java 32bit System Low Memory
                 <br />

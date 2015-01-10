@@ -428,7 +428,7 @@
                 17. Transactional Document NoSQL Java C# Multipurpose Self Contained fast database local server Windows Unity
                 18. Linux J2EE Web Java ACID NoSQL Embedded Database JSP WEB HTML5 JavaScript FREE Update Increment SQL java database Comparison java object-oriented embedded database
                 19. In Memory ORM NoSQL Document Database for NET Java C# Android embedded database server
-                20. Android Xamarin Lightweight nosql databases c# local database document nosql file db
+                20. Android Xamarin Lightweight nosql databases c# local database document nosql java file db
                 21. Mono C# Java Simple Small Fast Embedded Local Object Database ACID Android Windows Phone C# dotNET Databases NoSQL Mobile Sync Document Oriented
             </div>
 
@@ -775,7 +775,7 @@ DB.Root(Application.persistentDataPath);
 
                 JAVA
                 <pre>
-// use short path
+//use short path
 iBoxDB.LocalServer.DB.root(&quot;/DB/&quot;);
                 </pre>
 
@@ -806,7 +806,7 @@ box.Select(&quot;*from Member&quot;);
 box.Select(&quot;!from Member&quot;)
                 </pre>
 
-                <h5>Getting Started</h5>
+                <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre>
  var server = new DB();
  server.EnsureTable&lt;Record&gt;("Table1", &quot;ID&quot;);
@@ -829,43 +829,35 @@ box.Select(&quot;!from Member&quot;)
                 tip: Windows + VS,
                 if you get a message 'a reference to a higher version cannot be added to the project' , click Unblock button in the file properties dialog
                 <br />
-                tip: Console Script can open the DB
-                <br />
+               
 
-                <h5>Console FSharp</h5>
+                <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
                 <pre>
- //set PATH=%Path%;SDKs\F#\3.1\Framework\v4.0 
- //F# fsi 
- #r &quot;iBoxDB.dll&quot;
- iBoxDB.LocalServer.DB.Root(&quot;C:\\DB&quot;)
- let server = new iBoxDB.LocalServer.DB(1L)
- let db = server.Open()
- let box = db.Cube()
- let service = box :?&gt; iBoxDB.LocalServer.IBoxModifier
- service.GetSchemas()
- for v in box.Select(&quot;from OT limit 0 , 2&quot;) do
-   let s = iBoxDB.LocalServer.DB.ToString(v)
-   System.Console.WriteLine(s)
- box.Dispose()
+ #r &quot;iBoxDB.dll&quot; 
+ open iBoxDB.LocalServer 
+ open System 
+ DB.Root( &quot;C:\\DB&quot; ) 
+ let server = new DB() 
+ let db = server.Open() 
+ for v in db.Select(&quot;from OT limit 0 , 2&quot;) do 
+   Console.WriteLine(DB.ToString(v)) 
+ for v in (db.Cube() :?&gt; IBoxModifier).GetSchemas() do 
+   Console.WriteLine(v.Key) 
  server.Dispose()
                 </pre>
-
-                <h5>Shell JavaScript</h5>
                 <pre>
  //jjs -cp iBoxDBv181.jar 
  var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
  DB.root(&quot;/db/&quot;) 
- var server = new DB(1) 
+ var server = new DB() 
  var db = server.open() 
- var box = db.cube() 
- var schemas = box.GetSchemas(); 
- for (var table_name in schemas) { print(table_name) } 
- box.select(&quot;from table1 limit 0,3&quot;) 
-    .forEach(function(v){ print(v) })
- box.close()
- server.close()
+ db.select(&quot;from table1 limit 0,3&quot;) 
+   .forEach( function(v){ print(v) }) 
+ db.cube().GetSchemas() 
+   .forEach( function(v){ print(v) }) 
+ server.close() 
                 </pre>
-
+                
                 <h5>Benchmark with MongoDB</h5>
                 iBoxDB.Java 32bit System Low Memory
                 <br />

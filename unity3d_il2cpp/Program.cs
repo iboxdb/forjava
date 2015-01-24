@@ -9,7 +9,7 @@ namespace CA
 {
     class Program
     {
-        //use .NET Framework 3.5 , Mono.Cecil 0.9.6 . for Unity3D IL2CPP beta
+        //use .NET Framework 3.5 , Mono.Cecil 0.9.6 . for Unity3D IL2CPP 
         static void Main(string[] args)
         {
             String path = @"C:\Users\Root\Downloads\iBoxDB_io_v22_181_m\Lib\NetDB\net2\iBoxDB.net2.dll";

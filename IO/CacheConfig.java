@@ -14,9 +14,9 @@ public class CacheConfig extends BoxFileStreamConfig {
 	String lockFile = null;
 
 	public CacheConfig() {
-		this.ReadStreamCount = 64;
+		this.ReadStreamCount = 8;
 		// -Xmx****m
-		this.CachePageCount = 1024 * 1024;
+	    this.CacheLength = mb(1024);
 
 	}
 

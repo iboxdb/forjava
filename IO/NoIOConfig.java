@@ -9,8 +9,8 @@ import iBoxDB.LocalServer.IO.StreamAccess;
 public class NoIOConfig extends DatabaseConfig {
 
 	public NoIOConfig() {
-		this.ReadStreamCount = 64;
-		this.CachePageCount = Integer.MAX_VALUE;
+		this.ReadStreamCount = 8;
+		this.CacheLength = Long.MAX_VALUE;
 		this.FileIncSize = Integer.MAX_VALUE;
 	}
 

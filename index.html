@@ -815,7 +815,7 @@ box.Select(&quot;from Member where Field1 == ? & Field2 == ?&quot;)
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre>
  var server = new DB();
- server.EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
+ server.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
  var db = server.Open();
  db.Insert(&quot;Table&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
  var o1 = db.SelectKey&lt;Record&gt;(&quot;Table&quot;, 1);
@@ -825,7 +825,7 @@ box.Select(&quot;from Member where Field1 == ? & Field2 == ?&quot;)
                     </pre>
                 <pre>
  DB server = new DB();
- server.ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
+ server.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox db = server.open();
  db.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
  Record o1 = db.selectKey(Record.class, &quot;Table&quot;, 1);
@@ -854,14 +854,14 @@ box.Select(&quot;from Member where Field1 == ? & Field2 == ?&quot;)
  server.Dispose()
                 </pre>
                 <pre>
- //jjs -cp iBoxDBv181.jar 
+ //jjs -cp iBoxDBv19.jar 
  var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
  DB.root(&quot;/db/&quot;) 
  var server = new DB() 
  var db = server.open() 
  db.select(&quot;from table1 limit 0,3&quot;) 
    .forEach( function(v){ print(v) }) 
- db.cube().GetSchemas() 
+ db.cube().getSchemas() 
    .forEach( function(v){ print(v) }) 
  server.close() 
                 </pre>

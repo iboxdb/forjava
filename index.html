@@ -849,19 +849,19 @@ box.Select(&quot;from Member where Field1 == ? & Field2 == ?&quot;)
  let db = server.Open() 
  for v in db.Select(&quot;from OT limit 0 , 2&quot;) do 
    Console.WriteLine(DB.ToString(v)) 
- for v in (db.Cube() :?&gt; IBoxModifier).GetSchemas() do 
+ for v in db.GetDatabase().GetSchemata() do 
    Console.WriteLine(v.Key) 
  server.Dispose()
                 </pre>
                 <pre>
- //jjs -cp iBoxDBv191.jar 
+ //jjs -cp iBoxDB.jar 
  var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
  DB.root(&quot;/db/&quot;) 
  var server = new DB() 
  var db = server.open() 
  db.select(&quot;from table1 limit 0,3&quot;) 
    .forEach( function(v){ print(v) }) 
- db.cube().getSchemas() 
+ db.getDatabase().getSchemata() 
    .forEach( function(v){ print(v) }) 
  server.close() 
                 </pre>
@@ -949,7 +949,7 @@ iBoxDB(InMemory Mode)
 
             </p>
             <p>
-                Database Version: iBoxDB.NET v2.3.1&nbsp; iBoxDB.Java v1.9.1 &nbsp;
+                Database Version: iBoxDB.NET v2.3.2&nbsp; iBoxDB.Java v1.9.2 &nbsp;
                 <a href="iBoxDB-TableStyle-Document-NoSQL-Database-Embeddable-History.html"><span style="display: inline-block; width: 1px; height: 1px; overflow: hidden">iBoxDB Embeddable Document Object NoSQL Database Storage Engines </span>Download &amp; History</a>
                 &nbsp; &nbsp;<a href="mailto:iboxdb@hotmail.com">Support</a>&nbsp;
             </p>

@@ -461,6 +461,16 @@
  ildasm A.dll /out:A.il 
  rename A.dll A.bak
  ilasm  A.il  /dll /key=kp.snk</pre>
+
+
+            <a onclick="javascript:code2.style.display='block'">il2cpp patch 5.0.0p1</a>
+            <br />
+            <pre style="display: none" id="code2">
+ DB.Root(Application.persistentDataPath);
+ //RESET Intern
+ iBoxDB.BoxSystem.Platform.Intern = (s) =&gt; { return s; };
+</pre>
+
         </section>
     </div>
 

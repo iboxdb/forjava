@@ -467,8 +467,16 @@
             <br />
             <pre style="display: none" id="code2">
  DB.Root(Application.persistentDataPath);
- //*RESET Intern
+ //RESET Intern
  iBoxDB.BoxSystem.Platform.Intern = (s) =&gt; { return s; };
+</pre>
+
+            <a onclick="javascript:code3.style.display='block'">il2cpp webgl save</a>
+            <br />
+            <pre style="display: none" id="code3">
+if (GUI.Button (new Rect (0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
+   Application.ExternalEval( &quot;FS.syncfs(false, function (err) {});&quot;); 
+}
 </pre>
 
         </section>

@@ -480,6 +480,24 @@ if (GUI.Button (new Rect (0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
 }
 </pre>
 
+            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">web player save</a>
+            <br />
+            <pre style="display: none" id="code4">
+1. Remove FileStream codes 
+2. Start()
+    var data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;)); 
+    server = new DB(data);
+    server.MinConfig ().FileIncSize = 1; 
+    ...
+    db = server.Open ();
+  
+3. if (GUI.Button (new Rect (0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
+    var data = server.GetBuffer(); 
+    PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
+    PlayerPrefs.Save(); 
+  }
+</pre>
+
         </section>
     </div>
 

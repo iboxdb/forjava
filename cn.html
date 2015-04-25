@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="keywords" content="iBoxDB,Android,Xamarin,Unity3D,ACID,数据库事务,NoSQL,ORM,数据库,Java,Mono,Nashorn,嵌入式,C#,MVCC,文档,应用程序,NET,性能,对象,数据表">
+    <meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,Java,Android,Unity3D,Xamarin,C#,数据库事务,应用程序,WP">
     <meta name="description" content="iBoxDB 全事务极简高效NoSQL应用程序数据库引擎，支持 Java .NET C# Android Mono Unity3D Xamarin Nashorn Linux Windows Phone">
 
     <link rel="shortcut icon" href="favicon.ico" />
@@ -408,27 +408,7 @@
 
             <!-- key words -->
             <div style="width: 1px; height: 1px; overflow: hidden">
-                01. 应用程序数据库 iBoxDB NoSQL Database 线程安全 多用途 Java dotNET 本地数据库 Local Database ACID                 
-                02. MVCC ACID NoSQL 嵌入式 文档 数据库 引擎 Windows Phone Android iPhone Java NET Mono ASP NET CSharp
-                04. 嵌入式 NoSQL WindowsPhone 数据库 带 ACID 事务 X86 ARM  Mono embedded NoSQL database
-                05. java 数据库 iBoxDB 轻量 对象 文档 数据库 nosql databases Agile Development Smart Small JSON Database
-                06. C# 本地 数据库 简便快捷 引擎 c# 数据库 dotNET Database document database.
-                07. C# NoSQL 嵌入式 文档 数据库 Comparison Android NoSQL Database Java NoSQL Embedded Document 数据库比较 Mono NoSQL Database Comparison
-
-                08. Xamarin Unity3D ORM 专业 数据库事务 缓存 NoSQL Database Embedded Database 移动数据库
-                09. iBoxDB Android Windows Phone Fast Lightweight Mobile Document Database Java Database Engine Embeddable
-                10. Update Increment Selecting Tracer NET C# MVCC ACID NoSQL Embedded Document Database
-                11. Nashorn ACID NoSQL Database JavaScript Java Databae Unity NoSQL Database C# Java Serverless Table Style Server 非结构化数据 Less KeyValue
-                12. NoSQL SQL Lite Lightweight Object Relational Mapping 对象关系映射 Database Java JavaScript Nashorn Embedded Document 应用程序 数据库
-                13. Database NoSQL Database SQL 敏捷开发 Transaction NoSQL Graph Mono 免费 C# local server nosql storage engines
-                14. 轻量支持独立运行数据库 Xamarin Unity3D Linux ACID Transaction NoSQL Database dotNET C#
-                15. Best NoSQL Database Embedded For Java Net C# Android Windows Phone Nashorn Stable Standalone DB
-                16. Mono Unity3D Xamarin ACID Simple NoSQL Database CRUD Lightweight Fast Transaction 移动设备 手持设备 嵌入式
-                17. 事务型文档数据库 NoSQL Java C# 多用途 Self Contained fast database local server Windows Unity
-                18. Linux J2EE Web Java ACID NoSQL Embedded Database JSP WEB HTML5 JavaScript FREE Update Increment SQL java database Comparison java 面向对象 嵌入式 数据库
-                19. 内存数据库 ORM NoSQL Document Database for NET Java C# Android embedded database server
-                20. Android Xamarin Lightweight nosql databases c# local database document nosql java file db IL2CPP
-                21. Mono C# Java 简单 实用 高性能 Embedded Local 对象 Database ACID Android Windows Phone C# dotNET Databases NoSQL Mobile 数据同步 面向文档
+                iBoxDB NoSQL Database
             </div>
 
             <h3>项目介绍</h3>
@@ -748,7 +728,7 @@
 
                 <h5>数据库路径设置</h5>
 
-                ASP.NET
+                ASP.NET 跨平台
                 <pre>
 BoxFileStreamConfig.RootPath =
     HttpContext.Current.Server.MapPath(&quot;~/App_Data/&quot;);
@@ -795,18 +775,7 @@ public class StartListener implements ServletContextListener {
                </pre>
 
 
-
-                <h5>数据查询</h5>
-                <pre>
-//一般查询
-box.Select(&quot;from Member&quot;);
-//加载到内存中， 以'*'开始
-box.Select(&quot;*from Member&quot;);
-//跟踪数据, 以'!'开始
-box.Select(&quot;!from Member&quot;)
-                </pre>
-
-                <h5>设置索引提升查询速度</h5>
+                <h5>支持索引提升查询速度</h5>
                 <pre>
 config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;, &quot;Field2&quot;)
 box.Select(&quot;from Member where Field1 == ? & Field2 == ?&quot;)

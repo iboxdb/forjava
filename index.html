@@ -768,7 +768,7 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
                 <pre>
  var server = new DB();
  server.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
- var db = server.Open();
+ DB.AutoBox db = server.Open();
  db.Insert(&quot;Table&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
  var o1 = db.SelectKey&lt;Record&gt;(&quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
@@ -778,7 +778,7 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
                 <pre>
  DB server = new DB();
  server.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
- AutoBox db = server.open();
+ DB.AutoBox db = server.open();
  db.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
  Record o1 = db.selectKey(Record.class, &quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;

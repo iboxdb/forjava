@@ -53,10 +53,12 @@ public class HotFileBackup implements IBoxRecycler2 {
 
 	public void phase2() {
 		while (receiving) {
+			/*
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 			}
+			*/
 		}
 		ArrayList<BoxData> backupList;
 		synchronized (this) {

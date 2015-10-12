@@ -56,7 +56,7 @@ namespace iBoxDB.LocalServer.Replication
         {
             while (receiving)
             {
-                Thread.Sleep(10);
+                //Thread.Sleep(10);
             }
             List<BoxData> backupList;
             lock (this)

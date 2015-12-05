@@ -462,17 +462,7 @@
             <br />
 
 
-            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">tips: Customize .NET strong name</a>
-            <br />
-            <pre style="display: none" id="code1">
- sn -k kp.snk 
- ildasm A.dll /out:A.il 
- rename A.dll A.bak
- ilasm  A.il  /dll /key=kp.snk</pre>
-
-
-
-            <a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D 5.0p1+  &nbsp;WebGL save</a>
+            <a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D WebGL Save</a>
             <br />
             <pre style="display: none" id="code3">
 if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
@@ -480,7 +470,7 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
 }
 </pre>
 
-            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer save</a>
+            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
             <br />
             <pre style="display: none" id="code4">
 1. #if UNITY_WEBPLAYER { Remove FileStream codes }
@@ -512,23 +502,37 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
 
 
             <a href="javascript:void(0)" onclick="javascript:code6.style.display='block'">DNXCore project.json
-            </a>
+            </a>&nbsp; <a href="https://www.nuget.org/packages/iBoxDB.DNX/" target="_blank">[nuget]</a>
             <br />
             <pre style="display: none" id="code6">
-{ 
-   &quot;version&quot;: &quot;1.0.0-*&quot;, 
-   &quot;compilationOptions&quot;: { &quot;emitEntryPoint&quot;: true }, 
-   &quot;dependencies&quot;: { 
-      &quot;iBoxDB.DNX&quot;: &quot;2.6.2.8&quot;,       
-      &quot;Microsoft.NETCore.Runtime&quot;: &quot;1.0.0&quot;, 
-      &quot;System.IO.FileSystem&quot;: &quot;4.0.0&quot;, 
-      &quot;System.Reflection.Extensions&quot;: &quot;4.0.0&quot;, 
-      &quot;System.Threading.Tasks.Parallel&quot;: &quot;4.0.0&quot;, 
-      &quot;System.Console&quot;: &quot;4.0.0-*&quot;,
-      &quot;System.Threading.Thread&quot;: &quot;4.0.0-*&quot; 
-   }, 
-   &quot;frameworks&quot;: { &quot;dnxcore50&quot;: { } }
+&quot;dependencies&quot;: { &quot;iBoxDB.DNX&quot;: &quot;2.6.2.11&quot; }, 
+&quot;frameworks&quot;: { 
+  &quot;dnx451&quot;: { 
+    &quot;frameworkAssemblies&quot;: { 
+      &quot;System.Runtime&quot;: &quot;4.0.10.0&quot;, 
+      &quot;System.IO&quot;: &quot;4.0.0.0&quot;, 
+      &quot;System.Threading.Tasks.Parallel&quot;: &quot;4.0.0.0&quot; 
+    } 
+  }, 
+  &quot;dnxcore50&quot;: { 
+    &quot;dependencies&quot;: { 
+      &quot;System.Console&quot;: &quot;4.0.0-*&quot;, 
+      &quot;System.IO.FileSystem&quot;: &quot;4.0.1-*&quot;, 
+      &quot;System.Threading.Thread&quot;: &quot;4.0.0-*&quot;, 
+      &quot;System.Threading.Tasks.Parallel&quot;: &quot;4.0.0-*&quot;, 
+      &quot;System.Reflection.Extensions&quot;: &quot;4.0.1-*&quot; 
+    } 
+  } 
 }</pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
+            <br />
+            <pre style="display: none" id="code1">
+ sn -k kp.snk 
+ ildasm A.dll /out:A.il 
+ rename A.dll A.bak
+ ilasm  A.il  /dll /key=kp.snk</pre>
+
 
         </section>
     </div>

@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "description": "Console Application",
+
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "commands": {
+    "COM": "COM"
+  },
+
+  "dependencies": {
+    "iBoxDB.DNX": "2.6.2.11"
+  },
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "4.0.10.0",
+        "System.IO": "4.0.0.0",
+        "System.Threading.Tasks.Parallel": "4.0.0.0"
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0.0-*",
+        "System.IO.FileSystem": "4.0.1-*",
+        "System.Threading.Thread": "4.0.0-*",
+        "System.Threading.Tasks.Parallel": "4.0.0-*",
+        "System.Reflection.Extensions": "4.0.1-*"
+      }
+    }
+  }
+}

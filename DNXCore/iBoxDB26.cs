@@ -23,7 +23,7 @@ using iBoxDB.LocalServer.IO;
   }
 
 copy to  "static void Main(string[] args)"
-  DB.Root("/tmp/");
+  iBoxDB.LocalServer.DB.Root("/tmp/");
   var text =  iBoxDB.TestHelper.RunALL();
   Console.WriteLine(text);
 */
@@ -33,6 +33,7 @@ namespace iBoxDB
     {
         public static String RunALL(bool moreSpeedTest = false)
         {
+
             DBPlatform.SetStorage();
 
             String text = "";
@@ -927,8 +928,7 @@ namespace iBoxDB
         {
             //DB.Root(path); DB Files Path
 #if (WINDOWS_PHONE || UNITY_WP8) && (!UNITY_EDITOR)
-            DB.ResetStorage();
-#else
+            DB.Root(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
 #if (NETFX_CORE || UNITY_METRO) && (!UNITY_EDITOR)
             iBoxDB.WSDatabaseConfig.ResetStorage();
 #else

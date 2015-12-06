@@ -11,7 +11,7 @@
   },
 
   "dependencies": {
-    "iBoxDB.DNX": "2.6.2.11"
+    "iBoxDB.DNX": "2.6.2.15"
   },
   "frameworks": {
     "dnx451": {

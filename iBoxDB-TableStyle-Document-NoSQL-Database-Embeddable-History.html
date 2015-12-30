@@ -508,7 +508,7 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
             </a>&nbsp; <a href="https://github.com/iboxdb/aspnet-cross-platform-db/tree/master/dnxcore" target="_blank">[more]</a>
             <br />
             <pre style="display: none" id="code6">
-&quot;dependencies&quot;: { &quot;iBoxDB.DNX&quot;: &quot;2.6.2.15&quot; }, 
+&quot;dependencies&quot;: { &quot;iBoxDB&quot;: &quot;2.7.0.3&quot; }, 
 &quot;frameworks&quot;: { 
   &quot;dnx451&quot;: { 
     &quot;frameworkAssemblies&quot;: { 
@@ -525,7 +525,14 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
       &quot;System.Threading.Tasks.Parallel&quot;: &quot;4.0.0-*&quot;, 
       &quot;System.Reflection.Extensions&quot;: &quot;4.0.1-*&quot; 
     } 
-  } 
+  },
+  { export DOTNET_REFERENCE_ASSEMBLIES_PATH=&quot;/usr/lib/mono/xbuild-frameworks&quot; }
+  &quot;dnx45&quot;: { 
+    &quot;frameworkAssemblies&quot;: { 
+      &quot;System.Runtime&quot;: &quot;4.0.0&quot;, 
+      &quot;System.IO&quot;: &quot;4.0.0&quot;
+    } 
+  }, 
 }</pre>
 
             <a href="javascript:void(0)" onclick="javascript:code8.style.display='block'">Visual Studio up1 + Windows Phone 8 + dnx451 local</a>

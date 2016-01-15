@@ -45,14 +45,14 @@ public final class BoxReplication {
 	private static boolean MasterAction(BEntity op, LocalBox box) {
 		switch (op.ActionType.Ord) {
 		case ActionType.Ord_Insert:
-			return box.Insert(op.TableName, op.Value);
+			return box.Insert(op.TableName, op.Value, op.Length).has();
 		case ActionType.Ord_Delete:
-			return box.Delete(op.TableName, op.Key);
+			return box.Delete(op.TableName, op.Key).has();
 		case ActionType.Ord_Update:
-			if (box.Update(op.TableName, op.Key, op.Value)) {
+			if (box.Update(op.TableName, op.Key, op.Value).has()) {
 				return true;
 			} else {
-				return box.Insert(op.TableName, op.Value);
+				return box.Insert(op.TableName, op.Value, op.Length).has();
 			}
 		}
 		throw new RuntimeException("");

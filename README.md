@@ -7,4 +7,4 @@ Web Site  [http://www.iboxdb.com/](http://www.iboxdb.com/)
 
 [Full Text Search](https://github.com/iboxdb/ftserver)
 
-[Web Site Download Mirror](http://sourceforge.net/projects/application-database/files/latest/download)
+[Web Site Download Mirror](https://sourceforge.net/projects/application-database/files/latest/download)

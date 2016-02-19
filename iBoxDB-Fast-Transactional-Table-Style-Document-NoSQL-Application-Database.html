@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="keywords" content="iBoxDB,Android,Xamarin,Unity3D,ACID,Transaction,NoSQL,Database,Java,Mono,Nashorn,C#,Embedded,Document,Lightweight,JSON,Fast,NET,ORM">
+    <meta name="keywords" content="iBoxDB,ORM,Android,Xamarin,Unity3D,ACID,Transaction,NoSQL,Database,Java,Mono,Nashorn,C#,Embedded,Document,Lightweight,JSON,Fast,NET">
     <meta name="description" content="iBoxDB NoSQL Database Document Database Java Database C# Database Embeddable ORM Android Mono Unity3D Xamarin .NET Database Nashorn Application Database Linux Windows Phone">
 
     <link rel="shortcut icon" href="favicon.ico" />
@@ -121,8 +121,6 @@ Theme Styles
             -moz-transition: text-shadow 0.5s ease;
             -o-transition: color 0.5s ease;
             -o-transition: text-shadow 0.5s ease;
-            -ms-transition: color 0.5s ease;
-            -ms-transition: text-shadow 0.5s ease;
         }
 
             a:hover, a:focus {
@@ -152,8 +150,6 @@ Theme Styles
             box-shadow: 0 0 5px #ebebeb;
             -webkit-box-shadow: 0 0 5px #ebebeb;
             -moz-box-shadow: 0 0 5px #ebebeb;
-            -o-box-shadow: 0 0 5px #ebebeb;
-            -ms-box-shadow: 0 0 5px #ebebeb;
         }
 
         p img {
@@ -279,7 +275,6 @@ Full-Width Styles
             background: #212121;
             background: -moz-linear-gradient(top, #373737, #212121);
             background: -webkit-linear-gradient(top, #373737, #212121);
-            background: -ms-linear-gradient(top, #373737, #212121);
             background: -o-linear-gradient(top, #373737, #212121);
             background: linear-gradient(top, #373737, #212121);
         }
@@ -397,12 +392,16 @@ La base de données de transaction La base de données de documents Rapide
 
             <p>iBoxDB is a fast transactional table style document NoSQL Application Database, easily store, process objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and .NET engines, no dependencies.</p>
 
-            <p>iBoxDB has a well designed interface with great performance and capability for agile development, you can focus on the applications. It can embed into an application and deploy on mobiles, desktops, servers, then help designers to persist objects and documents thread-safely with transaction support. </p>
+            <p>
+                iBoxDB has a well designed interface with great performance and capability for agile development. You can create applications with database services embedded and deploy it on mobiles, desktops, servers,
+                to persist your data from anywhere.
+            </p>
 
             <p>
-                Dual Core NoSQL Application Database 
+                Dual Core Application Database
                 <br />
-                For JAVA C# Android Mono Unity Xamarin .NET Nashorn Linux Windows Phone
+                For &nbsp; JAVA &nbsp; .NET &nbsp; Android &nbsp; Mono &nbsp; Unity3D &nbsp; Xamarin &nbsp; Nashorn &nbsp; Linux &nbsp; Windows Phone
+
             </p>
 
 
@@ -431,7 +430,7 @@ La base de données de transaction La base de données de documents Rapide
                 <li>JAVA6+ &nbsp; .NET2+</li>
             </ul>
 
-            <div id="details">
+            <div>
 
 
                 <h3>Examples</h3>
@@ -624,8 +623,8 @@ La base de données de transaction La base de données de documents Rapide
  string 
        
  //non-indexable
- MemoryStream STREAM ;
  Dictionary&lt;string, object&gt;
+ MemoryStream
  bool[] 
  char[] 
  byte[]
@@ -670,8 +669,9 @@ La base de données de transaction La base de données de documents Rapide
  String
  
  //Non-Indexable
- byte[]
  HashMap&lt;String,Object&gt;
+ MemoryStream
+ byte[]
  Object[]
                             </pre>
                         </td>
@@ -690,44 +690,48 @@ La base de données de transaction La base de données de documents Rapide
                             <pre style="margin: 0px; padding: 0px;">
  class BoxFileStreamConfig
  class BoxMemoryStreamConfig
- class BoxIsolatedStorageFileStreamConfig
- class ReadonlyResourceStreamConfig
-                                </pre>
+ class ReadonlyStreamConfig
+ class CacheStreamConfig </pre>
                         </td>
 
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
                             <pre style="margin: 0px; padding: 0px;">
  class BoxFileStreamConfig 
  class BoxMemoryStreamConfig
-                                
-                                 
-                                </pre>
+ class ReadonlyStreamConfig
+ class CacheStreamConfig </pre>
                         </td>
                     </tr>
                 </table>
 
 
                 <h5>Database Path</h5>
-
+                C# &amp; JAVA,&nbsp;  place outside IDE working directory can get better performance
+                <pre>
+iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;);
+                </pre>
                 ASP.NET Cross Platform
                 <pre>
-BoxFileStreamConfig.RootPath =
-    HttpContext.Current.Server.MapPath(&quot;~/App_Data/&quot;);
+iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));
                       </pre>
 
                 Xamarin
                 <pre>
-BoxFileStreamConfig.RootPath =
-   System.Environment.GetFolderPath( 
-                   System.Environment.SpecialFolder.Personal ) + &quot;/&quot;;
+iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
+       System.Environment.SpecialFolder.Personal));
                           </pre>
+
+                Unity3D
+                <pre>
+iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);
+                </pre>
 
                 Android
                 <pre>
-BoxFileStreamConfig.RootPath = 
-   android.os.Environment.getDataDirectory().getAbsolutePath()
-	  + &quot;/data/&quot; + packageName + &quot;/&quot;;
+iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
+       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;);
                 </pre>
+
 
                 JSP WebApplication
                 <pre>
@@ -735,19 +739,14 @@ BoxFileStreamConfig.RootPath =
 public class StartListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-      String path = sce.getServletContext().getRealPath(&quot;/&quot;) 
-                   + &quot;DB&quot; + File.separatorChar;
-      BoxFileStreamConfig.RootPath = path;
-      File f = new File(BoxFileStreamConfig.RootPath);
-      f.mkdir();     
+       String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
+       new File(path).mkdirs();   
+       iBoxDB.LocalServer.DB.root(path); 
     }
 }
                </pre>
 
-                Unity3D
-                <pre>
-DB.Root(Application.persistentDataPath);
-                </pre>
+
 
                 <h5>Query</h5>
                 <pre>
@@ -759,89 +758,119 @@ box.Select(&quot;*from Member&quot;);
 box.Select(&quot;!from Member&quot;)
                 </pre>
 
-                <h5>Getting Started</h5>
+                <h5>Index, make Select hundred times faster in average</h5>
                 <pre>
- var server = new DB(1, &quot;&quot;, IsWP);
- server.EnsureTable&lt;Record&gt;("Table1", &quot;ID&quot;);
- var db = server.Open();
- //insert
- db.Insert(&quot;Table1&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
- //select
- var o1 = db.SelectKey&lt;Record&gt;(&quot;Table1&quot;, 1);
- //update
+config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
+config.EnsureIndex(Member.class, &quot;Member&quot;, isUniqueIndex,&quot;Field1&quot;,&quot;Field2&quot;)
+box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
+</pre>
+
+                <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
+                <pre>
+ var server = new DB();
+ server.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
+ DB.AutoBox auto = server.Open();
+ auto.Insert(&quot;Table&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
+ var o1 = auto.SelectKey&lt;Record&gt;(&quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
- db.Update(&quot;Table1&quot;, o1);
+ auto.Update(&quot;Table&quot;, o1);
+ auto.Delete(&quot;Table&quot;, 1);
                     </pre>
                 <pre>
- DB db = new DB(1, &quot;&quot;);
- db.ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
- AutoBox box = db.open();
- //insert
- box.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
- //select
- Record o1 = box.selectKey(Record.class, &quot;Table&quot;, 1);
- //update
+ DB server = new DB();
+ server.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
+ DB.AutoBox auto = server.open();
+ auto.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
+ Record o1 = auto.selectKey(Record.class, &quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
- box.update("Table", o1);
+ auto.update(&quot;Table&quot;, o1);
+ auto.delete(&quot;Table&quot;, 1);
+                </pre>
+
+
+                <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
+                <pre>
+ #r &quot;iBoxDB.dll&quot; 
+ open iBoxDB.LocalServer 
+ open System 
+ DB.Root( &quot;C:\\DB&quot; ) 
+ let server = new DB() 
+ let db = server.Open() 
+ for v in db.Select(&quot;from OT limit 0 , 2&quot;) do 
+   Console.WriteLine(DB.ToString(v)) 
+ for v in db.GetDatabase().GetSchemata() do 
+   Console.WriteLine(v.Key) 
+ server.Dispose()
+                </pre>
+                <pre>
+ //jjs -cp iBoxDB.jar 
+ var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
+ DB.root(&quot;/db/&quot;) 
+ var server = new DB() 
+ var db = server.open() 
+ db.select(&quot;from table1 limit 0,3&quot;) 
+   .forEach( function(v){ print(v) }) 
+ db.getDatabase().getSchemata() 
+   .forEach( function(v){ print(v) }) 
+ server.close() 
                 </pre>
 
                 <h5>Benchmark with MongoDB</h5>
                 iBoxDB.Java 32bit System Low Memory
                 <br />
-                iBoxDB.java v1.4.1 
-  mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
+                iBoxDB.java v1.4.1
+                mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
                 <pre>
 Results:
 threadCount=100000 , batchCount=10
 MongoDB(Default)
-Database Transaction Test: None
-MongoDB Insert&amp;Counting:1000000  AVG:10521 objects/s
-
+ Database Transaction Test: None
+ Insert:1000000  AVG:10521 objects/s
+ 
 iBoxDB(File Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1000000  AVG:17981 objects/s
-iBoxDB Update:1000000  AVG:12397 objects/s 
-iBoxDB Delete:1000000  AVG:22869 objects/s
-
+ Database Transaction Test: Succeeded
+ Insert:1000000  AVG:17981 objects/s
+ Update:1000000  AVG:12397 objects/s 
+ Delete:1000000  AVG:22869 objects/s
+            
 iBoxDB(MemoryMappedFile Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1000000  AVG:38458 objects/s
-iBoxDB Update:1000000  AVG:20200 objects/s 
-iBoxDB Delete:1000000  AVG:33342 objects/s
-
+ Database Transaction Test: Succeeded
+ Insert:1000000  AVG:38458 objects/s
+ Update:1000000  AVG:20200 objects/s 
+ Delete:1000000  AVG:33342 objects/s
+ 
 iBoxDB(InMemory Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1000000  AVG:39132 objects/s
-iBoxDB Update:1000000  AVG:20226 objects/s 
-iBoxDB Delete:1000000  AVG:33658 objects/s
+ Database Transaction Test: Succeeded
+ Insert:1000000  AVG:39132 objects/s
+ Update:1000000  AVG:20226 objects/s 
+ Delete:1000000  AVG:33658 objects/s
                 </pre>
                 <br />
                 iBoxDB.NET 64bit System<br />
-                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34 
+                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34
                 <pre>
 MongoDB(Default)
-Database Transaction Test: None
-MongoDB Insert&amp;Counting:1,000,000 AVG: 32,702 objects/s
-
+ Database Transaction Test: None
+ Insert:1,000,000  AVG: 32,702 objects/s
+ 
 iBoxDB(File Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1,000,000 AVG: 33,368 objects/s
-iBoxDB Select&amp;Update:1,000,000 AVG: 16,939 objects/s 
-iBoxDB Delete:1,000,000 AVG: 22,504 objects/s
-
+ Database Transaction Test: Succeeded
+ Insert:1,000,000  AVG:33,368 objects/s
+ Update:1,000,000  AVG:16,939 objects/s 
+ Delete:1,000,000  AVG:22,504 objects/s
+ 
 iBoxDB(MemoryMappedFile Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1,000,000 AVG: 42,236 objects/s
-iBoxDB Select&amp;Update:1,000,000 AVG: 17,765 objects/s 
-iBoxDB Delete:1,000,000 AVG: 23,147 objects/s
-
+ Database Transaction Test: Succeeded
+ Insert:1,000,000  AVG:42,236 objects/s
+ Update:1,000,000  AVG:17,765 objects/s 
+ Delete:1,000,000  AVG:23,147 objects/s
+ 
 iBoxDB(InMemory Mode)
-Database Transaction Test: Succeeded
-iBoxDB Insert&amp;Counting:1,000,000 AVG: 47,382 objects/s
-iBoxDB Select&amp;Update:1,000,000 AVG: 26,806 objects/s 
-iBoxDB Delete:1,000,000 AVG: 35,092 objects/s
+ Database Transaction Test: Succeeded
+ Insert:1,000,000  AVG:47,382 objects/s
+ Update:1,000,000  AVG:26,806 objects/s 
+ Delete:1,000,000  AVG:35,092 objects/s
                 </pre>
-
 
                 <h5>Replication Master-Slave , Master-Master</h5>
                 <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" /><br />

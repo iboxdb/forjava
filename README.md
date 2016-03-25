@@ -5,5 +5,5 @@ Web Site  [http://www.iboxdb.com/](http://www.iboxdb.com/)  Download [Mirror①]
 
 [Wiki Code](https://github.com/iboxdb/forjava/wiki)
 
-[Full Text Search](https://github.com/iboxdb/ftserver)
+[Full Text Search Project](https://github.com/iboxdb/ftserver)
 

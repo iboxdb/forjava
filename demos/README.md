@@ -1,6 +1,6 @@
 ####DEMOS
 
-######KeyOnly.java Output
+######KeyOnly.java Output     [Link](https://github.com/iboxdb/forjava/blob/master/demos/KeyOnly.java)
 
 ```
 Insert TotalObjects: 1,000,000 FileSize: 158MB

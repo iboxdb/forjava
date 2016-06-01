@@ -541,6 +541,41 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
             <br />
             <a href="http://scan.xamarin.com/Home/Report?scanId=1df908c4-0e6e-429d-b3fa-befefbb4efe0" target="_blank">Xamarin Scan Results</a>
             <br />
+            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">Unity3D iOS Mono2X backend backward compatible</a>
+            <br />
+            <pre style="display: none" id="code9">
+//Remove the method &quot;WaitHandle::WaitOne(Int32)&quot;, not necessary. 
+static void Main(string[] args) { 
+  //import Mono.Cecil.dll  [ver 0.9.6, not the old 0.6.9] 
+  //(\Unity\Editor\Data\Managed\Mono.Cecil.dll) 
+  //using Mono.Cecil; 
+  var fileName = @&quot;.\iBoxDBv291_25\NETDB\NET2\iBoxDB.NET2.dll&quot;; 
+  var fileName_out = @&quot;.\iBoxDBv291_25\NETDB\NET2\Dasm\iBoxDB.NET2.dll&quot;; 
+  ModuleDefinition module = ModuleDefinition.ReadModule(fileName); 
+  foreach (var type in module.GetTypes()) { 
+    if (type.FullName == &quot;iBoxDB.BoxSystem/Platform/Class2&quot;) { 
+      foreach (var method in type.Methods) { 
+        if (method.Name == &quot;method_1&quot;) { 
+           //iBoxDB.BoxSystem+Platform+Class2::method_1(string),
+           //the Last 2 is &quot;return &#39;string&#39;&quot; ; 
+           while (method.Body.Instructions.Count &gt; 2) { 
+             Console.WriteLine(&quot;Remove &quot; +method.Body.Instructions[0]); 
+             method.Body.Instructions.RemoveAt(0); 
+           } 
+           while (method.Body.ExceptionHandlers.Count &gt; 0) { 
+             Console.WriteLine(&quot;Remove &quot; +method.Body.ExceptionHandlers[0]); 
+             method.Body.ExceptionHandlers.RemoveAt(0); 
+           } 
+           module.Write(fileName_out); 
+           Console.WriteLine(&quot;Fixed&quot;); 
+           return; 
+        } 
+      } 
+    } 
+  } 
+}
+</pre>
+
             <br />
             <h5>License</h5>
             FreeSoftware Redistributable

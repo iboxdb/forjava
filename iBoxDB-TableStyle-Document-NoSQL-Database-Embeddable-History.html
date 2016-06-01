@@ -544,7 +544,8 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
             <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">Unity3D iOS Mono2X backend backward compatible</a>
             <br />
             <pre style="display: none" id="code9">
-//Remove the method &quot;WaitHandle::WaitOne(Int32)&quot;, not necessary. 
+//Set Strippling Level to &quot;Strip Assemblies&quot;/&quot;Strip Byte Code&quot;
+//or Strip the method &quot;WaitHandle::WaitOne(Int32)&quot; by code
 static void Main(string[] args) { 
   //import Mono.Cecil.dll  [ver 0.9.6, not the old 0.6.9] 
   //(\Unity\Editor\Data\Managed\Mono.Cecil.dll) 
@@ -559,11 +560,11 @@ static void Main(string[] args) {
            //iBoxDB.BoxSystem+Platform+Class2::method_1(string),
            //the Last 2 is &quot;return &#39;string&#39;&quot; ; 
            while (method.Body.Instructions.Count &gt; 2) { 
-             Console.WriteLine(&quot;Remove &quot; +method.Body.Instructions[0]); 
+             Console.WriteLine(&quot;Remove &quot;+method.Body.Instructions[0]); 
              method.Body.Instructions.RemoveAt(0); 
            } 
            while (method.Body.ExceptionHandlers.Count &gt; 0) { 
-             Console.WriteLine(&quot;Remove &quot; +method.Body.ExceptionHandlers[0]); 
+             Console.WriteLine(&quot;Remove &quot;+method.Body.ExceptionHandlers[0]); 
              method.Body.ExceptionHandlers.RemoveAt(0); 
            } 
            module.Write(fileName_out); 

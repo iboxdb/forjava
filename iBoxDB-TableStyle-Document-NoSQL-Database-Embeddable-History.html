@@ -541,6 +541,31 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
             <br />
             <a href="http://scan.xamarin.com/Home/Report?scanId=1df908c4-0e6e-429d-b3fa-befefbb4efe0" target="_blank">Xamarin Scan Results</a>
             <br />
+            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">When to close the DB</a>
+            <br />
+            <pre style="display: none" id="code9">
+static DB db; 
+static AutoBox auto; 
+void onApplicationStart() { 
+  db = new DB(1); 
+  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;); 
+  auto = db.open(); 
+} 
+void onApplicationClose() { 
+  auto.getDatabase().close(); 
+  // or db.close(); 
+} 
+                
+void anywhere1() { 
+  auto.insert(&quot;Table&quot;, new Member()); 
+} 
+void anywhere2() { 
+  try (Box box = auto.cube()) { 
+    box.d(&quot;Table&quot;).insert(new Member()); 
+    CommitResult cr = box.commit(); 
+  } 
+}
+</pre>
             <br />
 
             <h5>License</h5>

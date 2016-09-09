@@ -530,17 +530,7 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
             <pre style="display: none" id="code7">
 -XX:+UseConcMarkSweepGC 
 </pre>
-
-            <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>
-            <br />
-            <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search FTS C#</a>
-            <br />
-            <a href="https://github.com/iboxdb/hijk" target="_blank">Nashorn JavaScript</a>
-            <br />
-            <a href="https://github.com/iboxdb/forjava/tree/master/demos" target="_blank">Key Only Example JAVA</a>
-
-            <br />
-            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">When to close the DB</a>
+            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB life cycle</a>
             <br />
             <pre style="display: none" id="code9">
 static DB db; 
@@ -549,11 +539,7 @@ void onApplicationStart() {
   db = new DB(1); 
   db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;); 
   auto = db.open(); 
-} 
-void onApplicationClose() { 
-  auto.getDatabase().close(); 
-} 
-                
+}                 
 void anywhere1() { 
   auto.insert(&quot;Table&quot;, new Member()); 
 } 
@@ -563,7 +549,18 @@ void anywhere2() {
     CommitResult cr = box.commit(); 
   } 
 }
+void onApplicationClose() { 
+  auto.getDatabase().close(); 
+} 
 </pre>
+            <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>
+            <br />
+            <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search FTS C#</a>
+            <br />
+            <a href="https://github.com/iboxdb/hijk" target="_blank">Nashorn JavaScript</a>
+            <br />
+            <a href="https://github.com/iboxdb/forjava/tree/master/demos" target="_blank">Key Only Example JAVA</a>
+            <br />
             <br />
 
             <h5>License</h5>

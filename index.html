@@ -569,16 +569,18 @@
                 <h5>Snapshot-Serializable Transaction</h5>
                 <table>
                     <tr>
-                        <th>Transaction</th>
-                        <td>Application Point</td>
-                        <td>Database Point</td>
+                        <th>Transaction Step</th>
+                        <th>Isolation Level</th>
+
                     </tr>
                     <tr>
-                        <th>Isolation Level</th>
+                        <td>Application Point</td>
                         <td>Snapshot</td>
+                    </tr>
+                    <tr>
+                        <td>Database Point</td>
                         <td>Serializable</td>
                     </tr>
-
                 </table>
 
                 <h5>Supported Types</h5>
@@ -669,7 +671,7 @@
  BigInteger
  String
  
- //Non-Indexable
+ //non-indexable
  HashMap&lt;String,Object&gt;
  MemoryStream
  byte[]

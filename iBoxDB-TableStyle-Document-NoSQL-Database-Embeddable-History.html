@@ -528,6 +528,9 @@ void anywhere2() {
     box.d(&quot;Table&quot;).insert(new Member()); 
     CommitResult cr = box.commit(); 
   } 
+} 
+boolean exists(Box box) { 
+  return box.selectCount(&quot;from Table limit 0,1&quot;) &gt; 0; 
 }
 void onApplicationClose() { 
   auto.getDatabase().close(); 

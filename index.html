@@ -770,9 +770,9 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
 
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre>
- var server = new DB();
- server.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
- DB.AutoBox auto = server.Open();
+ var db = new DB();
+ db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
+ AutoBox auto = db.Open();
  auto.Insert(&quot;Table&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
  var o1 = auto.SelectKey&lt;Record&gt;(&quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
@@ -780,9 +780,9 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
  auto.Delete(&quot;Table&quot;, 1);
                     </pre>
                 <pre>
- DB server = new DB();
- server.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
- DB.AutoBox auto = server.open();
+ DB db = new DB();
+ db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
+ AutoBox auto = db.open();
  auto.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
  Record o1 = auto.selectKey(Record.class, &quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
@@ -797,25 +797,25 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
  open iBoxDB.LocalServer 
  open System 
  DB.Root( &quot;C:\\DB&quot; ) 
- let server = new DB() 
- let db = server.Open() 
- for v in db.Select(&quot;from OT limit 0 , 2&quot;) do 
+ let db = new DB() 
+ let auto = db.Open() 
+ for v in auto.Select(&quot;from OT limit 0 , 2&quot;) do 
    Console.WriteLine(DB.ToString(v)) 
- for v in db.GetDatabase().GetSchemata() do 
+ for v in auto.GetDatabase().GetSchemata() do 
    Console.WriteLine(v.Key) 
- server.Dispose()
+ db.Dispose()
                 </pre>
                 <pre>
  //jjs -cp iBoxDB.jar 
  var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
  DB.root(&quot;/db/&quot;) 
- var server = new DB() 
- var db = server.open() 
- db.select(&quot;from table1 limit 0,3&quot;) 
+ var db = new DB() 
+ var auto = db.open() 
+ auto.select(&quot;from table1 limit 0,3&quot;) 
    .forEach( function(v){ print(v) }) 
- db.getDatabase().getSchemata() 
+ auto.getDatabase().getSchemata() 
    .forEach( function(v){ print(v) }) 
- server.close() 
+ db.close() 
                 </pre>
 
                 <h5>Benchmark with MongoDB</h5>

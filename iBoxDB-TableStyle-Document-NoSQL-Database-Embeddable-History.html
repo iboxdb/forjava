@@ -497,7 +497,7 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
 &lt;/Project&gt;
             </pre>
 
- 
+
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />
             <pre style="display: none" id="code1">
@@ -518,6 +518,7 @@ static AutoBox auto;
 void onApplicationStart() { 
   db = new DB(1); 
   db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;); 
+  db.getConfig().ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;);
   auto = db.open(); 
 }                 
 void anywhere1() { 
@@ -531,6 +532,13 @@ void anywhere2() {
 } 
 boolean exists(Box box) { 
   return box.selectCount(&quot;from Table limit 0,1&quot;) &gt; 0; 
+} 
+&lt;V&gt; Iterable&lt;V&gt; startsWith(Box box, Class&lt;V&gt; vClass, String prefix) { 
+  String begin = prefix; 
+  char[] cs = prefix.toCharArray(); 
+  cs[cs.length - 1] = (char) ((short) cs[cs.length - 1] + 1); 
+  String end = new String(cs); 
+  return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end); 
 }
 void onApplicationClose() { 
   auto.getDatabase().close(); 
@@ -540,11 +548,11 @@ void onApplicationClose() {
             <br />
             <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search FTS C#</a>
             <br />
-            <a href="https://github.com/iboxdb/hijk" target="_blank">Nashorn JavaScript</a>
-            <br />
             <a href="https://github.com/iboxdb/forjava/tree/master/demos" target="_blank">Key Only Example JAVA</a>
             <br />
             <a href="https://github.com/iboxdb/forjava/wiki/Use-multi-thread-to-increase-speed-and-use-CommitEvent-to-decrease-conflict#ss-transaction" target="_blank">Snapshot and Serializable Isolations in one Transaction</a>
+            <br />
+            <a href="https://github.com/iboxdb/hijk" target="_blank">Nashorn JavaScript</a>
             <br />
             <br />
 

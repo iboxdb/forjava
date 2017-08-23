@@ -475,7 +475,7 @@
 </code></pre>
                     <pre><code class="java">  box.d(&quot;Table&quot;, ID).select(Member.class);
   //Composite Key
-  box.d(&quot;Table2&quot;,8, &quot;MyID&quot;).select(Product.class);  </code></pre>
+  box.d(&quot;Table2&quot;, 8, &quot;MyID&quot;).select(Product.class);  </code></pre>
                 </div>
 
                 <h5>SQL Like</h5>
@@ -492,7 +492,7 @@
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Value&quot;));</code></pre>
+                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new Query(&quot;Value&quot;));</code></pre>
                 </div>
 
                 <h5>Compatible with LINQ (.NET)</h5>
@@ -580,7 +580,7 @@
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ini"> bool
+                            <pre style="margin: 0px; padding: 0px;"><code class="diff"> bool
  char
  byte
  sbyte
@@ -634,7 +634,7 @@
                         </td>
 
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ini"> boolean 
+                            <pre style="margin: 0px; padding: 0px;"><code class="diff"> boolean 
  Boolean
  byte 
  Byte
@@ -738,6 +738,7 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
 
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre><code class="cs"> using iBoxDB.LocalServer;
+
  var db = new DB();
  db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.Open();
@@ -747,6 +748,7 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
  auto.Update(&quot;Table&quot;, o1);
  auto.Delete(&quot;Table&quot;, 1);  </code></pre>
                 <pre><code class="java"> import iBoxDB.LocalServer.*;
+
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.open();

@@ -163,7 +163,7 @@
             border: none;
         }
 
-        pre, code {
+        pre {
             width: 100%;
             color: #222;
             background-color: #fff;
@@ -327,6 +327,9 @@
             background: #212121;
         }
     </style>
+    <link rel="stylesheet" href="highlight/styles/vs.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
@@ -424,100 +427,86 @@
 
                 <h5>Each box is an ISOLATED data space (transaction-based)</h5>
                 <div>
-                    <pre>  using(var box = db.Cube())
+                    <pre><code class="cs">  using(var box = db.Cube())
   {                            
      //select, insert, update, delete ...
      var result = box.Commit();
   }
-</pre>
-                    <pre>
-  try(Box box = db.cube()){
+</code></pre>
+                    <pre><code class="java">  try(Box box = db.cube()){
      ...
      CommitResult r = box.commit();
-  }
-                    </pre>
+  }  </code></pre>
 
                 </div>
 
                 <h5>Normal Object</h5>
                 <div>
-                    <pre> box.Bind(&quot;Member&quot;).Insert(
+                    <pre><code class="cs"> box[&quot;Member&quot;].Insert(
        new Member() {  
              ID=box.NewId(Member.IncTableID, 1) ,
              LoginName = &quot;Andy&quot;,
              Password = Member.EncodePassowrd(&quot;123&quot;),
              Tags = new string[]{ &quot;Nice&quot; , &quot;Strong&quot; }
         }
-      );
-</pre>
-                    <pre>
-  Member m = new Member();
+  );
+</code></pre>
+                    <pre><code class="java">  Member m = new Member();
   m.ID = box.newId(Member.IncTableID, 1);
   m.setName(&quot;Andy&quot;);
   m.setTags(new Object[] { &quot;Nice&quot;, &quot;Strong&quot; });
-  box.bind(&quot;Table&quot;).insert(m);
-                    </pre>
+  box.d(&quot;Table&quot;).insert(m); </code></pre>
                 </div>
 
                 <h5>Dynamic Object (document database)</h5>
                 <div>
-                    <pre>  game[&quot;GameType&quot;] = &quot;ACT&quot;;
-  box.Bind(&quot;Product&quot;).Insert(game);
-</pre>
-                    <pre>
-  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
-  box.bind(&quot;Table&quot;).insert(game);
-                    </pre>
+                    <pre><code class="cs">  game[&quot;GameType&quot;] = &quot;ACT&quot;;
+  box[&quot;Product&quot;].Insert(game);
+</code></pre>
+                    <pre><code class="java">  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
+  box.d(&quot;Table&quot;).insert(game);  </code></pre>
                 </div>
 
                 <h5>Key Value Style Query</h5>
                 <div>
-                    <pre>  box.Bind(&quot;Table&quot;, 2L).Select&lt;AClass&gt;();
+                    <pre><code class="cs">  box[&quot;Table&quot;, 2L].Select&lt;AClass&gt;();
    //Composite Key
-  box.Bind(&quot;Table2&quot;, 99, &quot;ABC&quot;).Select&lt;BClass&gt;();
-</pre>
-                    <pre>
-  box.bind(&quot;Table&quot;, ID).select(Member.class);
+  box[&quot;Table2&quot;, 99, &quot;ABC&quot;].Select&lt;BClass&gt;();
+</code></pre>
+                    <pre><code class="java">  box.d(&quot;Table&quot;, ID).select(Member.class);
   //Composite Key
-  box.bind(&quot;Table2&quot;,8, &quot;MyID&quot;).select(Product.class);
-                    </pre>
+  box.d(&quot;Table2&quot;,8, &quot;MyID&quot;).select(Product.class);  </code></pre>
                 </div>
 
                 <h5>SQL Like</h5>
 
                 <div>
-                    <pre>  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
-  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;);
-</pre>
-                    <pre>
-  //from [table] where [condition] 
+                    <pre><code class="cs">  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
+  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;);</code></pre>
+                    <pre><code class="java">  //from [table] where [condition] 
   //                    order by [field1] desc,[field2] limit [0,10]
   //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
   //[IFunction:] =[F1,F2,F3]
-  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;);
-                    </pre>
+  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
                 </div>
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre>  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Value&quot;));
-</pre>
+                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new QueryArray(&quot;Value&quot;));</code></pre>
                 </div>
 
                 <h5>Compatible with LINQ (.NET)</h5>
                 <div>
-                    <pre>  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
+                    <pre><code class="cs">  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
   where o.Text.Contains(text)
-  select o;
-</pre>
+  select o;</code></pre>
                 </div>
 
                 <h5>Compatible with Stream (Java8)</h5>
                 <div>
-                    <pre>  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
+                    <pre><code class="java">  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
   .collect(Collectors.groupingBy((l) -&gt; l.get(&quot;GroupID&quot;),
-   Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));
-</pre>
+   Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
                 </div>
 
                 <h5>Update Increment</h5>
@@ -591,8 +580,7 @@
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- bool
+                            <pre style="margin: 0px; padding: 0px;"><code class="ini"> bool
  char
  byte
  sbyte
@@ -642,13 +630,11 @@
  double[] 
  decimal[] 
  DateTime[] 
- Guid[]
-             </pre>
+ Guid[] </code></pre>
                         </td>
 
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- boolean 
+                            <pre style="margin: 0px; padding: 0px;"><code class="ini"> boolean 
  Boolean
  byte 
  Byte
@@ -676,7 +662,7 @@
  MemoryStream
  byte[]
  Object[]
-                            </pre>
+                            </code></pre>
                         </td>
                     </tr>
                 </table>
@@ -690,19 +676,17 @@
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- class BoxFileStreamConfig
+                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig
  class BoxMemoryStreamConfig
  class ReadonlyStreamConfig
- class CacheStreamConfig </pre>
+ class CacheStreamConfig </code></pre>
                         </td>
 
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- class BoxFileStreamConfig 
+                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig 
  class BoxMemoryStreamConfig
  class ReadonlyStreamConfig
- class CacheStreamConfig </pre>
+ class CacheStreamConfig </code></pre>
                         </td>
                     </tr>
                 </table>
@@ -710,35 +694,24 @@
 
                 <h5>Database Path</h5>
                 C# &amp; JAVA,&nbsp;  place outside IDE working directory can get better performance
-                <pre>
-iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;);
-                </pre>
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
                 ASP.NET Cross Platform
-                <pre>
-iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));
-                      </pre>
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
 
                 Xamarin
-                <pre>
-iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
-       System.Environment.SpecialFolder.Personal));
-                          </pre>
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
+       System.Environment.SpecialFolder.Personal));</code></pre>
 
                 Unity3D
-                <pre>
-iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);
-                </pre>
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
 
                 Android
-                <pre>
-iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
-       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;);
-                </pre>
+                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
+       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
 
 
                 JSP WebApplication
-                <pre>
-@WebListener()
+                <pre><code class="java">@WebListener()
 public class StartListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -746,30 +719,25 @@ public class StartListener implements ServletContextListener {
        new File(path).mkdirs();   
        iBoxDB.LocalServer.DB.root(path); 
     }
-}
-               </pre>
+} </code></pre>
 
 
 
                 <h5>Query</h5>
-                <pre>
-//query
+                <pre><code class="cs">//query
 box.Select(&quot;from Member&quot;);
 //query, load to memory first, startwith '*'
 box.Select(&quot;*from Member&quot;);
 //query, selecting tracer, startwith '!'
-box.Select(&quot;!from Member&quot;)
-                </pre>
+box.Select(&quot;!from Member&quot;)  </code></pre>
 
                 <h5>Index, make Select hundred times faster in average</h5>
-                <pre>
-config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
+                <pre><code class="cs">config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
 config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
-box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
-</pre>
+box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
 
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
-                <pre>
+                <pre><code class="cs"> using iBoxDB.LocalServer;
  var db = new DB();
  db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.Open();
@@ -777,9 +745,8 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
  var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
  auto.Update(&quot;Table&quot;, o1);
- auto.Delete(&quot;Table&quot;, 1);
-                    </pre>
-                <pre>
+ auto.Delete(&quot;Table&quot;, 1);  </code></pre>
+                <pre><code class="java"> import iBoxDB.LocalServer.*;
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.open();
@@ -787,13 +754,11 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
  Record o1 = auto.get(Record.class, &quot;Table&quot;, 1);
  o1.Name = &quot;Kelly&quot;;
  auto.update(&quot;Table&quot;, o1);
- auto.delete(&quot;Table&quot;, 1);
-                </pre>
+ auto.delete(&quot;Table&quot;, 1);  </code></pre>
 
 
                 <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
-                <pre>
- #r &quot;iBoxDB.dll&quot; 
+                <pre><code class="cs"> #r &quot;iBoxDB.dll&quot; 
  open iBoxDB.LocalServer 
  open System 
  DB.Root( &quot;C:\\DB&quot; ) 
@@ -803,10 +768,8 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
    Console.WriteLine(DB.ToString(v)) 
  for v in auto.GetDatabase().GetSchemata() do 
    Console.WriteLine(v.Key) 
- db.Dispose()
-                </pre>
-                <pre>
- //jjs -cp iBoxDB.jar 
+ db.Dispose()</code></pre>
+                <pre><code class="javascript"> //jjs -cp iBoxDB.jar 
  var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
  DB.root(&quot;/db/&quot;) 
  var db = new DB() 
@@ -815,17 +778,14 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)
    .forEach( function(v){ print(v) }) 
  auto.getDatabase().getSchemata() 
    .forEach( function(v){ print(v) }) 
- db.close() 
-                </pre>
+ db.close()   </code></pre>
 
                 <h5>Benchmark with MongoDB</h5>
                 iBoxDB.Java 32bit System Low Memory
                 <br />
                 iBoxDB.java v1.4.1
                 mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
-                <pre>
-Results:
-threadCount=100000 , batchCount=10
+                <pre><code class="sql">threadCount=100000 , batchCount=10
 MongoDB(Default)
  Database Transaction Test: None
  Insert:1000000  AVG:10521 objects/s
@@ -846,13 +806,11 @@ iBoxDB(InMemory Mode)
  Database Transaction Test: Succeeded
  Insert:1000000  AVG:39132 objects/s
  Update:1000000  AVG:20226 objects/s 
- Delete:1000000  AVG:33658 objects/s
-                </pre>
+ Delete:1000000  AVG:33658 objects/s </code></pre>
                 <br />
                 iBoxDB.NET 64bit System<br />
                 iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34
-                <pre>
-MongoDB(Default)
+                <pre><code class="sql">MongoDB(Default)
  Database Transaction Test: None
  Insert:1,000,000  AVG: 32,702 objects/s
  
@@ -872,12 +830,11 @@ iBoxDB(InMemory Mode)
  Database Transaction Test: Succeeded
  Insert:1,000,000  AVG:47,382 objects/s
  Update:1,000,000  AVG:26,806 objects/s 
- Delete:1,000,000  AVG:35,092 objects/s
-                </pre>
+ Delete:1,000,000  AVG:35,092 objects/s   </code></pre>
 
                 <h5>Composite Key Supported</h5>
                 <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
-                <pre>config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</pre>
+                <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
                 <br />
 
                 <h5>Replication Master-Slave , Master-Master</h5>

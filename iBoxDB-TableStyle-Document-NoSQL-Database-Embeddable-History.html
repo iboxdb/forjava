@@ -156,7 +156,7 @@
             border: none;
         }
 
-        pre, code {
+        pre { 
             width: 100%;
             color: #222;
             background-color: #fff;
@@ -166,25 +166,19 @@
             -moz-border-radius: 2px;
             -webkit-border-radius: 2px;
         }
-
+     
         pre {
             width: 100%;
             padding: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,.1);
             overflow: auto;
         }
-
-        code {
-            padding: 3px;
-            margin: 0 3px;
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
-        }
-
-        pre code {
+      
+       pre  { 
             display: block;
             box-shadow: none;
         }
-
+     
         blockquote {
             color: #666;
             margin-bottom: 20px;
@@ -325,6 +319,9 @@
             font-weight: bold;
         }
     </style>
+    <link rel="stylesheet" href="highlight/styles/vs.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
@@ -453,20 +450,75 @@
             <br />
 
 
+            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB Life Cycle</a>
+            <br />
+            <pre style="display: none" id="code9"><code class="java">static DB db; 
+static AutoBox auto; 
+synchronized static void onApplicationStart() { 
+  db = new DB(1); 
+  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;) 
+                .ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;); 
+  //Tree-&gt;Parts 
+  db.getConfig().ensureTable(&quot;Node&quot;, Node.class, &quot;ID&quot;) 
+                .ensureIndex(&quot;Node&quot;, Node.class, &quot;Parent&quot;); 
 
+  db.getConfig().ensureTable(&quot;Part&quot;, Part.class, &quot;ID&quot;) 
+                .ensureIndex(&quot;Part&quot;, Part.class, &quot;Node&quot;);
+  auto = db.open(); 
+}        
+                         
+void anywhere1() { 
+  auto.insert(&quot;Table&quot;, new Member()); 
+} 
+
+void anywhere2() { 
+  try (Box box = auto.cube()) { 
+    box.d(&quot;Table&quot;).insert(new Member()); 
+    CommitResult cr = box.commit(); 
+  } 
+} 
+
+boolean exists(Box box) { 
+  return box.selectCount(&quot;from Table limit 0,1&quot;) &gt; 0; 
+} 
+
+&lt;V&gt; Iterable&lt;V&gt; startsWith(Box box, Class&lt;V&gt; vClass, String prefix) { 
+  String begin = prefix; 
+  char[] cs = prefix.toCharArray(); 
+  cs[cs.length - 1] = (char) ((short) cs[cs.length - 1] + 1); 
+  String end = new String(cs); 
+  return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end); 
+}
+
+void TreeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) { 
+  if (maxLevel &gt; 5) { return; } 
+  char[] cs = new char[maxLevel * 2]; Arrays.fill(cs, &#39; &#39;); 
+  for (Node node : box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) { 
+    result.append(cs).append(&quot;NODE:&quot;)
+          .append(&quot;-&gt;&quot;).append(node.ID).append(&quot;\r\n&quot;); 
+    for (Part part : box.select(Part.class, &quot;from Part where Node==?&quot;, node.ID)) { 
+      result.append(cs).append(&quot; PART:&quot;)
+            .append(&quot;-&gt;&quot;).append(part.ID).append(&quot;\r\n&quot;); 
+    } 
+    TreeJoin(box, node.ID, maxLevel + 1, result); 
+  } 
+}
+
+void onApplicationClose() { 
+  auto.getDatabase().close(); 
+} 
+</code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D WebGL Save</a>
             <br />
-            <pre style="display: none" id="code3">
-if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
+            <pre style="display: none" id="code3"><code class="cs">if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
    Application.ExternalEval(&quot;FS.syncfs(false, function (err) {});&quot;); 
 }
-</pre>
+</code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
             <br />
-            <pre style="display: none" id="code4">
-1. #if UNITY_WEBPLAYER { Remove FileStream codes }
+            <pre style="display: none" id="code4"><code class="cs">1. #if UNITY_WEBPLAYER { Remove FileStream codes }
 2. Start()
     var data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;)); 
     server = new DB(data);
@@ -479,14 +531,23 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
     PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
     PlayerPrefs.Save(); 
   }
+</code></pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
+            <br />
+            <pre style="display: none" id="code1"><code class="ss"> sn -k kp.snk 
+ ildasm A.dll /out:A.il 
+ rename A.dll A.bak
+ ilasm  A.il  /dll /key=kp.snk</code></pre>
+            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java GC option</a>
+            <br />
+            <pre style="display: none" id="code7">
+-XX:+UseConcMarkSweepGC 
 </pre>
-
-
             <a href="javascript:void(0)" onclick="javascript:code6.style.display='block'">NETCoreAPP
             </a>
             <br />
-            <pre style="display: none" id="code6">
-&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+            <pre style="display: none" id="code6"><code class="xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
   &lt;PropertyGroup&gt;
     &lt;OutputType>Exe&lt;/OutputType&gt;
     &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
@@ -494,56 +555,8 @@ if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
   &lt;ItemGroup&gt;
     &lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;2.12&quot; /&gt;
   &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-            </pre>
+&lt;/Project&gt;</code></pre>
 
-
-            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
-            <br />
-            <pre style="display: none" id="code1">
- sn -k kp.snk 
- ildasm A.dll /out:A.il 
- rename A.dll A.bak
- ilasm  A.il  /dll /key=kp.snk</pre>
-            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java GC option</a>
-            <br />
-            <pre style="display: none" id="code7">
--XX:+UseConcMarkSweepGC 
-</pre>
-            <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB life cycle</a>
-            <br />
-            <pre style="display: none" id="code9">
-static DB db; 
-static AutoBox auto; 
-void onApplicationStart() { 
-  db = new DB(1); 
-  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;); 
-  db.getConfig().ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;);
-  auto = db.open(); 
-}                 
-void anywhere1() { 
-  auto.insert(&quot;Table&quot;, new Member()); 
-} 
-void anywhere2() { 
-  try (Box box = auto.cube()) { 
-    box.d(&quot;Table&quot;).insert(new Member()); 
-    CommitResult cr = box.commit(); 
-  } 
-} 
-boolean exists(Box box) { 
-  return box.selectCount(&quot;from Table limit 0,1&quot;) &gt; 0; 
-} 
-&lt;V&gt; Iterable&lt;V&gt; startsWith(Box box, Class&lt;V&gt; vClass, String prefix) { 
-  String begin = prefix; 
-  char[] cs = prefix.toCharArray(); 
-  cs[cs.length - 1] = (char) ((short) cs[cs.length - 1] + 1); 
-  String end = new String(cs); 
-  return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end); 
-}
-void onApplicationClose() { 
-  auto.getDatabase().close(); 
-} 
-</pre>
             <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>
             <br />
             <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search FTS C#</a>

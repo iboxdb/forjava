@@ -452,7 +452,9 @@
 
             <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB Life Cycle</a>
             <br />
-            <pre style="display: none" id="code9"><code class="java">static DB db; 
+            <pre style="display: none" id="code9"><code class="java">import iBoxDB.LocalServer.*;
+
+static DB db; 
 static AutoBox auto; 
 synchronized static void onApplicationStart() { 
   db = new DB(1); 

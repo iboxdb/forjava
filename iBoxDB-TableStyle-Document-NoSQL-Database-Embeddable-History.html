@@ -184,7 +184,7 @@ boolean exists(Box box) {
   return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end); 
 }
 
-void TreeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) { 
+void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) { 
   if (maxLevel &gt; 5) { return; } 
   char[] cs = new char[maxLevel * 2]; Arrays.fill(cs, &#39; &#39;); 
   for (Node node : box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) { 
@@ -194,7 +194,7 @@ void TreeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
       result.append(cs).append(&quot; PART:&quot;)
             .append(&quot;-&gt;&quot;).append(part.ID).append(&quot;\r\n&quot;); 
     } 
-    TreeJoin(box, node.ID, maxLevel + 1, result); 
+    treeJoin(box, node.ID, maxLevel + 1, result); 
   } 
 }
 
@@ -203,7 +203,7 @@ synchronized static void onApplicationClose() {
 } 
 </code></pre>
 
-            <a href="javascript:void(0)" onclick="javascript:code10.style.display='block'">DatabaseServer Manage Configs</a>
+            <a href="javascript:void(0)" onclick="javascript:code10.style.display='block'">Use DatabaseServer to Manage Configs</a>
             <br />
             <pre style="display: none" id="code10"><code class="cs">using iBoxDB.LocalServer;
 using iBoxDB.LocalServer.IO;
@@ -257,15 +257,13 @@ public class ApplicationServer : LocalDatabaseServer
                 
 void Anywhere1() 
 { 
-  long address = 1L; 
-  var auto = ApplicationServer.DB(address).Get(); 
+  var auto = ApplicationServer.DB(1L).Get(); 
   auto.Insert(&quot;Member&quot;, new Member()); 
 } 
                 
 void Anywhere2() 
 { 
-  long address = 2L; 
-  var db = ApplicationServer.DB(address); 
+  var db = ApplicationServer.DB(2L); 
   using (var box = db.Cube()) 
   { 
     box[&quot;Item&quot;].Insert(new Item()); 
@@ -278,6 +276,25 @@ void OnApplicationClose()
   ApplicationServer.App.Dispose(); 
 }</code></pre>
 
+
+
+            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
+            <br />
+            <pre style="display: none" id="code4"><code class="cs">1. #if UNITY_WEBPLAYER { Remove FileStream codes }
+2. Start()
+    byte[] data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;)); 
+    db = new DB(data);
+    db.MinConfig().FileIncSize = 1; 
+    ...
+    auto = db.Open();
+  
+3. if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50),&quot;Save&quot;)) { 
+    byte[] data = db.GetBuffer(); 
+    PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
+    PlayerPrefs.Save(); 
+  }
+</code></pre>
+
             <a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D WebGL Save</a>
             <br />
             <pre style="display: none" id="code3"><code class="cs">if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) { 
@@ -285,21 +302,9 @@ void OnApplicationClose()
 }
 </code></pre>
 
-            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
+            <a href="javascript:void(0)" onclick="javascript:code11.style.display='block'">Cache Only Config</a>
             <br />
-            <pre style="display: none" id="code4"><code class="cs">1. #if UNITY_WEBPLAYER { Remove FileStream codes }
-2. Start()
-    var data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;)); 
-    server = new DB(data);
-    server.MinConfig().FileIncSize = 1; 
-    ...
-    db = server.Open();
-  
-3. if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50),&quot;Save&quot;)) { 
-    var data = server.GetBuffer(); 
-    PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
-    PlayerPrefs.Save(); 
-  }
+            <pre style="display: none" id="code11"><code class="cs">DB db = new DB(DB.CacheOnlyArg);
 </code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>

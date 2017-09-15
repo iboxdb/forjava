@@ -281,13 +281,61 @@ void OnApplicationClose()
             <br />
             <pre style="display: none" id="code6"><code class="xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
   &lt;PropertyGroup&gt;
-    &lt;OutputType>Exe&lt;/OutputType&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
     &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
   &lt;/PropertyGroup&gt;
   &lt;ItemGroup&gt;
     &lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;2.15&quot; /&gt;
   &lt;/ItemGroup&gt;
 &lt;/Project&gt;</code></pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code13.style.display='block'">JSP Config</a>
+            <br />
+            <pre style="display: none" id="code13"><code class="java,xml">//db.jsp
+&lt;%@page contentType=&quot;text/html&quot; pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot; %&gt;
+&lt;%@page import=&quot;iBoxDB.LocalServer.*&quot; %&gt;
+&lt;%!
+    public static AutoBox auto() {
+        synchronized (DB.class) {
+            if (DB.Tag != null) {
+                return (AutoBox) DB.Tag;
+            }
+
+            String root = System.getProperty(&quot;user.home&quot;) + &quot;/jsp_data/&quot;;
+            new java.io.File(root).mkdirs();
+            DB.root(root);
+            DB db = new DB(1);
+            db.getConfig().ensureTable(JSPUser.class, &quot;JSPUser&quot;, &quot;id&quot;);
+
+            DB.Tag = db.open();
+            return (AutoBox) DB.Tag;
+        }
+    }
+
+    public static class JSPUser {
+        public long id;
+        public String name;
+    }
+%&gt;
+
+//index.jsp
+&lt;%@page contentType=&quot;text/html&quot; pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot;%&gt;
+&lt;%@include file=&quot;db.jsp&quot; %&gt;
+
+&lt;%
+    long id = auto().newId();
+
+    JSPUser user = new JSPUser();
+    user.id = id;
+    user.name = &quot;iBoxDB on JSP -&quot; + user.id;
+    auto().insert(&quot;JSPUser&quot;, user);
+%>
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;h1&gt;&lt;%=auto().get(JSPUser.class, &quot;JSPUser&quot;, id).name%&gt; &lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
 
             <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
             <br />
@@ -329,6 +377,18 @@ void OnApplicationClose()
             <pre style="display: none" id="code7">
 -XX:+UseConcMarkSweepGC 
 </pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code12.style.display='block'">Complex Search, Region Control</a>
+            <br />
+            <pre style="display: none" id="code12"><code class="cs">//use a simple query to control search region
+box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last) 
+   //with a complex query to filter data
+   .Where((u) =&gt; { 
+       if ( u... )
+        if ( u... )
+          return u.Time &gt; dt ;
+   });
+</code></pre>
 
 
             <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>

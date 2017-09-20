@@ -105,11 +105,11 @@
 
             <h3 id="nosql_download">Download</h3>
 
-            <span class="dlversion">iBoxDB.NET v2.15&nbsp;&nbsp; iBoxDB.JAVA v2.7</span>
+            <span class="dlversion">iBoxDB.NET v2.16&nbsp;&nbsp; iBoxDB.JAVA v2.7</span>
             <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21500_27.zip/download" target="_blank">Download</a>]
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21600_27.zip/download" target="_blank">Download</a>]
             &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21500_27.zip" target="_blank">Download Mirror</a>]
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21600_27.zip" target="_blank">Download Mirror</a>]
 
             <br />
             Adjust Code
@@ -372,11 +372,7 @@ void OnApplicationClose()
  ildasm A.dll /out:A.il 
  rename A.dll A.bak
  ilasm  A.il  /dll /key=kp.snk</code></pre>
-            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java GC option</a>
-            <br />
-            <pre style="display: none" id="code7">
--XX:+UseConcMarkSweepGC 
-</pre>
+
 
             <a href="javascript:void(0)" onclick="javascript:code12.style.display='block'">Complex Search, Region Control</a>
             <br />
@@ -389,15 +385,12 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
           return u.Time &gt; dt ;
    });
 </code></pre>
-
-            <a href="javascript:void(0)" onclick="javascript:code14.style.display='block'">Xamarin Debug</a>
+            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java GC option</a>
             <br />
-            <pre style="display: none" id="code14"><code class="cs">#if DEBUG 
-  //Only for Xamarin Debug, Release doesn&#39;t need it. 
-  iBoxDB.BoxSystem.Platform.LockFile = (f, p, l) =&gt; { return true; }; 
-#endif 
-  //path = System.Environment.SpecialFolder.Personal
-  iBoxDB.LocalServer.DB.Root(path);</code></pre>
+            <pre style="display: none" id="code7">
+-XX:+UseConcMarkSweepGC 
+</pre>
+
             <br />
             <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>
             <br />

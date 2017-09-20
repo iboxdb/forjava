@@ -390,7 +390,15 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
    });
 </code></pre>
 
-
+            <a href="javascript:void(0)" onclick="javascript:code14.style.display='block'">Xamarin Debug</a>
+            <br />
+            <pre style="display: none" id="code14"><code class="cs">#if DEBUG 
+  //Only for Xamarin Debug, Release doesn&#39;t need it. 
+  iBoxDB.BoxSystem.Platform.LockFile = (f, p, l) =&gt; { return true; }; 
+#endif 
+  //path = System.Environment.SpecialFolder.Personal
+  iBoxDB.LocalServer.DB.Root(path);</code></pre>
+            <br />
             <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>
             <br />
             <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search FTS C#</a>

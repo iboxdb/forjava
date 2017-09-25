@@ -385,7 +385,19 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
           return u.Time &gt; dt ;
    });
 </code></pre>
-            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java GC option</a>
+
+            <a href="javascript:void(0)" onclick="javascript:code14.style.display='block'">Java 9 module-info.java</a>
+            <br />
+            <pre style="display: none" id="code14"><code class="java">module newmodule { 
+  //rename .jar 
+  //cp iBoxDBv27.jar iBoxDB.jar 
+  requires iBoxDB; 
+                
+  //The DB Classes package 
+  exports app;   
+} </code></pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java 7,8 GC option</a>
             <br />
             <pre style="display: none" id="code7">
 -XX:+UseConcMarkSweepGC 

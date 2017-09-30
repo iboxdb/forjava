@@ -1,10 +1,5 @@
 ### Java6+Jar to Java 9 Module Jar
 
-#### Show Java Class
-```sh
-$javap module-info.class
-```
-
 
 #### Update Jar to module
 ```bush
@@ -38,4 +33,8 @@ module newmodule {
 }
 ```
 
+#### Show Java Class
+```sh
+$javap module-info.class
+```
 

@@ -364,7 +364,7 @@ void OnApplicationClose()
             <a href="javascript:void(0)" onclick="javascript:code11.style.display='block'">Cache Only &amp; Heat Up</a>
             <br />
             <pre style="display: none" id="code11"><code class="cs">DB db = new DB(DB.CacheOnlyArg);
-//Heats engine up Before Start()
+//Heats engine up Before Application.Start()
 new Thread(() =&gt; { Hot(); }).Start();
 public static void Hot() { 
   var db = new DB(DB.CacheOnlyArg); 

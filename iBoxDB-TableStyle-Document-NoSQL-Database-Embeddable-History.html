@@ -365,6 +365,7 @@ void OnApplicationClose()
             <br />
             <pre style="display: none" id="code11"><code class="cs">DB db = new DB(DB.CacheOnlyArg);
 //Heats engine up Before Application.Start()
+//System.Threading.Tasks.Task.Run((Action)Hot);
 new Thread(() =&gt; { Hot(); }).Start();
 public static void Hot() { 
   var db = new DB(DB.CacheOnlyArg); 
@@ -373,7 +374,15 @@ public static void Hot() {
   auto.Insert(&quot;Item&quot;, new Item()); 
   auto.Select(&quot;from Item&quot;); 
   db.Close(); 
-} </code></pre>
+  MakeSureClassesAreLinked();
+} 
+private static void MakeSureClassesAreLinked() { 
+  if (Object.ReferenceEquals(1, 2)) { 
+    new System.IO.FileStream(&quot;&quot;, System.IO.FileMode.OpenOrCreate,
+        System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite, 1);
+    System.IO.File.Exists(&quot;&quot;); 
+  } 
+}</code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />

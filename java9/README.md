@@ -4,7 +4,7 @@
 #### Update Jar to module
 Download [module-info.class(295 bytes)](https://github.com/iboxdb/forjava/blob/master/java9/module-info.class)
 ```bush
-$ jar --update --file iBoxDBv27.jar --module-version 2.7  module-info.class
+$ jar --update --file iBoxDBv28.jar --module-version 2.8  module-info.class
 ```
 
 

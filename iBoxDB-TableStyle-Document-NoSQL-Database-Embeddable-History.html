@@ -105,6 +105,19 @@
 
             <h3 id="nosql_download">Download</h3>
 
+            <span class="dlversion">iBoxDB.NET v2.17&nbsp;&nbsp; iBoxDB.JAVA v2.8</span>
+            <br />
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21700_28.zip/download" target="_blank">Download</a>]
+            &nbsp;&nbsp;
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21700_28.zip" target="_blank">Download Mirror</a>]
+
+            <br />
+            New BoxData format
+           
+            <br />
+            <br />
+
+
             <span class="dlversion">iBoxDB.NET v2.16&nbsp;&nbsp; iBoxDB.JAVA v2.7</span>
             <br />
             [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21600_27.zip/download" target="_blank">Download</a>]
@@ -117,29 +130,7 @@
             <br />
             <br />
 
-            <span class="dlversion">iBoxDB.NET v2.11&nbsp;&nbsp; iBoxDB.JAVA v2.6</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21100_26.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21100_26.zip" target="_blank">Download Mirror</a>]
 
-            <br />
-            More Cache
-           
-            <br />
-            <br />
-
-            <span class="dlversion">iBoxDB.NET v2.9.1&nbsp;&nbsp; iBoxDB.JAVA v2.5</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv2912_25.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv2912_25.zip" target="_blank">Download Mirror</a>]
-
-            <br />
-            Select faster
-           
-            <br />
-            <br />
 
 
             <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB Life Cycle</a>
@@ -285,7 +276,7 @@ void OnApplicationClose()
     &lt;TargetFramework&gt;netcoreapp2.0&lt;/TargetFramework&gt;
   &lt;/PropertyGroup&gt;
   &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;2.16&quot; /&gt;
+    &lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;2.17&quot; /&gt;
   &lt;/ItemGroup&gt;
 &lt;/Project&gt;</code></pre>
 
@@ -408,7 +399,7 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
             <br />
             <pre style="display: none" id="code14"><code class="java">module newmodule { 
   //rename .jar 
-  //cp iBoxDBv27.jar iBoxDB.jar 
+  //cp iBoxDBv28.jar iBoxDB.jar 
   requires iBoxDB; 
                 
   //The DB Classes package 

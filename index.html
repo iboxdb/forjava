@@ -76,7 +76,7 @@
             <p>
                 Dual Core Application Database
                 <br />
-                For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity3D &nbsp; Xamarin &nbsp; Mono &nbsp; Nashorn &nbsp; Linux &nbsp; Windows
+                For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity &nbsp; Xamarin &nbsp; Mono &nbsp; Nashorn &nbsp; Linux &nbsp; Windows
 
             </p>
 
@@ -128,20 +128,19 @@
 
                 <h5>Normal Object</h5>
                 <div>
-                    <pre><code class="cs"> box[&quot;Member&quot;].Insert(
-       new Member() {  
-             ID=box.NewId(Member.IncTableID, 1) ,
-             LoginName = &quot;Andy&quot;,
-             Password = Member.EncodePassowrd(&quot;123&quot;),
-             Tags = new string[]{ &quot;Nice&quot; , &quot;Strong&quot; }
-        }
+                    <pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {  
+       ID=box.NewId(),
+       Name = &quot;Andy&quot;,
+       Password = EncodePassowrd(&quot;123&quot;),
+       Tags = new string[]{ &quot;Nice&quot; , &quot;Fast&quot; }
+     }
   );
 </code></pre>
                     <pre><code class="java">  Member m = new Member();
-  m.ID = box.newId(Member.IncTableID, 1);
-  m.setName(&quot;Andy&quot;);
-  m.setTags(new Object[] { &quot;Nice&quot;, &quot;Strong&quot; });
-  box.d(&quot;Table&quot;).insert(m); </code></pre>
+  m.ID = box.newId();
+  m.setName(&quot;Kevin&quot;);
+  m.setTags(new Object[] { &quot;Handsome&quot;, &quot;Strong&quot; });
+  box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
                 <h5>Dynamic Object (document database)</h5>
@@ -150,25 +149,25 @@
   box[&quot;Product&quot;].Insert(game);
 </code></pre>
                     <pre><code class="java">  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
-  box.d(&quot;Table&quot;).insert(game);  </code></pre>
+  box.d(&quot;Product&quot;).insert(game);  </code></pre>
                 </div>
 
                 <h5>Key Value Style Query</h5>
                 <div>
-                    <pre><code class="cs">  box[&quot;Table&quot;, 2L].Select&lt;AClass&gt;();
+                    <pre><code class="cs">  box[&quot;Table&quot;, 2L].Select&lt;Member&gt;();
    //Composite Key
-  box[&quot;Table2&quot;, 99, &quot;ABC&quot;].Select&lt;BClass&gt;();
+  box[&quot;Table2&quot;, 99, &quot;ABC&quot;].Select&lt;Product&gt;();
 </code></pre>
-                    <pre><code class="java">  box.d(&quot;Table&quot;, ID).select(Member.class);
+                    <pre><code class="java">  box.d(&quot;Table&quot;, 3L).select(Member.class);
   //Composite Key
-  box.d(&quot;Table2&quot;, 8, &quot;MyID&quot;).select(Product.class);  </code></pre>
+  box.d(&quot;Table2&quot;, 88, &quot;ABC&quot;).select(Product.class);  </code></pre>
                 </div>
 
                 <h5>SQL Like</h5>
 
                 <div>
                     <pre><code class="cs">  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
-  box.Select&lt;Member&gt;(&quot;from Member where LoginName==?&quot;, &quot;MyName&quot;);</code></pre>
+  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
                     <pre><code class="java">  //from [table] where [condition] 
   //                    order by [field1] desc,[field2] limit [0,10]
   //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
@@ -428,21 +427,21 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
  var db = new DB();
  db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.Open();
- auto.Insert(&quot;Table&quot;, new Record { ID = 1, Name = &quot;Andy&quot; });
- var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1);
+ auto.Insert(&quot;Table&quot;, new Record { ID = 1L, Name = &quot;Andy&quot; });
+ var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
  o1.Name = &quot;Kelly&quot;;
  auto.Update(&quot;Table&quot;, o1);
- auto.Delete(&quot;Table&quot;, 1);  </code></pre>
+ auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
                 <pre><code class="java"> import iBoxDB.LocalServer.*;
 
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
  AutoBox auto = db.open();
- auto.insert(&quot;Table&quot;, new Record(1, &quot;Andy&quot;));
- Record o1 = auto.get(Record.class, &quot;Table&quot;, 1);
+ auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
+ Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
  o1.Name = &quot;Kelly&quot;;
  auto.update(&quot;Table&quot;, o1);
- auto.delete(&quot;Table&quot;, 1);  </code></pre>
+ auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
 
                 <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
@@ -541,7 +540,7 @@ iBoxDB(InMemory Mode)
             <p class="copyright">
                 Dual Core Application Database Express
                 <br />
-                For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity3D &nbsp; Xamarin &nbsp; Mono &nbsp; Nashorn &nbsp; Linux &nbsp; Windows
+                For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity &nbsp; Xamarin &nbsp; Mono &nbsp; Nashorn &nbsp; Linux &nbsp; Windows
                
             <br />
                 Database Version : iBoxDB .NET v2.17&nbsp;&nbsp; JAVA v2.8 &nbsp;
@@ -558,10 +557,7 @@ iBoxDB(InMemory Mode)
 
     <!-- Global Links -->
     <div style="width: 1px; height: 1px; overflow: hidden">
-        <a href="iBoxDB-Fast-Transactional-Table-Style-Document-NoSQL-Application-Database.html">iBoxDB Fast Java C# .NET Document NoSQL Database Embeddable</a>
-
         <a href="cn.html">International iBoxDB</a>
-        <a href="https://iboxdb.github.io/">iBoxDB Fast ACID Embedded Document Database NoSQL Backup Address</a>
     </div>
     <!-- key words -->
     <div style="width: 1px; height: 1px; overflow: hidden">

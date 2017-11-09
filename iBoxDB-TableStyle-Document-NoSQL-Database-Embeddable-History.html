@@ -328,21 +328,20 @@ void OnApplicationClose()
 &lt;/html&gt;</code></pre>
 
 
-            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">WebPlayer Save</a>
+            <a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">Save DB as String</a>
             <br />
-            <pre style="display: none" id="code4"><code class="cs">1. #if UNITY_WEBPLAYER { Remove FileStream codes }
-2. Start()
+            <pre style="display: none" id="code4"><code class="cs">Start(){
     byte[] data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;)); 
     db = new DB(data);
     db.MinConfig().FileIncSize = 1; 
     ...
     auto = db.Open();
-  
-3. if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50),&quot;Save&quot;)) { 
+}  
+Save() { 
     byte[] data = db.GetBuffer(); 
     PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
     PlayerPrefs.Save(); 
-  }
+}
 </code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D WebGL Save</a>

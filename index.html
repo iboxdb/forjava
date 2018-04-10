@@ -423,9 +423,9 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
                 <pre><code class="cs"> using iBoxDB.LocalServer;
 
  var db = new DB();
- db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
+ db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.Open();
- auto.Insert(&quot;Table&quot;, new Record { ID = 1L, Name = &quot;Andy&quot; });
+ auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
  var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
  o1.Name = &quot;Kelly&quot;;
  auto.Update(&quot;Table&quot;, o1);
@@ -433,7 +433,7 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
                 <pre><code class="java"> import iBoxDB.LocalServer.*;
 
  DB db = new DB();
- db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
+ db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.open();
  auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
  Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);

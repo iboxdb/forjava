@@ -140,13 +140,13 @@ static DB db;
 static AutoBox auto; 
 synchronized static void onApplicationStart() { 
   db = new DB(1); 
-  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;ID&quot;) 
+  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;Id&quot;) 
                 .ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;); 
   //Tree-&gt;Parts 
-  db.getConfig().ensureTable(&quot;Node&quot;, Node.class, &quot;ID&quot;) 
+  db.getConfig().ensureTable(&quot;Node&quot;, Node.class, &quot;Id&quot;) 
                 .ensureIndex(&quot;Node&quot;, Node.class, &quot;Parent&quot;); 
 
-  db.getConfig().ensureTable(&quot;Part&quot;, Part.class, &quot;ID&quot;) 
+  db.getConfig().ensureTable(&quot;Part&quot;, Part.class, &quot;Id&quot;) 
                 .ensureIndex(&quot;Part&quot;, Part.class, &quot;Node&quot;);
   auto = db.open(); 
 }        
@@ -179,12 +179,12 @@ void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
   char[] cs = new char[maxLevel * 2]; Arrays.fill(cs, &#39; &#39;); 
   for (Node node : box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) { 
     result.append(cs).append(&quot;NODE:&quot;)
-          .append(&quot;-&gt;&quot;).append(node.ID).append(&quot;\r\n&quot;); 
-    for (Part part : box.select(Part.class, &quot;from Part where Node==?&quot;, node.ID)) { 
+          .append(&quot;-&gt;&quot;).append(node.Id).append(&quot;\r\n&quot;); 
+    for (Part part : box.select(Part.class, &quot;from Part where Node==?&quot;, node.Id)) { 
       result.append(cs).append(&quot; PART:&quot;)
-            .append(&quot;-&gt;&quot;).append(part.ID).append(&quot;\r\n&quot;); 
+            .append(&quot;-&gt;&quot;).append(part.Id).append(&quot;\r\n&quot;); 
     } 
-    treeJoin(box, node.ID, maxLevel + 1, result); 
+    treeJoin(box, node.Id, maxLevel + 1, result); 
   } 
 }
 
@@ -220,7 +220,7 @@ public class ApplicationServer : LocalDatabaseServer
   { 
     public MainConfig() : base() 
     { 
-      EnsureTable&lt;Member&gt;(&quot;Member&quot;, &quot;ID&quot;); 
+      EnsureTable&lt;Member&gt;(&quot;Member&quot;, &quot;Id&quot;); 
       EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Name(20)&quot;);
       EnsureTable&lt;Product&gt;(&quot;Product&quot;, &quot;Type&quot;, &quot;UID&quot;); 
     }
@@ -230,7 +230,7 @@ public class ApplicationServer : LocalDatabaseServer
   { 
     public InventoryConfig() : base() 
     { 
-      EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;ID&quot;); 
+      EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;); 
     } 
   } 
                 

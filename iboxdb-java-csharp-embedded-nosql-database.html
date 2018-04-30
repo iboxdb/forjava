@@ -148,6 +148,11 @@ synchronized static void onApplicationStart() {
 
   db.getConfig().ensureTable(&quot;Part&quot;, Part.class, &quot;Id&quot;) 
                 .ensureIndex(&quot;Part&quot;, Part.class, &quot;Node&quot;);
+
+  DatabaseConfig cfg = db.getConfig().DBConfig;
+  cfg.CacheLength = cfg.mb(512);
+  cfg.FileIncSize = (int)cfg.mb(4);
+
   auto = db.open(); 
 }        
                          

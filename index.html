@@ -23,8 +23,8 @@
             <h2 id="project_tagline">Fast ACID Table Style Document NoSQL Application Database</h2>
             <div id="downloads">
                 <a href="https://sourceforge.net/projects/application-database/files/latest/download" target="_blank"
-                    style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;"
-                    onclick="switchURL(this)">DOWNLOAD</a>
+                   style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;"
+                   onclick="switchURL(this)">DOWNLOAD</a>
             </div>
         </header>
     </div>
@@ -38,26 +38,26 @@
                 Application Database iBoxDB NoSQL Database Small Footprint Makes it Easier and Cheaper to Store and Process DATA.
                 iBoxDB Windows Linux NoSQL DB Database Thread Safe Multi-Threaded Best Lightweight General Purpose Java dotNET Local Database ACID.
                 MVCC ACID NoSQL Embedded Document Database Engine Java C# Mono Android iPhone Windows Mobile ASP.NET CSharp.
-                                
+
                 Lightweight Serverless Database Xamarin Unity3D Linux ACID Transaction NoSQL Database dotNET.
                 Best NoSQL Database Embedded For Java Net C# Android Windows Phone Nashorn Stable Standalone DB.
                 Mono Unity Xamarin ACID Simple NoSQL Database CRUD Lightweight Fast Transaction Mobile Embeddable Windows Mobile Database.
-               
+
                 An Embedded NoSQL Database with ACID Transactions X86 ARM  Mono embedded NoSQL database.
                 Java database iBoxDB Lightweight Object Document Database nosql databases Agile Development Smart Small JSON Database.
                 Local Database Lightweight self-contained database c# database dotNET Database document database Cross Platform for Linux and Mac and Win.
                 C# NoSQL Embedded Document Database Comparison Android NoSQL Database Java NoSQL Embedded Document Database Comparison Mono NoSQL Database Comparison
-               
+
                 Xamarin Unity3D ORM Professional Transactional Caching NoSQL Database Embedded Database.
                 iBoxDB Android Windows Phone Fast Lightweight Mobile Document Database Java Database Engine Embeddable
                 Update Increment Selecting Tracer NET C# MVCC ACID NoSQL Embedded Document Database.
-                               
+
                 Transactional Document SQL Database Java C# Multipurpose Self Contained fast database local server Windows Unity DB.
                 Linux J2EE Web Java ACID NoSQL Embedded Database JSP WEB HTML5 JavaScript CSharp FREE Update Increment SQL java database Comparison java object-oriented embedded database
                 In Memory and On Disk ORM NoSQL Document Database for NET Java C# Android embedded database server Cross-Platform Development.
                 Android Xamarin Lightweight NoSQL Databases CSharp Local Database Java File DB document nosql IL2CPP.
                 Mono C# Java Simple Small Fast Embedded Local Object Database ACID Android Windows Phone C# dotNET Databases NoSQL Mobile Sync Document Oriented
-            
+
                 Nashorn ACID NoSQL Database JavaScript Java Database Unity NoSQL Database C# Java Serverless Table Style Server Free Schema Less KeyValue
                 SQL NoSQL DB Lite Java C# Embedded Document Application Database Lightweight Object Relational Mapping ORM Database.
                 Java CSharp Local Serverless NoSQL Storage Engines Lite Database and Transaction NoSQL Database Hyperlink SQL Table Document Agile Development
@@ -164,14 +164,31 @@
                 <h5>SQL Like</h5>
 
                 <div>
-                    <pre><code class="cs">  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
-  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
-                    <pre><code class="java">  //from [table] where [condition] 
-  //                    order by [field1] desc,[field2] limit [0,10]
-  //[Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
-  //[IFunction:] =[F1,F2,F3]
-  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
+                    <pre><code class="java">  /* 
+  from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
+
+  from [table] where [condition] 
+                      order by [field1] desc,[field2] limit [0,10]
+  [Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
+  [IFunction:] =[F1,F2,F3] 
+  */ </code></pre>
+                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
+                    <pre><code class="java">  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
+
                 </div>
+
+                <h5>Query</h5>
+                <pre><code class="cs">  //query
+  box.Select(&quot;from Member&quot;);
+  //load to memory first, startwith '*'
+  box.Select(&quot;*from Member&quot;);
+  //selecting tracer, startwith '!'
+  box.Select(&quot;!from Member&quot;)  </code></pre>
+
+                <h5>Index, make Select hundred times faster in average</h5>
+                <pre><code class="cs">  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
+  config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
+  box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
 
                 <h5>Custom QueryFunction</h5>
                 <div>
@@ -417,18 +434,7 @@ public class StartListener implements ServletContextListener {
 
 
 
-                <h5>Query</h5>
-                <pre><code class="cs">//query
-box.Select(&quot;from Member&quot;);
-//query, load to memory first, startwith '*'
-box.Select(&quot;*from Member&quot;);
-//query, selecting tracer, startwith '!'
-box.Select(&quot;!from Member&quot;)  </code></pre>
 
-                <h5>Index, make Select hundred times faster in average</h5>
-                <pre><code class="cs">config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
-config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
-box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
 
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre><code class="cs"> using iBoxDB.LocalServer;
@@ -452,6 +458,9 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
  auto.update(&quot;Table&quot;, o1);
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
+                <h5>Install</h5>
+                <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
+                <pre><code class="java">Java: Add JavaDB/iBoxDB.jar to Project</code></pre>
 
                 <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
                 <pre><code class="cs"> #r &quot;iBoxDB.dll&quot; 
@@ -550,8 +559,8 @@ iBoxDB(InMemory Mode)
                 Dual Core Application Database Express
                 <br />
                 For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity &nbsp; Xamarin &nbsp; Mono &nbsp; Nashorn &nbsp; Linux &nbsp; Windows
-               
-            <br />
+
+                <br />
                 Database Version : iBoxDB .NET v2.17&nbsp;&nbsp; JAVA v2.8 &nbsp;
                 <a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download"><span style="display: inline-block; width: 1px; height: 1px; overflow: hidden">iBoxDB Embeddable NoSQL Document Database Object Storage Engines </span>Download &amp; Example</a>
                 &nbsp; &nbsp;<a href="mailto:iboxdb@hotmail.com" title="iboxdb@hotmail.com">Support</a>
@@ -570,12 +579,12 @@ iBoxDB(InMemory Mode)
     </div>
     <!-- key words -->
     <div style="width: 1px; height: 1px; overflow: hidden">
-        iBoxDB Professional Document Database Transaction NoSQL Application Database        
+        iBoxDB Professional Document Database Transaction NoSQL Application Database
         Xamarin Unity3D Embedded Database SchemaLess KeyValue Android Java Embedded Document powerful cross platform NoSQL database system.
         <!--
         Transactional Thread Safe Java and C# Database Update Increment Java JSP WEB HTML5 JavaScript OODB
         Mono Application Database SQL Agile Development Small NoSQL Document Database.
-        iBoxDB Android Windows Phone Fast Lightweight Local Database ACID NET C#       
+        iBoxDB Android Windows Phone Fast Lightweight Local Database ACID NET C#
         Java Serverless TableStyle ServerFree Simple Small Database ACID Nashorn jjs.
         Simple NoSQL Database ACID CRUD DB Comparison Java dotNET C# Selecting Tracer Graph
         Embedded Document Database Engine in memory database software for real time and embedded applications.
@@ -596,8 +605,6 @@ iBoxDB(InMemory Mode)
         best game database Self Contained Embeddable Lightweight Fast C# Local Database In-Process.
         embedded NET database engine has zero deployment costs NoSQL embedded database for NET Java C#
         -->
-       
-
         Just Enough to Get the Job Done.
 
     </div>
@@ -618,7 +625,7 @@ iBoxDB(InMemory Mode)
                     sender.href = path;
                     sender.innerText = "DOWNLOAD+";
                 }, 500
-                )
+            )
         }
     </script>
 

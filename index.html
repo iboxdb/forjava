@@ -112,13 +112,13 @@
 
                 <h5>Each box is an ISOLATED data space (transaction-based)</h5>
                 <div>
-                    <pre><code class="cs">  using(var box = db.Cube())
+                    <pre><code class="cs">  using(var box = auto.Cube())
   {                            
      //select, insert, update, delete ...
      var result = box.Commit();
   }
 </code></pre>
-                    <pre><code class="java">  try(Box box = db.cube()){
+                    <pre><code class="java">  try(Box box = auto.cube()){
      ...
      CommitResult r = box.commit();
   }  </code></pre>
@@ -365,6 +365,7 @@
  MemoryStream
  byte[]
  Object[]
+
 
 
 

@@ -103,9 +103,9 @@ a {
     -o-transition: text-shadow 0.5s ease;
 }
 
-a:hover, a:focus {
-    text-decoration: underline;
-}
+    a:hover, a:focus {
+        text-decoration: underline;
+    }
 
 footer a {
     color: #F2F2F2;
@@ -266,9 +266,9 @@ Full-Width Styles
     background: linear-gradient(top, #373737, #212121);
 }
 
-#header_wrap .inner {
-    padding: 50px 10px 30px 10px;
-}
+    #header_wrap .inner {
+        padding: 50px 10px 30px 10px;
+    }
 
 #project_title {
     margin: 0;
@@ -276,6 +276,7 @@ Full-Width Styles
     font-size: 42px;
     font-weight: 700;
     text-shadow: #111 0px 0px 10px;
+    text-indent: 100px;
 }
 
 #project_tagline {
@@ -296,6 +297,15 @@ Full-Width Styles
     background-image: url( "images/ico.png");
 }
 
+#logo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 11;
+    top: 20px;
+    left: 0px;
+    background-image: url( "images/ico4.png");
+}
 
 
 #main_content_wrap {

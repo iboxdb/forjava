@@ -211,6 +211,31 @@
    Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
                 </div>
 
+                <h5>Snapshot-Serializable Transaction</h5>
+                <table>
+                    <tr>
+                        <th>Transaction Step</th>
+                        <th>Isolation Level</th>
+
+                        <td rowspan="3">
+                            <pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
+  //Snapshot...
+  box.Commit( ()=>{
+    //Serializable...  
+  });                            
+}</code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Application Point</td>
+                        <td>Snapshot</td>
+                    </tr>
+                    <tr>
+                        <td>Database Point</td>
+                        <td>Serializable</td>
+                    </tr>
+                </table>
+
                 <h5>Update Increment</h5>
 
                 <table>
@@ -220,13 +245,7 @@
                         <th>Trigger </th>
                         <th>Type </th>
                         <th>Value From </th>
-                    </tr>
-                    <tr>
-                        <td>AutoIncrement</td>
-                        <td>primary key</td>
-                        <td>insert</td>
-                        <td>number</td>
-                        <td>Table Max(ID)+1</td>
+
                     </tr>
                     <tr>
                         <td style="font-weight: bold">UpdateIncrement</td>
@@ -234,6 +253,30 @@
                         <td>insert/update</td>
                         <td>long</td>
                         <td style="white-space: nowrap">Database NewId(MaxPos,1)</td>
+
+                    </tr>
+                    <tr>
+                        <td>AutoIncrement</td>
+                        <td>primary key</td>
+                        <td>insert</td>
+                        <td>number</td>
+                        <td>Table Max(ID)+1</td>
+
+                    </tr>
+
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th colspan="4">Generator Time</th>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">UpdateIncrement</td>
+                        <td colspan="4">Transaction Commit</td>
+                    </tr>
+                    <tr>
+                        <td>AutoIncrement</td>
+                        <td colspan="4">Data Insert, Differed from Commit order</td>
                     </tr>
                 </table>
 
@@ -246,33 +289,18 @@
                         <th>Usage </th>
                     </tr>
                     <tr>
-                        <td>Locker </td>
-                        <td>blocked </td>
-                        <td>read/write same record </td>
-                    </tr>
-                    <tr>
                         <td style="font-weight: bold">Tracer</td>
                         <td>non-blocked </td>
                         <td>read/write different records </td>
                     </tr>
-                </table>
-
-                <h5>Snapshot-Serializable Transaction</h5>
-                <table>
                     <tr>
-                        <th>Transaction Step</th>
-                        <th>Isolation Level</th>
-
-                    </tr>
-                    <tr>
-                        <td>Application Point</td>
-                        <td>Snapshot</td>
-                    </tr>
-                    <tr>
-                        <td>Database Point</td>
-                        <td>Serializable</td>
+                        <td>Locker </td>
+                        <td>blocked </td>
+                        <td>read/write same record </td>
                     </tr>
                 </table>
+
+
 
                 <h5>Supported Types</h5>
                 <table style="margin: 0px; padding: 0px; width: 90%">
@@ -494,8 +522,7 @@ public class StartListener implements ServletContextListener {
                 iBoxDB.java v1.4.1
                 mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
                 <pre><code class="sql">threadCount=100000 , batchCount=10
-MongoDB(Default)
- Database Transaction Test: None
+MongoDB(Default) 
  Insert:1000000  AVG:10521 objects/s
  
 iBoxDB(File Mode)
@@ -504,8 +531,7 @@ iBoxDB(File Mode)
  Update:1000000  AVG:12397 objects/s 
  Delete:1000000  AVG:22869 objects/s
             
-iBoxDB(MemoryMappedFile Mode)
- Database Transaction Test: Succeeded
+iBoxDB(MemoryMappedFile Mode) 
  Insert:1000000  AVG:38458 objects/s
  Update:1000000  AVG:20200 objects/s 
  Delete:1000000  AVG:33342 objects/s
@@ -516,14 +542,13 @@ iBoxDB(InMemory Mode)
  Update:1000000  AVG:20226 objects/s 
  Delete:1000000  AVG:33658 objects/s </code></pre>
                 <br />
-                iBoxDB.NET 64bit System<br />
+                iBoxDB.NET 64bit System
+                <br />
                 iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34
-                <pre><code class="sql">MongoDB(Default)
- Database Transaction Test: None
+                <pre><code class="sql">MongoDB(Default) 
  Insert:1,000,000  AVG: 32,702 objects/s
  
-iBoxDB(File Mode)
- Database Transaction Test: Succeeded
+iBoxDB(File Mode) 
  Insert:1,000,000  AVG:33,368 objects/s
  Update:1,000,000  AVG:16,939 objects/s 
  Delete:1,000,000  AVG:22,504 objects/s
@@ -546,7 +571,8 @@ iBoxDB(InMemory Mode)
                 <br />
 
                 <h5>Replication Master-Slave , Master-Master</h5>
-                <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" /><br />
+                <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" />
+                <br />
 
                 <img src="images/p3.png" alt="iBoxDB Fast Transactional NoSQL Application Database for JAVA, .NET, Android, Mono, Unity3D, Xamarin, Nashorn, Linux, Windows" />
 

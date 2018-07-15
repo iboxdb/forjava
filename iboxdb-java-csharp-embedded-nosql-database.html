@@ -133,10 +133,12 @@
             <br />
             <pre style="display: none" id="code9"><code class="java">import iBoxDB.LocalServer.*;
 
-static DB db; 
-static AutoBox auto; 
+public class App{
+   public static AutoBox auto;
+}                
 synchronized static void onApplicationStart() { 
-  db = new DB(1); 
+  DB.root(path);
+  DB db = new DB(1); 
   db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;Id&quot;) 
                 .ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;); 
   //Tree-&gt;Parts 
@@ -150,15 +152,15 @@ synchronized static void onApplicationStart() {
   cfg.CacheLength = cfg.mb(512);
   cfg.FileIncSize = (int)cfg.mb(4);
 
-  auto = db.open(); 
+  App.auto = db.open(); 
 }        
                          
 void anywhere1() { 
-  auto.insert(&quot;Table&quot;, new Member()); 
+  App.auto.insert(&quot;Table&quot;, new Member()); 
 } 
 
 void anywhere2() { 
-  try (Box box = auto.cube()) { 
+  try (Box box = App.auto.cube()) { 
     box.d(&quot;Table&quot;).insert(new Member()); 
     CommitResult cr = box.commit(); 
   } 
@@ -191,7 +193,7 @@ void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
 }
 
 synchronized static void onApplicationClose() { 
-  auto.getDatabase().close(); 
+  App.auto.getDatabase().close(); 
 } 
 </code></pre>
 
@@ -200,12 +202,12 @@ synchronized static void onApplicationClose() {
             <pre style="display: none" id="code10"><code class="cs">using iBoxDB.LocalServer;
 using iBoxDB.LocalServer.IO;
 
-public class ApplicationServer : LocalDatabaseServer 
+public class AppServer : LocalDatabaseServer 
 { 
-  public static ApplicationServer App = new ApplicationServer(); 
+  private static AppServer server = new AppServer(); 
   public static IDatabase DB(long address) 
   { 
-    return App.GetInstance(address); 
+    return server.GetInstance(address); 
   }
 
   abstract class Config : BoxFileStreamConfig 
@@ -249,13 +251,13 @@ public class ApplicationServer : LocalDatabaseServer
                 
 void Anywhere1() 
 { 
-  var auto = ApplicationServer.DB(1L).Get(); 
+  var auto = AppServer.DB(1L).Get(); 
   auto.Insert(&quot;Member&quot;, new Member()); 
 } 
                 
 void Anywhere2() 
 { 
-  var db = ApplicationServer.DB(2L); 
+  var db = AppServer.DB(2L); 
   using (var box = db.Cube()) 
   { 
     box[&quot;Item&quot;].Insert(new Item()); 
@@ -265,7 +267,7 @@ void Anywhere2()
 
 void OnApplicationClose() 
 { 
-  ApplicationServer.App.Dispose(); 
+  AppServer.server.Dispose(); 
 }</code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code6.style.display='block'">.NET Core APP

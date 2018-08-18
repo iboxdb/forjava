@@ -209,6 +209,7 @@ public class AppServer : LocalDatabaseServer
     public MainConfig() : base() 
     { 
       EnsureTable&lt;Member&gt;(&quot;Member&quot;, &quot;Id&quot;); 
+      //set Max-Length = 20, String default is 32
       EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Name(20)&quot;);
       EnsureTable&lt;Product&gt;(&quot;Product&quot;, &quot;Type&quot;, &quot;UID&quot;); 
     }

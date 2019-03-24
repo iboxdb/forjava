@@ -119,18 +119,21 @@
 
 public class App{
    public static AutoBox auto;
+   public static Box cube(){
+     return auto.cube();
+   }
 }                
 synchronized static void onApplicationStart() { 
   DB.root(path);
   DB db = new DB(1); 
-  db.getConfig().ensureTable(&quot;Table&quot;, Member.class, &quot;Id&quot;) 
-                .ensureIndex(&quot;Table&quot;, Member.class, &quot;Name&quot;); 
+  db.getConfig().ensureTable(Member.class, &quot;Table&quot;, &quot;Id&quot;) 
+                .ensureIndex(Member.class, &quot;Table&quot;, &quot;Name&quot;); 
   //Tree-&gt;Parts 
-  db.getConfig().ensureTable(&quot;Node&quot;, Node.class, &quot;Id&quot;) 
-                .ensureIndex(&quot;Node&quot;, Node.class, &quot;Parent&quot;); 
+  db.getConfig().ensureTable(Node.class, &quot;Node&quot;, &quot;Id&quot;) 
+                .ensureIndex(Node.class, &quot;Node&quot;, &quot;Parent&quot;); 
 
-  db.getConfig().ensureTable(&quot;Part&quot;, Part.class, &quot;Id&quot;) 
-                .ensureIndex(&quot;Part&quot;, Part.class, &quot;Node&quot;);
+  db.getConfig().ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;) 
+                .ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
 
   DatabaseConfig cfg = db.getConfig().DBConfig;
   cfg.CacheLength = cfg.mb(512);
@@ -144,7 +147,7 @@ void anywhere1() {
 } 
 
 void anywhere2() { 
-  try (Box box = App.auto.cube()) { 
+  try (Box box = App.cube()) { 
     box.d(&quot;Table&quot;).insert(new Member()); 
     CommitResult cr = box.commit(); 
   } 

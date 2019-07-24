@@ -38,7 +38,7 @@
 
             <h3>Project Description</h3>
 
-            <p>iBoxDB is a fast transactional table style document NoSQL Application Database, easily store, process objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and .NET engines, no dependencies.</p>
+            <p>iBoxDB is a fast transactional table style document NoSQL Application Database, easily store, process objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and DotNET engines, no dependencies.</p>
 
             <p>
                 iBoxDB has a well designed interface with great performance and capability for agile development. You can create applications with database services embedded and deploy it on mobiles, desktops, servers,
@@ -62,6 +62,7 @@
                 <li>SQL like query language</li>
                 <li>Transactions support</li>
                 <li>Concurrency control, thread safe</li>
+                <li>Multiple applications supported</li>
                 <li>Memory management</li>
                 <li>Scalable hot MasterSlave and MasterMaster replications</li>
                 <li>On disk and in memory databases supported</li>
@@ -79,16 +80,28 @@
             </ul>
             <!-- key words -->
             <div style="width: 1px; height: 1px; overflow: hidden">
-                C# Java Embeddable NoSQL Database Best Key-Value and Key-Only Document Database.
-                iBoxDB Android Xamarin Mono Java NET Best Lightweight Stable Standalone Self Contained NoSQL Document Database.
+                Best Lightweight Stable Standalone Self Contained NoSQL Document Database, Java C# NET Android Xamarin Mono.
                 Embedded Database nosql storage engines, small fast multithreaded engine has zero deployment cost,
                 for real time and embedded applications.
                 Lite NoSQL DB with SQL support and Object Relational Mapping ORM, ACID Transaction Document Database.
+                C# Java Embeddable NoSQL Database Best Key-Value and Key-Only Document Database.
             </div>
 
             <h3 id="nosql_download">Download</h3>
 
-            <span class="dlversion">iBoxDB.NET v2.17.3&nbsp;&nbsp; iBoxDB.JAVA v2.8.3</span>
+            <span class="dlversion">[FREE] iBoxDB.NET v2.18&nbsp;&nbsp; iBoxDB.JAVA v2.9</span>
+            <br />
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21800_29.zip/download" target="_blank">Download</a>]
+            &nbsp;&nbsp;
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21800_29.zip" target="_blank">Download Mirror</a>]
+
+            <br />
+            Multiple Applications Supported
+
+            <br />
+            <br />
+
+            <span class="dlversion">[FREE] iBoxDB.NET v2.17.3&nbsp;&nbsp; iBoxDB.JAVA v2.8.3</span>
             <br />
             [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21730_283.zip/download" target="_blank">Download</a>]
             &nbsp;&nbsp;
@@ -100,17 +113,7 @@
             <br />
             <br />
 
-            <span class="dlversion">iBoxDB.NET v2.17&nbsp;&nbsp; iBoxDB.JAVA v2.8</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21700_28.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21700_28.zip" target="_blank">Download Mirror</a>]
 
-            <br />
-            New BoxData format
-
-            <br />
-            <br />
 
 
             <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB Life Cycle</a>
@@ -334,33 +337,18 @@ Save() {
             <a href="javascript:void(0)" onclick="javascript:code11.style.display='block'">Cache Only &amp; Heat Up</a>
             <br />
             <pre style="display: none" id="code11"><code class="cs">DB db = new DB(DB.CacheOnlyArg);
-//Heats engine up Before Application.Start()
+//Using Thread to heat engine up Before Application.Start()
 //System.Threading.Tasks.Task.Run((Action)Hot);
 new Thread(() =&gt; { Hot(); }).Start();
+
+static AutoBox auto;
 public static void Hot() { 
   var db = new DB(DB.CacheOnlyArg); 
   db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Time&quot;, &quot;Gid&quot;); 
-  var auto = db.Open(); 
+  auto = db.Open(); 
   auto.Insert(&quot;Item&quot;, new Item()); 
-  auto.Select(&quot;from Item&quot;); 
-  db.Close(); 
-  MakeSureClassesAreLinked();
-} 
-private static void MakeSureClassesAreLinked() { 
-  if (Object.ReferenceEquals(1, 2)) { 
-    new System.IO.FileStream(&quot;&quot;, System.IO.FileMode.OpenOrCreate,
-        System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite, 1);
-    System.IO.File.Exists(&quot;&quot;); 
-  } 
+  auto.Select(&quot;from Item&quot;);  
 }</code></pre>
-
-            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
-            <br />
-            <pre style="display: none" id="code1"><code class="ss"> sn -k kp.snk 
- ildasm A.dll /out:A.il 
- rename A.dll A.bak
- ilasm  A.il  /dll /key=kp.snk</code></pre>
-
 
             <a href="javascript:void(0)" onclick="javascript:code12.style.display='block'">Complex Search, Region Control</a>
             <br />
@@ -373,6 +361,27 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
           return u.Time &gt; dt ;
    });
 </code></pre>
+            <a href="javascript:void(0)" onclick="javascript:code15.style.display='block'">Multiple Applications</a>
+            <br />
+            <pre style="display: none" id="code15"><code class="cs">DB db = new DB();
+//for LockFile Supported Platform only
+db.WaitAnotherApp(1000 * 60 * 5);
+
+using (var auto = db.Open()){
+   ...
+   //auto.Cube();
+}
+</code></pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
+            <br />
+            <pre style="display: none" id="code1"><code class="ss"> sn -k kp.snk 
+ ildasm A.dll /out:A.il 
+ rename A.dll A.bak
+ ilasm  A.il  /dll /key=kp.snk</code></pre>
+
+
+
 
             <a href="javascript:void(0)" onclick="javascript:code14.style.display='block'">Java 9 Automatic-Module-Name</a>
             <br />
@@ -406,10 +415,6 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
             <br />
             <br />
 
-            <h5>License</h5>
-            FreeSoftware Redistributable
-            <br />
-            The software is licensed &quot;as-is.&quot; You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
 
         </section>
     </div>

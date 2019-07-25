@@ -89,11 +89,11 @@
 
             <h3 id="nosql_download">Download</h3>
 
-            <span class="dlversion">[FREE] iBoxDB.NET v2.18&nbsp;&nbsp; iBoxDB.JAVA v2.9</span>
+            <span class="dlversion">[FREE] iBoxDB.NET v2.19&nbsp;&nbsp; iBoxDB.JAVA v2.11</span>
             <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21800_29.zip/download" target="_blank">Download</a>]
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21900_211.zip/download" target="_blank">Download</a>]
             &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21800_29.zip" target="_blank">Download Mirror</a>]
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21900_211.zip" target="_blank">Download Mirror</a>]
 
             <br />
             Multiple Applications Supported
@@ -364,20 +364,13 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
             <a href="javascript:void(0)" onclick="javascript:code15.style.display='block'">Multiple Applications</a>
             <br />
             <pre style="display: none" id="code15"><code class="cs">DB db = new DB(db_id);
-//set the database(db_id) can be opened by multiple applications
 //for LockFile Supported Platform only
 db.WaitAnotherApp(1000 * 60 * 5);
 
-//only support multiple AutoBoxes in one application mode,
-//not support multiple AutoBoxes in multiple applications mode, 
-//so add a Lock, synchronized(db)
-lock(db){ 
-  using (var auto = db.Open()){
-     ...
-     //auto.Cube(); Insert(), Update()...
-  }
-}
-</code></pre>
+using (var auto = db.Open()){
+   ...
+   //auto.Cube(); Insert(), Update()...
+}</code></pre>
 
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />

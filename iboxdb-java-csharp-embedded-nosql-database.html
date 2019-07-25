@@ -363,13 +363,19 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
 </code></pre>
             <a href="javascript:void(0)" onclick="javascript:code15.style.display='block'">Multiple Applications</a>
             <br />
-            <pre style="display: none" id="code15"><code class="cs">DB db = new DB();
+            <pre style="display: none" id="code15"><code class="cs">DB db = new DB(db_id);
+//set the database(db_id) can be opened by multiple applications
 //for LockFile Supported Platform only
 db.WaitAnotherApp(1000 * 60 * 5);
 
-using (var auto = db.Open()){
-   ...
-   //auto.Cube();
+//only support multiple AutoBoxes in one application mode,
+//not support multiple AutoBoxes in multiple applications mode, 
+//so add a Lock, synchronized(db)
+lock(db){ 
+  using (var auto = db.Open()){
+     ...
+     //auto.Cube(); Insert(), Update()...
+  }
 }
 </code></pre>
 

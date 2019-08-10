@@ -204,9 +204,12 @@ public class AppServer : LocalDatabaseServer
   { 
     public Config() : base() 
     { 
-      CacheLength = MB(512); 
+      CacheLength = MB(512); //1024L*1024L*512L
       FileIncSize = (int)MB(4); 
+      //Thread, default is 4
       ReadStreamCount = 8; 
+      //set equal to 1 in small device.
+      //ReadStreamCount = 1; 
     } 
   } 
                 
@@ -414,7 +417,9 @@ using (var auto = db.Open()){
             <br />
             <br />
 
-
+            <h5>License</h5> 
+            The software is licensed &quot;as-is.&quot; You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. 
+           
         </section>
     </div>
 

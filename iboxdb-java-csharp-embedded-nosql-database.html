@@ -381,26 +381,7 @@ using (var auto = db.Open()){
  ildasm A.dll /out:A.il 
  rename A.dll A.bak
  ilasm  A.il  /dll /key=kp.snk</code></pre>
-
-
-
-
-            <a href="javascript:void(0)" onclick="javascript:code14.style.display='block'">Java 9 Automatic-Module-Name</a>
-            <br />
-            <pre style="display: none" id="code14"><code class="java">module newmodule { 
-  //rename .jar 
-  //cp iBoxDBv28.jar iBoxDB.jar 
-  requires iBoxDB; 
-                
-  //The DB Classes package 
-  exports app;   
-} </code></pre>
-
-            <a href="javascript:void(0)" onclick="javascript:code7.style.display='block'">Java 7,8 GC option</a>
-            <br />
-            <pre style="display: none" id="code7">
--XX:+UseConcMarkSweepGC 
-</pre>
+        
 
             <br />
             <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search FTS JAVA</a>

@@ -55,7 +55,7 @@
             <h3>Features</h3>
 
             <ul>
-                <li>CRUD</li>
+                <li>CRUD and Forward CRUD</li>
                 <li>KeyValue and KeyOnly tables</li>
                 <li>Unique and non-unique indexes</li>
                 <li>Unique and non-unique composite indexes</li>
@@ -89,6 +89,19 @@
 
             <h3 id="nosql_download">Download</h3>
 
+            <span class="dlversion">[FREE] iBoxDB.NET v2.21&nbsp;&nbsp; iBoxDB.JAVA v2.15</span>
+            <br />
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv22100_215.zip/download" target="_blank">Download</a>]
+            &nbsp;&nbsp;
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv22100_215.zip" target="_blank">Download Mirror</a>]
+
+            <br />
+            Added: Forward CRUD
+
+            <br />
+            <br />
+
+
             <span class="dlversion">[FREE] iBoxDB.NET v2.19&nbsp;&nbsp; iBoxDB.JAVA v2.11</span>
             <br />
             [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21900_211.zip/download" target="_blank">Download</a>]
@@ -101,17 +114,6 @@
             <br />
             <br />
 
-            <span class="dlversion">[FREE] iBoxDB.NET v2.17.3&nbsp;&nbsp; iBoxDB.JAVA v2.8.3</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21730_283.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21730_283.zip" target="_blank">Download Mirror</a>]
-
-            <br />
-            Adjust Code
-
-            <br />
-            <br />
 
 
             <h5>Examples</h5>
@@ -374,6 +376,17 @@ using (var auto = db.Open()){
    ...
    //auto.Cube(); Insert(), Update()...
 }</code></pre>
+
+            <a href="javascript:void(0)" onclick="javascript:code16.style.display='block'">Forward CRUD</a>
+            <br />
+            <pre style="display: none" id="code16"><code class="java">try (Box box = auto.cube()) { 
+   // forward Update()
+   Member m = box.d(&quot;Table&quot;, 100L).update(Member.class); 
+   m.setName(&quot;Name&quot;); 
+   m.setAmount(BigDecimal.TEN); 
+   CommitResult cr = box.commit(); 
+}</code></pre>
+
 
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />

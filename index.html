@@ -100,38 +100,38 @@
                     <pre><code class="cs">  using(var box = auto.Cube())
   {                            
      //select, insert, update, delete ...
-     var result = box.Commit();
+     CommitResult cr = box.Commit();
   }
 </code></pre>
                     <pre><code class="java">  try(Box box = auto.cube()){
      ...
-     CommitResult r = box.commit();
+     CommitResult cr = box.commit();
   }  </code></pre>
                 </div>
 
                 <h5>Normal Object</h5>
                 <div>
                     <pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {  
-       ID=box.NewId(),
+       Id = box.NewId(),
        Name = &quot;Andy&quot;,
-       Password = EncodePassowrd(&quot;123&quot;),
-       Tags = new string[]{ &quot;Nice&quot; , &quot;Fast&quot; }
+       Password = EncodePassowrd(&quot;123&quot;)
      }
   );
 </code></pre>
                     <pre><code class="java">  Member m = new Member();
-  m.ID = box.newId();
+  m.Id = box.newId();
   m.setName(&quot;Kevin&quot;);
-  m.setTags(new Object[] { &quot;Handsome&quot;, &quot;Strong&quot; });
   box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
                 <h5>Dynamic Object (document database)</h5>
                 <div>
-                    <pre><code class="cs">  game[&quot;GameType&quot;] = &quot;ACT&quot;;
+                    <pre><code class="cs">  //Game : Dictionary&lt;string, object&gt;
+  game[&quot;GameType&quot;] = &quot;ACT&quot;;
   box[&quot;Product&quot;].Insert(game);
 </code></pre>
-                    <pre><code class="java">  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
+                    <pre><code class="java">  //Game extends HashMap&lt;String,Object&gt;
+  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
   box.d(&quot;Product&quot;).insert(game);  </code></pre>
                 </div>
 
@@ -155,7 +155,6 @@
   from [table] where [condition] 
                       order by [field1] desc,[field2] limit [0,10]
   [Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
-  [IFunction:] =[F1,F2,F3] 
   */ </code></pre>
                     <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
                     <pre><code class="java">  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>

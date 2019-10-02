@@ -175,21 +175,20 @@
 
                 <h5>Custom QueryFunction</h5>
                 <div>
-                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new IFunction(&quot;Value&quot;));</code></pre>
+                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new IFunction(&quot;Value&quot;))</code></pre>
                 </div>
 
                 <h5>Compatible with LINQ (.NET)</h5>
                 <div>
-                    <pre><code class="cs">  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
-  where o.Text.Contains(text)
-  select o;</code></pre>
+                    <pre><code class="cs">  from o in box.Select&lt;Member&gt;(&quot;from Member&quot;)
+  where o.Text.Contains(text) select o;</code></pre>
                 </div>
 
-                <h5>Compatible with Stream (Java8)</h5>
+                <h5>Compatible with Stream (Java)</h5>
                 <div>
-                    <pre><code class="java">  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
-  .collect(Collectors.groupingBy((l) -&gt; l.get(&quot;GroupID&quot;),
-   Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
+                    <pre><code class="java">  StreamSupport
+   .stream(box.select(Member.class,&quot;from Member&quot;).spliterator(), true)
+   .collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
                 </div>
 
                 <h5>Snapshot-Serializable Transaction</h5>

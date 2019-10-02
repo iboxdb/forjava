@@ -111,12 +111,11 @@
 
                 <h5>Normal Object</h5>
                 <div>
-                    <pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {  
-       Id = box.NewId(),
-       Name = &quot;Andy&quot;,
-       Password = EncodePassowrd(&quot;123&quot;)
-     }
-  );
+                    <pre><code class="cs">  Member m = new Member();  
+  m.Id = box.NewId();
+  m.Name = &quot;Andy&quot;;
+  m.Password = EncodePassowrd(&quot;123&quot;);
+  box[&quot;Member&quot;].Insert(m);
 </code></pre>
                     <pre><code class="java">  Member m = new Member();
   m.Id = box.newId();
@@ -164,9 +163,9 @@
                 <h5>Query</h5>
                 <pre><code class="cs">  //query
   box.Select(&quot;from Member&quot;);
-  //load to memory first, startwith '*'
+  //load to memory first, startswith '*'
   box.Select(&quot;*from Member&quot;);
-  //selecting tracer, startwith '!'
+  //selecting tracer, startswith '!'
   box.Select(&quot;!from Member&quot;)  </code></pre>
 
                 <h5>Index, make Select hundred times faster in average</h5>

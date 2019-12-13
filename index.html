@@ -172,7 +172,7 @@
                 <h5>Index, make Select hundred times faster in average</h5>
                 <pre><code class="cs">  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
   config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
-  box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
+  box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;,arg1,arg2)</code></pre>
 
                 <h5>Custom QueryFunction</h5>
                 <div>

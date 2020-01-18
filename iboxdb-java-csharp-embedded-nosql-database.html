@@ -44,6 +44,7 @@
                 iBoxDB has a well designed interface with great performance and capability for agile development. You can create applications with database services embedded and deploy it on mobiles, desktops, servers,
                 to persist your data from anywhere.
             </p>
+            <p>Green, low carbon emission!</p>
             <p>
                 Dual Core Application Database
                 <br />
@@ -140,17 +141,22 @@ public class App{
 synchronized static void onApplicationStart() { 
   DB.root(path);
   DB db = new DB(1); 
-  db.getConfig().ensureTable(Member.class, &quot;Table&quot;, &quot;Id&quot;) 
-                .ensureIndex(Member.class, &quot;Table&quot;, &quot;Name&quot;); 
-  //Tree-&gt;Parts 
-  db.getConfig().ensureTable(Node.class, &quot;Node&quot;, &quot;Id&quot;) 
-                .ensureIndex(Node.class, &quot;Node&quot;, &quot;Parent&quot;); 
 
-  db.getConfig().ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;) 
-                .ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
+  db.getConfig()
+    .ensureTable(Member.class, &quot;Table&quot;, &quot;Id&quot;) 
+    .ensureIndex(Member.class, &quot;Table&quot;, &quot;Name&quot;); 
+
+  //Tree-&gt;Parts 
+  db.getConfig()
+    .ensureTable(Node.class, &quot;Node&quot;, &quot;Id&quot;) 
+    .ensureIndex(Node.class, &quot;Node&quot;, &quot;Parent&quot;); 
+
+  db.getConfig()
+    .ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;) 
+    .ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
 
   DatabaseConfig cfg = db.getConfig().DBConfig;
-  cfg.CacheLength = cfg.mb(512);
+  cfg.CacheLength = cfg.mb(512L);
   cfg.FileIncSize = (int)cfg.mb(4);
 
   App.auto = db.open(); 
@@ -179,15 +185,13 @@ boolean exists(Box box) {
   return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end); 
 }
 
-void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) { 
-  if (maxLevel &gt; 5) { return; } 
-  char[] cs = new char[maxLevel * 2]; Arrays.fill(cs, &#39; &#39;); 
-  for (Node node : box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) { 
-    result.append(cs).append(&quot;NODE:&quot;)
-          .append(&quot;-&gt;&quot;).append(node.Id).append(&quot;\r\n&quot;); 
-    for (Part part : box.select(Part.class, &quot;from Part where Node==?&quot;, node.Id)) { 
-      result.append(cs).append(&quot; PART:&quot;)
-            .append(&quot;-&gt;&quot;).append(part.Id).append(&quot;\r\n&quot;); 
+void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
+  for (Node node : 
+         box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) { 
+           result.append(&quot; NODE:&quot;).append(node.Id); 
+    for (Part part : 
+       	   box.select(Part.class, &quot;from Part where Node==?&quot;, node.Id)) { 
+      	     result.append(&quot; PART:&quot;).append(part.Id); 
     } 
     treeJoin(box, node.Id, maxLevel + 1, result); 
   } 

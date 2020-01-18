@@ -56,7 +56,7 @@
                 iBoxDB has a well designed interface with great performance and capability for agile development. You can create applications with database services embedded and deploy it on mobiles, desktops, servers,
                 to persist your data from anywhere.
             </p>
-
+            <p>Green, low carbon emission!</p>
             <p>
                 Dual Core Application Database
                 <br />
@@ -454,6 +454,7 @@ public class StartListener implements ServletContextListener {
  var db = new DB();
  db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.Open();
+
  auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
  var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
  o1.Name = &quot;Kelly&quot;;
@@ -464,6 +465,7 @@ public class StartListener implements ServletContextListener {
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.open();
+
  auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
  Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
  o1.Name = &quot;Kelly&quot;;
@@ -504,22 +506,22 @@ public class StartListener implements ServletContextListener {
                 mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
                 <pre><code class="sql">threadCount=100000 , batchCount=10
 MongoDB(Default) 
- Insert:1000000  AVG:10521 objects/s
+ Insert:1,000,000  AVG:10,521 objects/s
  
 iBoxDB(File Mode)
- Insert:1000000  AVG:17981 objects/s
- Update:1000000  AVG:12397 objects/s 
- Delete:1000000  AVG:22869 objects/s
+ Insert:1,000,000  AVG:17,981 objects/s
+ Update:1,000,000  AVG:12,397 objects/s 
+ Delete:1,000,000  AVG:22,869 objects/s
             
 iBoxDB(MemoryMappedFile Mode) 
- Insert:1000000  AVG:38458 objects/s
- Update:1000000  AVG:20200 objects/s 
- Delete:1000000  AVG:33342 objects/s
+ Insert:1,000,000  AVG:38,458 objects/s
+ Update:1,000,000  AVG:20,200 objects/s 
+ Delete:1,000,000  AVG:33,342 objects/s
  
 iBoxDB(InMemory Mode)
- Insert:1000000  AVG:39132 objects/s
- Update:1000000  AVG:20226 objects/s 
- Delete:1000000  AVG:33658 objects/s </code></pre>
+ Insert:1,000,000  AVG:39,132 objects/s
+ Update:1,000,000  AVG:20,226 objects/s 
+ Delete:1,000,000  AVG:33,658 objects/s </code></pre>
                 <br />
                 iBoxDB.NET 64bit System
                 <br />

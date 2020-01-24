@@ -340,6 +340,7 @@ void OnApplicationClose()
 }  
 Save() { 
     byte[] data = db.GetBuffer(); 
+    //data = Zip(data); = 1/5
     PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data)); 
     PlayerPrefs.Save(); 
 }
@@ -401,6 +402,11 @@ using (var auto = db.Open()){
 }</code></pre>
 
 
+      <a href="javascript:void(0)" onclick="javascript:code17.style.display='block'">Schemata</a>
+            <br />
+            <pre style="display: none" id="code17"><code class="java">auto.getDatabase().getSchemata() 
+</code></pre>
+
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />
             <pre style="display: none" id="code1"><code class="ss"> sn -k kp.snk 
@@ -428,6 +434,14 @@ using (var auto = db.Open()){
             <a href="https://github.com/iboxdb/aspnet-cross-platform-db/blob/master/blazorwasm/IApp.cs" target="_blank">Blazor Wasm Client</a>
             <br />
             <a href="https://github.com/iboxdb/forjava/wiki/Use-multi-thread-to-increase-speed-and-use-CommitEvent-to-decrease-conflict#ss-transaction" target="_blank">Snapshot and Serializable Isolations in one Transaction</a>
+
+            <br />
+            <br />
+            <h5>Benchmark Code</h5>
+            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MySQL" target="_blank">With MySQL</a>
+            <br />
+            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB" target="_blank">With MongoDB</a>
+            
             <br />
             <br />
             <br />

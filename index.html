@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="keywords" content="iboxdb,android,xamarin,unity,acid,nosql,database,transaction,java,mono,orm,embedded,mvcc,keyonly,document,blazor,lite,fast,net,db,c#">
+    <meta name="keywords" content="iboxdb,android,xamarin,unity,acid,nosql,database,transaction,java,mono,embedded,mvcc,keyonly,document,blazor,mysql,mongodb,sqlite,fast,net,db,c#">
     <meta name="description" content="iBoxDB Fast Lightweight ACID Embedded Table Style Document NoSQL Databases for Java C# Android Unity Xamarin Mono Blazor ASP.NET Core Linux Windows">
 
     <link rel="shortcut icon" href="favicon.ico" />
@@ -282,6 +282,104 @@
                 </table>
 
 
+                <h5>IO</h5>
+                <table style="margin: 0px; padding: 0px; width: 90%">
+                    <tr>
+                        <th>.NET </th>
+                        <th>JAVA </th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig
+ class BoxMemoryStreamConfig
+ class ReadonlyStreamConfig
+ class CacheStreamConfig </code></pre>
+                        </td>
+
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig 
+ class BoxMemoryStreamConfig
+ class ReadonlyStreamConfig
+ class CacheStreamConfig </code></pre>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h5>Database Path</h5>
+                C# &amp; JAVA,&nbsp;  place outside IDE working directory can get better performance
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
+                ASP.NET Cross Platform
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
+
+                Xamarin
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
+       System.Environment.SpecialFolder.Personal));</code></pre>
+
+                Unity3D
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
+
+                Android
+                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
+       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
+
+
+                JSP WebApplication
+                <pre><code class="java">@WebListener()
+public class StartListener implements ServletContextListener {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+       String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
+       new File(path).mkdirs();   
+       iBoxDB.LocalServer.DB.root(path); 
+    }
+} </code></pre>
+
+
+
+
+
+                <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
+                <pre><code class="cs"> using iBoxDB.LocalServer;
+
+ var db = new DB();
+ db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
+ AutoBox auto = db.Open();
+
+ auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
+ var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
+ o1.Name = &quot;Kelly&quot;;
+ auto.Update(&quot;Table&quot;, o1);
+ auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
+                <pre><code class="java"> import iBoxDB.LocalServer.*;
+
+ DB db = new DB();
+ db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
+ AutoBox auto = db.open();
+
+ auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
+ Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
+ o1.Name = &quot;Kelly&quot;;
+ auto.update(&quot;Table&quot;, o1);
+ auto.delete(&quot;Table&quot;, 1L);  </code></pre>
+
+                <h5>Install</h5>
+                <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
+                <pre><code class="java">Java: Add JavaDB/iBoxDB.jar to Project</code></pre>
+                 
+
+                <h5>Benchmark with MySQL</h5>
+                <pre><code class="sql">iBoxDB
+ Insert: 1,000,000 AVG: 47,016 objects/s 
+ Update: 1,000,000 AVG: 25,558 objects/s 
+ Delete: 1,000,000 AVG: 42,714 objects/s 
+
+MySQL
+ Insert: 1,000,000 AVG: 5,514 objects/s 
+ Update: 1,000,000 AVG: 5,109 objects/s 
+ Delete: 1,000,000 AVG: 6,044 objects/s 
+</code></pre>
+
 
                 <h5>Supported Types</h5>
                 <table style="margin: 0px; padding: 0px; width: 90%">
@@ -390,160 +488,7 @@
                     </tr>
                 </table>
 
-
-                <h5>IO</h5>
-                <table style="margin: 0px; padding: 0px; width: 90%">
-                    <tr>
-                        <th>.NET </th>
-                        <th>JAVA </th>
-                    </tr>
-                    <tr>
-                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig
- class BoxMemoryStreamConfig
- class ReadonlyStreamConfig
- class CacheStreamConfig </code></pre>
-                        </td>
-
-                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig 
- class BoxMemoryStreamConfig
- class ReadonlyStreamConfig
- class CacheStreamConfig </code></pre>
-                        </td>
-                    </tr>
-                </table>
-
-
-                <h5>Database Path</h5>
-                C# &amp; JAVA,&nbsp;  place outside IDE working directory can get better performance
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
-                ASP.NET Cross Platform
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
-
-                Xamarin
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
-       System.Environment.SpecialFolder.Personal));</code></pre>
-
-                Unity3D
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
-
-                Android
-                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
-       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
-
-
-                JSP WebApplication
-                <pre><code class="java">@WebListener()
-public class StartListener implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-       String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
-       new File(path).mkdirs();   
-       iBoxDB.LocalServer.DB.root(path); 
-    }
-} </code></pre>
-
-
-
-
-
-                <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
-                <pre><code class="cs"> using iBoxDB.LocalServer;
-
- var db = new DB();
- db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
- AutoBox auto = db.Open();
-
- auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
- var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.Update(&quot;Table&quot;, o1);
- auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
-                <pre><code class="java"> import iBoxDB.LocalServer.*;
-
- DB db = new DB();
- db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
- AutoBox auto = db.open();
-
- auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
- Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.update(&quot;Table&quot;, o1);
- auto.delete(&quot;Table&quot;, 1L);  </code></pre>
-
-                <h5>Install</h5>
-                <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
-                <pre><code class="java">Java: Add JavaDB/iBoxDB.jar to Project</code></pre>
-
-                <h5>Command Line&nbsp;&nbsp; F# and JavaScript</h5>
-                <pre><code class="cs"> #r &quot;iBoxDB.dll&quot; 
- open iBoxDB.LocalServer 
- open System 
- DB.Root( &quot;C:\\DB&quot; ) 
- let db = new DB() 
- let auto = db.Open() 
- for v in auto.Select(&quot;from OT limit 0 , 2&quot;) do 
-   Console.WriteLine(DB.ToString(v)) 
- for v in auto.GetDatabase().GetSchemata() do 
-   Console.WriteLine(v.Key) 
- db.Dispose()</code></pre>
-                <pre><code class="javascript"> //jjs -cp iBoxDB.jar 
- var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
- DB.root(&quot;/db/&quot;) 
- var db = new DB() 
- var auto = db.open() 
- auto.select(&quot;from table1 limit 0,3&quot;) 
-   .forEach( function(v){ print(v) }) 
- auto.getDatabase().getSchemata() 
-   .forEach( function(v){ print(v) }) 
- db.close()   </code></pre>
-
-                <h5>Benchmark with MongoDB</h5>
-                iBoxDB.Java 32bit System Low Memory
-                <br />
-                iBoxDB.java v1.4.1
-                mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
-                <pre><code class="sql">threadCount=100000 , batchCount=10
-MongoDB(Default) 
- Insert:1,000,000  AVG:10,521 objects/s
- 
-iBoxDB(File Mode)
- Insert:1,000,000  AVG:17,981 objects/s
- Update:1,000,000  AVG:12,397 objects/s 
- Delete:1,000,000  AVG:22,869 objects/s
-            
-iBoxDB(MemoryMappedFile Mode) 
- Insert:1,000,000  AVG:38,458 objects/s
- Update:1,000,000  AVG:20,200 objects/s 
- Delete:1,000,000  AVG:33,342 objects/s
- 
-iBoxDB(InMemory Mode)
- Insert:1,000,000  AVG:39,132 objects/s
- Update:1,000,000  AVG:20,226 objects/s 
- Delete:1,000,000  AVG:33,658 objects/s </code></pre>
-                <br />
-                iBoxDB.NET 64bit System
-                <br />
-                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34
-                <pre><code class="sql">MongoDB(Default) 
- Insert:1,000,000  AVG: 32,702 objects/s
- 
-iBoxDB(File Mode) 
- Insert:1,000,000  AVG:33,368 objects/s
- Update:1,000,000  AVG:16,939 objects/s 
- Delete:1,000,000  AVG:22,504 objects/s
- 
-iBoxDB(MemoryMappedFile Mode)
- Insert:1,000,000  AVG:42,236 objects/s
- Update:1,000,000  AVG:17,765 objects/s 
- Delete:1,000,000  AVG:23,147 objects/s
- 
-iBoxDB(InMemory Mode)
- Insert:1,000,000  AVG:47,382 objects/s
- Update:1,000,000  AVG:26,806 objects/s 
- Delete:1,000,000  AVG:35,092 objects/s   </code></pre>
-
+               
                 <h5>Composite Key Supported</h5>
                 <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
                 <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>

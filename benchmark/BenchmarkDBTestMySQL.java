@@ -33,12 +33,14 @@ public class BenchmarkDBTestMySQL {
 
     static int threadCount = 100_000;
     static int batchCount = 10;
+    static int reinterationSelect = 3;
 
     public static void main(String[] args) {
         try {
 
             System.out.println(System.getProperty("java.version"));
-            System.out.format("threadCount= %,d batchCount= %,d %n", threadCount, batchCount);
+            System.out.format("threadCount= %,d batchCount= %,d reinterationSelect= %,d %n",
+                    threadCount, batchCount, reinterationSelect);
 
             iBoxDB.LocalServer.DB.root("/tmp");
             System.out.println("iBoxDB");
@@ -82,8 +84,8 @@ public class BenchmarkDBTestMySQL {
             } else {
                 System.out.println("Failed");
             }
-            box1.commit().Assert();
-            box2.commit().Assert();
+            box1.commit();
+            box2.commit();
 
             long watch = System.currentTimeMillis();
             final AtomicInteger count = new AtomicInteger(0);
@@ -98,11 +100,12 @@ public class BenchmarkDBTestMySQL {
                             for (int i = 0; i < batchCount; i++) {
                                 int id = (p * batchCount) + i;
                                 box.d("T1").insert(new T1(id, Integer.toString(id)));
+                                count.incrementAndGet();
                             }
                             var cr = box.commit();
                         }
 
-                        {
+                        for (int r = 0; r < reinterationSelect; r++) {
                             AutoBox auto = db.get();
                             int minId = p * batchCount + 0;
                             int maxId = p * batchCount + batchCount;
@@ -117,7 +120,6 @@ public class BenchmarkDBTestMySQL {
                                     throw new RuntimeException(ti + "  " + iv);
                                 }
                                 ti++;
-                                count.incrementAndGet();
                             }
                             if (ti != maxId) {
                                 System.out.println("e");
@@ -151,12 +153,40 @@ public class BenchmarkDBTestMySQL {
                                 int id = (p * batchCount) + i;
                                 Binder bd = box.d("T1", id);
                                 var hm = bd.select(T1.class);
-                                hm.setValue(hm.getValue() + new Date().toString());
+                                hm.setValue("U" + hm.getValue());
                                 bd.update(hm);
                                 count.incrementAndGet();
                             }
                             var cr = box.commit();
                         }
+
+                        {
+                            AutoBox auto = db.get();
+                            int minId = p * batchCount + 0;
+                            int maxId = p * batchCount + batchCount;
+                            var reader = auto
+                                    .select(T1.class, "from T1 where Id>=? & Id<? order by Id",
+                                            minId, maxId).iterator();
+                            int ti = minId;
+                            while (reader.hasNext()) {
+                                T1 t1 = reader.next();
+                                var iv = t1.getId();
+                                if (ti != iv) {
+                                    System.out.println("e");
+                                    throw new RuntimeException(ti + "  " + iv);
+                                }
+                                if (!("U" + ti).equals(t1.getValue())) {
+                                    System.out.println("eu");
+                                    throw new RuntimeException(ti + "  " + t1.getValue());
+                                }
+                                ti++;
+                            }
+                            if (ti != maxId) {
+                                System.out.println("e");
+                                throw new RuntimeException();
+                            }
+                        }
+
                     }
                 });
             }
@@ -295,7 +325,7 @@ public class BenchmarkDBTestMySQL {
                                 stmt.setInt(1, id);
                                 stmt.setString(2, Integer.toString(id));
                                 stmt.addBatch();
-
+                                count.incrementAndGet();
                             }
                             stmt.executeBatch();
                             stmt.close();
@@ -307,37 +337,39 @@ public class BenchmarkDBTestMySQL {
                             ex.printStackTrace();
                         }
 
-                        try {
-                            var conn = connPool.take();
-                            conn.setAutoCommit(true);
-                            var stmt = conn.prepareStatement("select Id,Value from T1 where Id>=? and Id<? order by Id");
-                            int minId = p * batchCount + 0;
-                            int maxId = p * batchCount + batchCount;
-                            stmt.setInt(1, minId);
-                            stmt.setInt(2, maxId);
+                        for (int r = 0; r < reinterationSelect; r++) {
+                            try {
+                                var conn = connPool.take();
+                                conn.setAutoCommit(true);
+                                var stmt = conn.prepareStatement("select Id,Value from T1 where Id>=? and Id<? order by Id");
+                                int minId = p * batchCount + 0;
+                                int maxId = p * batchCount + batchCount;
+                                stmt.setInt(1, minId);
+                                stmt.setInt(2, maxId);
 
-                            var reader = T1.toArray(stmt.executeQuery()).iterator();
-                            stmt.close();
+                                var reader = T1.toArray(stmt.executeQuery()).iterator();
+                                stmt.close();
 
-                            connPool.put(conn);
+                                connPool.put(conn);
 
-                            int ti = minId;
-                            while (reader.hasNext()) {
-                                var iv = reader.next().getId();
-                                if (ti != iv) {
-                                    System.out.println("e");
-                                    throw new RuntimeException(ti + "  " + iv);
+                                int ti = minId;
+                                while (reader.hasNext()) {
+                                    var iv = reader.next().getId();
+                                    if (ti != iv) {
+                                        System.out.println("e");
+                                        throw new RuntimeException(ti + "  " + iv);
+                                    }
+                                    ti++;
+
                                 }
-                                ti++;
-                                count.incrementAndGet();
-                            }
-                            if (ti != maxId) {
-                                System.out.println("e2");
-                                throw new RuntimeException(ti + "  " + maxId);
-                            }
+                                if (ti != maxId) {
+                                    System.out.println("e2");
+                                    throw new RuntimeException(ti + "  " + maxId);
+                                }
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
                 });
@@ -365,13 +397,13 @@ public class BenchmarkDBTestMySQL {
                         try {
                             var conn = connPool.take();
                             conn.setAutoCommit(false);
-                            var stmt = conn.prepareStatement("update T1 set Value=concat(Value,?) where Id=?");
+                            var stmt = conn.prepareStatement("update T1 set Value=? where Id=?");
 
                             for (int i = 0; i < batchCount; i++) {
                                 int id = (p * batchCount) + i;
 
                                 stmt.setInt(2, id);
-                                stmt.setString(1, new Date().toString());
+                                stmt.setString(1, "U" + id);
                                 stmt.addBatch();
 
                                 count.incrementAndGet();
@@ -381,6 +413,44 @@ public class BenchmarkDBTestMySQL {
 
                             conn.commit();
                             connPool.put(conn);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                        try {
+                            var conn = connPool.take();
+                            conn.setAutoCommit(true);
+                            var stmt = conn.prepareStatement("select Id,Value from T1 where Id>=? and Id<? order by Id");
+                            int minId = p * batchCount + 0;
+                            int maxId = p * batchCount + batchCount;
+                            stmt.setInt(1, minId);
+                            stmt.setInt(2, maxId);
+
+                            var reader = T1.toArray(stmt.executeQuery()).iterator();
+                            stmt.close();
+
+                            connPool.put(conn);
+
+                            int ti = minId;
+                            while (reader.hasNext()) {
+                                var t1 = reader.next();
+                                var iv = t1.getId();
+                                if (ti != iv) {
+                                    System.out.println("e");
+                                    throw new RuntimeException(ti + "  " + iv);
+                                }
+                                if (!("U" + ti).equals(t1.getValue())) {
+                                    System.out.println("eu");
+                                    throw new RuntimeException(ti + "  " + t1.getValue());
+                                }
+                                ti++;
+
+                            }
+                            if (ti != maxId) {
+                                System.out.println("e2");
+                                throw new RuntimeException(ti + "  " + maxId);
+                            }
+
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

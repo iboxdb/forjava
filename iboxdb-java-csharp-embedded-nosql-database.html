@@ -414,6 +414,16 @@ using (var auto = db.Open()){
  rename A.dll A.bak
  ilasm  A.il  /dll /key=kp.snk</code></pre>
 
+       <a href="javascript:void(0)" onclick="javascript:code18.style.display='block'">Big Cache</a>
+            <br />
+            <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig().DBConfig;
+ cfg.CacheLength = cfg.mb(1024L*3L);
+ //or
+ cfg.CacheLength = 1024L*1024L*1024L*3L
+ //Overflow int
+ //1024*1024*1024*3
+</code></pre>
+
 
             <br />
             <h5>Links</h5>
@@ -438,9 +448,11 @@ using (var auto = db.Open()){
             <br />
             <br />
             <h5>Benchmark Code</h5>
-            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MySQL" target="_blank">With MySQL</a>
+            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MySQL" target="_blank">With MySQL Java</a>
             <br />
-            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB" target="_blank">With MongoDB</a>
+            <a href="https://github.com/iboxdb/forjava/wiki/Benchmark-with-MongoDB" target="_blank">With MongoDB Java</a>
+            <br />
+            <a href="https://github.com/iboxdb/benchmarksql" target="_blank">With SQLite C#</a>
             
             <br />
             <br />

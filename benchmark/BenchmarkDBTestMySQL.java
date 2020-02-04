@@ -42,7 +42,10 @@ public class BenchmarkDBTestMySQL {
             System.out.format("threadCount= %,d batchCount= %,d reinterationSelect= %,d %n",
                     threadCount, batchCount, reinterationSelect);
 
-            iBoxDB.LocalServer.DB.root("/tmp");
+            //never set root = "" or "./" when inside IDE
+            //the IDE would block writing.
+            String root = "../"; //"/tmp"
+            iBoxDB.LocalServer.DB.root(root);
             System.out.println("iBoxDB");
             TestiBoxDB();
             System.out.println();

@@ -99,7 +99,7 @@
             [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv22300_217.zip" target="_blank">Download Mirror</a>]
 
             <br />
-            Support: use weak object (class Variant) as argument.
+            Supported: use weak object to query.
 
             <br />
             <br />
@@ -406,6 +406,25 @@ using (var auto = db.Open()){
 }</code></pre>
 
 
+
+	 <a href="javascript:void(0)" onclick="javascript:code19.style.display='block'">Weak Object</a>
+            <br />
+            <pre style="display: none" id="code19"><code class="java">//Strongly typed
+box.select("from Table where Id > ?" , 1L);
+//Weak Object
+box.select("from Table where Id > ?" , new Variant("1"));             
+</code></pre>
+
+       <a href="javascript:void(0)" onclick="javascript:code18.style.display='block'">Big Cache</a>
+            <br />
+            <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig().DBConfig;
+ cfg.CacheLength = cfg.mb(1024L*3L);
+ //or
+ cfg.CacheLength = 1024L*1024L*1024L*3L
+ //Overflow int
+ //1024*1024*1024*3
+</code></pre>
+
       <a href="javascript:void(0)" onclick="javascript:code17.style.display='block'">Schemata</a>
             <br />
             <pre style="display: none" id="code17"><code class="java">auto.getDatabase().getSchemata() 
@@ -418,15 +437,7 @@ using (var auto = db.Open()){
  rename A.dll A.bak
  ilasm  A.il  /dll /key=kp.snk</code></pre>
 
-       <a href="javascript:void(0)" onclick="javascript:code18.style.display='block'">Big Cache</a>
-            <br />
-            <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig().DBConfig;
- cfg.CacheLength = cfg.mb(1024L*3L);
- //or
- cfg.CacheLength = 1024L*1024L*1024L*3L
- //Overflow int
- //1024*1024*1024*3
-</code></pre>
+
 
 
             <br />

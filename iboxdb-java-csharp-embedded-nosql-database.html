@@ -71,6 +71,7 @@
                 <li>Dynamic columns</li>
                 <li>Different types with different indexes can be stored in same table</li>
                 <li>Persistence + ORM + Cache + Embeddable, ONE STOP solution</li>
+                <li>Ason, Array Script Object Notation</li>
                 <li>ResultSet compatible with LINQ</li>
                 <li>High performance, no dependencies</li>
                 <li>Update Increment</li>
@@ -92,6 +93,25 @@
 
             <div class="addthis_sharing_toolbox"> </div>
 
+
+            <span class="dlversion">[FREE] iBoxDB.NET v2.33&nbsp;&nbsp; iBoxDB.JAVA v2.27</span>
+            <br />
+            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv23300_227.zip/download" target="_blank">Download</a>]
+            &nbsp;&nbsp;
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv23300_227.zip" target="_blank">Download Mirror</a>]
+
+            <br />
+            Adjusted: DatabaseConfig <br />
+            Adjusted: Load to Memory in Select() <br />
+            Improved: IFunction <br /> 
+            Added: Ason, Array Script Object Notation 
+
+            <br />
+            <br />
+
+
+
+
             <span class="dlversion">[FREE] iBoxDB.NET v2.23&nbsp;&nbsp; iBoxDB.JAVA v2.17</span>
             <br />
             [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv22300_217.zip/download" target="_blank">Download</a>]
@@ -105,21 +125,9 @@
             <br />
             <br />
 
-            <span class="dlversion">[FREE] iBoxDB.NET v2.21&nbsp;&nbsp; iBoxDB.JAVA v2.15</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv22100_215.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv22100_215.zip" target="_blank">Download Mirror</a>]
-
-            <br />
-            Added: forward CRUD
-
-            <br />
-            <br />
 
 
-
-
+            <!--
             <h6>For .NETStandard1.3</h6>
             <span class="dlversion">[FREE] iBoxDB.NET v2.17.3&nbsp;&nbsp; iBoxDB.JAVA v2.8.3</span>
             <br />
@@ -129,7 +137,7 @@
             
             <br />
             <br />
-
+            -->
 
             <h5>Examples</h5>
 
@@ -160,7 +168,7 @@ synchronized static void onApplicationStart() {
     .ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;) 
     .ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
 
-  DatabaseConfig cfg = db.getConfig().DBConfig;
+  DatabaseConfig cfg = db.getConfig();
   cfg.CacheLength = cfg.mb(512L);
   cfg.FileIncSize = (int)cfg.mb(4);
 
@@ -418,7 +426,7 @@ box.select("from Table where Id > ?" , new Variant("1"));
 
        <a href="javascript:void(0)" onclick="javascript:code18.style.display='block'">Big Cache</a>
             <br />
-            <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig().DBConfig;
+            <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig();
  cfg.CacheLength = cfg.mb(1024L*3L);
  //or
  cfg.CacheLength = 1024L*1024L*1024L*3L
@@ -460,6 +468,9 @@ box.select("from Table where Id > ?" , new Variant("1"));
             <a href="https://github.com/iboxdb/aspnet-cross-platform-db/blob/master/blazorwasm/IApp.cs" target="_blank">Blazor Wasm Client</a>
             <br />
             <a href="https://github.com/iboxdb/forjava/wiki/Use-multi-thread-to-increase-speed-and-use-CommitEvent-to-decrease-conflict#ss-transaction" target="_blank">Snapshot and Serializable Isolations in one Transaction</a>
+            <br />
+            <a href="https://github.com/iboxdb/ason" target="_blank">Ason</a>
+
 
             <br />
             <br />

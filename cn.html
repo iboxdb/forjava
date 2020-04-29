@@ -4,12 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,MVCC,Java,Android,Unity3D,Xamarin,数据库事务,应用程序,文档数据库">
-    <meta name="description" content="iBoxDB 双核ACID事务NoSQL文档数据库引擎，支持JAVA C# Unity3D Android Mono Xamarin Linux ASP.NET Core Nashorn Windows">
+    <meta name="description" content="iBoxDB 双核数据库引擎，支持JAVA C# Unity3D Android Mono Xamarin Linux ASP.NET Core Linux Windows">
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="bookmark" href="favicon.ico" />
 
-    <title>iBoxDB JAVA C# ACID事务NoSQL文档数据库, 支持Unity Android Mono Xamarin ASP.NET Core</title>
+    <title>iBoxDB 高性能嵌入式数据库, 支持 Java .NET Unity Android Mono Xamarin ASP.NET Core</title>
 
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="highlight/styles/vs.css">
@@ -18,12 +18,12 @@
 <body>
 
     <!-- HEADER -->
-    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #CC3300;">
+    <div id="header_wrap" class="outer" style="border-bottom-style: solid; border-bottom-width: medium; border-bottom-color: #33CC00;">
         <header class="inner">
 
 
             <h1 id="project_title">iBoxDB</h1>
-            <h2 id="project_tagline">双核高效事务NoSQL应用程序数据库引擎</h2>
+            <h2 id="project_tagline">双核高效应用程序数据库引擎</h2>
             <div id="downloads">
                 <a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download"
                     style="border: 1px solid #FFFFFF; padding: 5px 28px 5px 28px; top: 103px; position: relative; font-size: x-large; background-color: #333333; color: #FFFFFF; font-weight: lighter;">下载数据库</a>
@@ -37,13 +37,12 @@
 
             <!-- key words -->
             <div style="width: 1px; height: 1px; overflow: hidden">
-                iBoxDB NoSQL Database 敏捷开发 嵌入式文档数据库
-                 iBoxDB NoSQL Document Database for JAVA C# Android ASP.NET Core Unity ORM Database Mobile Database MVCC Transactional Thread Safe
+                
             </div>
 
             <h3>项目介绍</h3>
 
-            <p>iBoxDB 是一个高性能的NoSQL应用程序数据库，提供事务支持，使用数据库表的风格存取任意结构的文档对象数据，包含无须安装配置的 JAVA 与 .NET 数据库引擎。</p>
+            <p>iBoxDB 是一个高能效的应用程序数据库，提供事务支持，使用数据库表的风格存取任意结构的文档对象数据，包含无须安装配置的 JAVA 与 .NET 数据库引擎。</p>
 
             <p>iBoxDB 提供一个优雅设计的编程接口，让应用程序无缝地与数据引擎溶为一体, 你能方便地把它发布到移动设备, 桌面设备和服务器上, 然后让它帮助你存取各种有结构的，或者无结构的数据，具备保持数据一致性的能力。</p>
 
@@ -65,6 +64,7 @@
                 <li>SQL风格的数据查询语言</li>
                 <li>数据库事务支持</li>
                 <li>并发控制，多线程安全</li>
+                <li>多进程安全</li>
                 <li>内存管理</li>
                 <li>主从和多主的数据库热同步</li>
                 <li>支持磁盘永久保存和全内存快速保存</li>
@@ -73,6 +73,7 @@
                 <li>动态列支持</li>
                 <li>带不同索引的多个数据类型能存到同一个表中</li>
                 <li>持久化 + 对象影射 + 缓存 + 嵌入式, 一站式解决方案</li>
+                <li>Ason, 快速动态对象实例化</li>
                 <li>结果集支持 LINQ 与 STREAM</li>
                 <li>高性能无外部系统依赖</li>
                 <li>更新自增</li>
@@ -105,15 +106,13 @@
                     <pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {  
        ID=box.NewId(),
        Name = &quot;Andy&quot;,
-       Password = EncodePassowrd(&quot;123&quot;),
-       Tags = new string[]{ &quot;Nice&quot; , &quot;Fast&quot; }
+       Password = EncodePassowrd(&quot;123&quot;)
      }
   );
 </code></pre>
                     <pre><code class="java">  Member m = new Member();
   m.ID = box.newId();
   m.setName(&quot;Kevin&quot;);
-  m.setTags(new Object[] { &quot;Handsome&quot;, &quot;Strong&quot; });
   box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
@@ -275,21 +274,6 @@
  //non-indexable
  MemoryStream STREAM ;
  Dictionary&lt;string, object&gt;
- bool[] 
- char[] 
- byte[]
- sbyte[] 
- short[]
- ushort[] 
- int[] 
- uint[] 
- long[]
- ulong[]
- float[]
- double[] 
- decimal[] 
- DateTime[] 
- Guid[]
              </pre>
                         </td>
 
@@ -322,6 +306,15 @@
  byte[]
  HashMap&lt;String,Object&gt;
  Object[]
+
+
+
+
+
+
+
+
+
                             </pre>
                         </td>
                     </tr>
@@ -416,80 +409,24 @@ box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></
  auto.update(&quot;Table&quot;, o1);
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
-                <h5>命令行方式&nbsp;&nbsp; F# and JavaScript</h5>
-                <pre><code class="cs"> #r &quot;iBoxDB.dll&quot; 
- open iBoxDB.LocalServer 
- open System 
- DB.Root( &quot;C:\\DB&quot; ) 
- let db = new DB() 
- let auto = db.Open() 
- for v in auto.Select(&quot;from OT limit 0 , 2&quot;) do 
-   Console.WriteLine(DB.ToString(v)) 
- for v in auto.GetDatabase().GetSchemata() do 
-   Console.WriteLine(v.Key) 
- db.Dispose()</code></pre>
-                <pre><code class="javascript"> //jjs -cp iBoxDB.jar 
- var DB = Java.type(&quot;iBoxDB.LocalServer.DB&quot;) 
- DB.root(&quot;/db/&quot;) 
- var db = new DB() 
- var auto = db.open() 
- auto.select(&quot;from table1 limit 0,3&quot;) 
-   .forEach( function(v){ print(v) }) 
- auto.getDatabase().getSchemata() 
-   .forEach( function(v){ print(v) }) 
- db.close()   </code></pre>
 
-                <h5>与MongoDB的性能参照</h5>
-                iBoxDB.Java 32bit System Low Memory
-                <br />
-                iBoxDB.java v1.4.1
-                mongodb-win32-i386-2.5.4  mongo-java-driver-2.9.3.jar
-                <pre><code class="sql">threadCount=100000 , batchCount=10
-MongoDB(Default)
- Database Transaction Test: None
- Insert:1000000  AVG:10521 objects/s
- 
-iBoxDB(File Mode)
- Database Transaction Test: Succeeded
- Insert:1000000  AVG:17981 objects/s
- Update:1000000  AVG:12397 objects/s 
- Delete:1000000  AVG:22869 objects/s
-            
-iBoxDB(MemoryMappedFile Mode)
- Database Transaction Test: Succeeded
- Insert:1000000  AVG:38458 objects/s
- Update:1000000  AVG:20200 objects/s 
- Delete:1000000  AVG:33342 objects/s
- 
-iBoxDB(InMemory Mode)
- Database Transaction Test: Succeeded
- Insert:1000000  AVG:39132 objects/s
- Update:1000000  AVG:20226 objects/s 
- Delete:1000000  AVG:33658 objects/s </code></pre>
-                <br />
-                iBoxDB.NET 64bit System<br />
-                iBoxDB v1.5  mongodb-win32-x86_64-2008plus-2.4.5  MongoDB.Driver v1.8.2.34
-                <pre><code class="sql">MongoDB(Default)
- Database Transaction Test: None
- Insert:1,000,000  AVG: 32,702 objects/s
- 
-iBoxDB(File Mode)
- Database Transaction Test: Succeeded
- Insert:1,000,000  AVG:33,368 objects/s
- Update:1,000,000  AVG:16,939 objects/s 
- Delete:1,000,000  AVG:22,504 objects/s
- 
-iBoxDB(MemoryMappedFile Mode)
- Database Transaction Test: Succeeded
- Insert:1,000,000  AVG:42,236 objects/s
- Update:1,000,000  AVG:17,765 objects/s 
- Delete:1,000,000  AVG:23,147 objects/s
- 
-iBoxDB(InMemory Mode)
- Database Transaction Test: Succeeded
- Insert:1,000,000  AVG:47,382 objects/s
- Update:1,000,000  AVG:26,806 objects/s 
- Delete:1,000,000  AVG:35,092 objects/s   </code></pre>
+         <h5>安装使用</h5>
+                <pre><code class="cs">.NET: 在项目中引用 NETDB/iBoxDB.DLL  </code></pre>
+                <pre><code class="java">Java: 在项目中引用 JavaDB/iBoxDB.jar </code></pre>
+                 
+
+                <h5>与 MySQL 的性能参照</h5>
+                  <pre><code class="sql">iBoxDB
+ Insert: 1,000,000 AVG: 47,016 objects/s 
+ Update: 1,000,000 AVG: 25,558 objects/s 
+ Delete: 1,000,000 AVG: 42,714 objects/s 
+
+MySQL
+ Insert: 1,000,000 AVG: 5,514 objects/s 
+ Update: 1,000,000 AVG: 5,109 objects/s 
+ Delete: 1,000,000 AVG: 6,044 objects/s 
+</code></pre>
+
 
                 <h5>复合键支持</h5>
                 <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
@@ -506,7 +443,7 @@ iBoxDB(InMemory Mode)
     </div>
 
     <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #CC3300">
+    <div id="footer_wrap" class="outer" style="border-top-style: solid; border-top-width: medium; border-top-color: #33CC00">
         <footer class="inner">
             <p class="copyright">
                 双引擎数据库

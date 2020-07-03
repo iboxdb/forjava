@@ -372,13 +372,13 @@ Save() {
             <a href="javascript:void(0)" onclick="javascript:code11.style.display='block'">Cache Only &amp; Heat Up</a>
             <br />
             <pre style="display: none" id="code11"><code class="cs">DB db = new DB(DB.CacheOnlyArg);
+
 //Using Thread to heat engine up Before Application.Start()
 //System.Threading.Tasks.Task.Run((Action)Hot);
 new Thread(() =&gt; { Hot(); }).Start();
-
 static AutoBox auto;
 public static void Hot() { 
-  var db = new DB(DB.CacheOnlyArg); 
+  var db = new DB(); 
   db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Time&quot;, &quot;Gid&quot;); 
   auto = db.Open(); 
   auto.Insert(&quot;Item&quot;, new Item()); 
@@ -388,7 +388,7 @@ public static void Hot() {
             <a href="javascript:void(0)" onclick="javascript:code12.style.display='block'">Complex Search, Region Control</a>
             <br />
             <pre style="display: none" id="code12"><code class="cs">//use a simple query to control search region
-box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last) 
+box.Select&lt;User&gt;(&quot;from User where Version&gt;? limit 0,1000&quot;, last) 
    //with a complex query to filter data
    .Where((u) =&gt; { 
        if ( u... )
@@ -396,9 +396,33 @@ box.Select&lt;User&gt;(&quot;from User where Ver&gt;? limit 0,1000&quot;, last)
           return u.Time &gt; dt ;
    });
 </code></pre>
+
+
+<a href="javascript:void(0)" onclick="javascript:code21.style.display='block'">Changed Values</a>
+            <br />
+            <pre style="display: none" id="code21"><code class="cs">using iBoxDB.LocalServer.Replication;
+DB db = new DB();
+db.SetBoxRecycler(
+  (Socket socket, BoxData outBox, bool normalPoweroff) => {
+    if (socket.Actions > 0) {
+      foreach (var e in outBox.GetActions()) {
+        var actionType = e.ActionType;
+        var key = e.Key;
+        if (actionType == ActionType.Begin) {
+	      continue;
+        }
+
+        var tableName = e.TableName;
+        var value = e.Select();
+        Log (actionType + " '" + tableName + "' at key '" + key 
+          + "' \r\n" + DB.ToString (value));
+}}});
+</code></pre>
+
+
             <a href="javascript:void(0)" onclick="javascript:code15.style.display='block'">Multiple Applications</a>
             <br />
-            <pre style="display: none" id="code15"><code class="cs">DB db = new DB(db_id);
+            <pre style="display: none" id="code15"><code class="cs">static DB db = new DB(db_id);
 //for LockFile Supported Platform only
 db.WaitAnotherApp(1000 * 60 * 5);
 

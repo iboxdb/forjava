@@ -124,7 +124,7 @@
 </code></pre>
                     <pre><code class="java">  Member m = new Member();
   m.Id = box.newId();
-  m.setName(&quot;Kevin&quot;);
+  m.Name = &quot;Kevin&quot;;
   box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
@@ -257,7 +257,7 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold">UpdateIncrement</td>
-                        <td colspan="4">Transaction Commit</td>
+                        <td colspan="4">Serializable Transaction Commit</td>
                     </tr>
                     <tr>
                         <td>AutoIncrement</td>
@@ -489,6 +489,35 @@ MySQL
 
                             </code></pre>
                         </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"> Automatic Object Mapping </th>
+                    </tr>
+                    <tr>
+                    <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+<code class="cs">//Name
+*.Name
+
+//name
+*.name
+
+
+
+                            </code></pre>                           
+                    </td>         
+                    <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;">
+<code class="java">//Name
+*.Name
+*.Name(val)
+*.setName(val)
+
+//name
+*.name
+*.name(val)
+*.setname(val) </code></pre>
+                    </td>
                     </tr>
                 </table>
 

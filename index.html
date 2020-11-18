@@ -178,6 +178,13 @@
   config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
   box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;,arg1,arg2)</code></pre>
 
+  <pre><code class="cs">  //Id on the Left would faster in many cases
+  box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)</code></pre>
+
+    <pre><code class="cs">  //Combine Results faster than OR
+  //where Id == ? | Id == ? | Id == ?
+  foreach(var id in [ 1, 2, 3 ])
+    result.AddAll( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
                 <h5>Custom QueryFunction</h5>
                 <div>
                     <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new IFunction(&quot;Value&quot;))</code></pre>

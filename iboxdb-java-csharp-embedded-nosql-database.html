@@ -179,7 +179,9 @@ void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
   } 
 }
 
-synchronized static void onApplicationClose() { 
+synchronized static void onApplicationClose() {
+  //Wait for all background/async tasks to finished.
+  App.waitfor();  
   App.auto.getDatabase().close(); 
 } 
 </code></pre>

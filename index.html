@@ -181,7 +181,7 @@
   <pre><code class="cs">  //Id on the Left would faster in many cases
   box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)</code></pre>
 
-    <pre><code class="cs">  //Combine Results faster than OR
+    <pre><code class="cs">  //Combining Results faster than OR
   //where Id == ? | Id == ? | Id == ?
   foreach(var id in [ 1, 2, 3 ])
     result.AddAll( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>

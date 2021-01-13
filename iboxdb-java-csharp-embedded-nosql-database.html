@@ -22,7 +22,7 @@
 
             <h1 id="project_title">iBoxDB <span style="font-size: large">Download</span></h1>
 
-            <h2 id="project_tagline">Fast ACID Table Style Document NoSQL Database</h2>
+            <h2 id="project_tagline">Fast ACID Table-Style Document NoSQL Database</h2>
 
             <div id="downloads">
                 <a href="#nosql_download"
@@ -59,6 +59,28 @@
 
 
 
+            <span class="dlversion">[FREE] iBoxDB.NET v3.0&nbsp;&nbsp; iBoxDB.JAVA v3.0</span>
+            <br />
+            [<a href="https://sourceforge.net/settings/mirror_choices?projectname=application-database&filename=iBoxDBv30_30.zip&selected=pilotfiber" target="_blank">Download</a>]
+            &nbsp;&nbsp;
+            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv30_30.zip" target="_blank">Download Mirror</a>]
+
+            <br />
+            Directly Select <br />
+            Transaction Huggers <br />  
+            Mirror Copy <br />
+            IBoxRecycler changed to 'override' from 'implement' <br />
+            New File Format, incompatible with 2.x <br />
+            don't hurry to upgrade, 2.x are good enough. <br />
+            3.0 using bigger memory settings
+            <br />
+            <br />
+            <div>
+            <script src="highlight/compact_share_buttons.packS.jS?SRC=USER"></script>
+            </div>
+            <br />
+
+
             <span class="dlversion">[FREE] iBoxDB.NET v2.33&nbsp;&nbsp; iBoxDB.JAVA v2.27</span>
             <br />
             [<a href="https://sourceforge.net/settings/mirror_choices?projectname=application-database&filename=iBoxDBv23300_227U.zip&selected=pilotfiber" target="_blank">Download</a>]
@@ -73,46 +95,14 @@
 
             <br />
             <br />
-            <div>
-            <script src="highlight/compact_share_buttons.packS.jS?SRC=USER"></script>
-            </div>
-            <br />
-
-
-
-
-            <span class="dlversion">[FREE] iBoxDB.NET v2.23&nbsp;&nbsp; iBoxDB.JAVA v2.17</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv22300_217.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv22300_217.zip" target="_blank">Download Mirror</a>]
-
-            <br />
-            Supported: use weak object to query.<br />
-            Modified : IFunction from 'interface' to 'class override'.
-
-            <br />
-            <br />
-
-
-
-            <!--
-            <h6>For .NETStandard1.3</h6>
-            <span class="dlversion">[FREE] iBoxDB.NET v2.17.3&nbsp;&nbsp; iBoxDB.JAVA v2.8.3</span>
-            <br />
-            [<a href="https://sourceforge.net/projects/application-database/files/iBoxDBv21730_283.zip/download" target="_blank">Download</a>]
-            &nbsp;&nbsp;
-            [<a href="https://github.com/iboxdb/hijk/raw/dependencies/kits/iBoxDBv21730_283.zip" target="_blank">Download Mirror</a>]
-            
-            <br />
-            <br />
-            -->
+             
+             
 
             <h5>Examples</h5>
 
             <a href="javascript:void(0)" onclick="javascript:code9.style.display='block'">The DB Life Cycle</a>
             <br />
-            <pre style="display: none" id="code9"><code class="java">import iBoxDB.LocalServer.*;
+            <pre style="display: none" id="code9"><code class="java">import iboxdb.localserver.*;
 
 public class App{
    public static AutoBox auto;
@@ -156,7 +146,7 @@ void anywhere2() {
 } 
 
 boolean exists(Box box) { 
-  return box.selectCount(&quot;from Table limit 0,1&quot;) &gt; 0; 
+  return box.count(&quot;from Table limit 0,1&quot;) &gt; 0; 
 } 
 
 &lt;V&gt; Iterable&lt;V&gt; startsWith(Box box, Class&lt;V&gt; vClass, String prefix) { 
@@ -188,8 +178,8 @@ synchronized static void onApplicationClose() {
 
             <a href="javascript:void(0)" onclick="javascript:code10.style.display='block'">Use DatabaseServer to Manage Configs</a>
             <br />
-            <pre style="display: none" id="code10"><code class="cs">using iBoxDB.LocalServer;
-using iBoxDB.LocalServer.IO;
+            <pre style="display: none" id="code10"><code class="cs">using IBoxDB.LocalServer;
+using IBoxDB.LocalServer.IO;
 
 public class AppServer : LocalDatabaseServer 
 { 
@@ -269,7 +259,7 @@ void OnApplicationClose()
             <br />
             <pre style="display: none" id="code13"><code class="java,xml">//db.jsp
 &lt;%@page contentType=&quot;text/html&quot; pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot; %&gt;
-&lt;%@page import=&quot;iBoxDB.LocalServer.*&quot; %&gt;
+&lt;%@page import=&quot;iboxdb.localserver.*&quot; %&gt;
 &lt;%!
     public static AutoBox auto() {
         synchronized (DB.class) {
@@ -368,7 +358,7 @@ box.Select&lt;User&gt;(&quot;from User where Version&gt;? limit 0,1000&quot;, la
 
 <a href="javascript:void(0)" onclick="javascript:code21.style.display='block'">Changed Values</a>
             <br />
-            <pre style="display: none" id="code21"><code class="cs">using iBoxDB.LocalServer.Replication;
+            <pre style="display: none" id="code21"><code class="cs">using IBoxDB.LocalServer.Replication;
 DB db = new DB();
 db.SetBoxRecycler(
   (Socket socket, BoxData outBox, bool normalPoweroff) => {

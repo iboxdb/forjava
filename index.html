@@ -21,7 +21,7 @@
         <header class="inner">
             <div id="logo"></div>
             <h1 id="project_title">iBoxDB</h1>
-            <h2 id="project_tagline">Fast ACID Table Style Document NoSQL Database</h2>
+            <h2 id="project_tagline">Fast ACID Table-Style Document NoSQL Database</h2>
 
             <div id="downloads">
                 <a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download"
@@ -53,7 +53,7 @@
 
             <h3>Project Description</h3>
 
-            <p>iBoxDB is a fast acid table style document NoSQL Embedded Database, easily store objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and DotNET engines, no dependencies.</p>
+            <p>iBoxDB is a fast acid table-style document NoSQL Embedded Database, easily store objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and DotNET engines, no dependencies.</p>
 
             <p>
                 iBoxDB has a well designed interface with great performance and capability for agile development. You can create applications with database services embedded and deploy it on mobiles, desktops, servers,
@@ -81,6 +81,7 @@
                 <li>Multiple applications supported</li>
                 <li>Memory management</li>
                 <li>Scalable hot MasterMaster and MasterSlave replications</li>
+                <li>Hot mirror copy</li>
                 <li>On disk and in memory databases supported</li>
                 <li>Automatically create databases</li>
                 <li>Zero configuration, copy and run, purely managed code</li>
@@ -88,8 +89,9 @@
                 <li>Different types with different indexes can be stored in same table</li>
                 <li>Persistence + ORM + Cache + Embeddable, ONE STOP solution</li>
                 <li>Ason, Array Script Object Notation</li>
-                <li>ResultSet compatible with LINQ</li>
                 <li>High performance, no dependencies</li>
+                <li>Transaction Huggers</li>
+                <li>Directly Select</li>
                 <li>Update Increment</li>
                 <li>Selecting Tracer</li>
                 <li>Snapshot-Serializable Isolation</li>
@@ -201,6 +203,27 @@
                     <pre><code class="java">  StreamSupport
    .stream(box.select(Member.class,&quot;from Member&quot;).spliterator(), true)
    .collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
+                </div>
+
+                <h5>Mirror Copy</h5>
+                <div>
+                    <pre><code class="cs">  auto.GetDatabase().CopyTo(new Mirror(bakAddr, bakRoot), buffer) </code></pre>
+                </div>
+
+                <h5>Directly Select</h5>
+                <div>
+                    <pre><code class="cs">  //Select records from a samll file directly
+  //without initializing database                   
+  IEnumerable records = DB.Select(fileAddress) </code></pre>
+                </div>
+
+                <h5>Transaction Huggers</h5>
+                <div>
+                    <pre><code class="cs">  //Three transactions committed together
+  long huggersBuffer = 1024L * 1024L * 32L;                   
+  box1.Commit(huggersBuffer);
+  box2.Commit(huggersBuffer);
+  box3.Commit(); </code></pre>
                 </div>
 
                 <h5>Snapshot-Serializable Transaction</h5>
@@ -319,20 +342,21 @@
 
                 <h5>Database Path</h5>
                 C# &amp; JAVA,&nbsp;  <strong>place outside IDE working directory</strong> can get better performance
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
+                <pre><code class="cs">//Different path has hugely different write speed on VM.
+IBoxDB.LocalServer.DB.Root(&quot;/data/&quot;) </code></pre>
                 ASP.NET Cross Platform
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
+                <pre><code class="cs">DB.Root(MapPath(&quot;~/App_Data/&quot;))</code></pre>
 
                 Xamarin
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
-       System.Environment.SpecialFolder.Personal));</code></pre>
+                <pre><code class="cs">DB.Root(System.Environment.GetFolderPath( 
+       System.Environment.SpecialFolder.LocalApplicationData/Personal))</code></pre>
 
                 Unity3D
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
+                <pre><code class="cs">DB.Root(Application.persistentDataPath)</code></pre>
 
                 Android
-                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
-       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
+                <pre><code class="java">DB.root(android.os.Environment.getDataDirectory()
+       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;) </code></pre>
 
 
                 JSP WebApplication
@@ -342,7 +366,7 @@ public class StartListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
        String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
        new File(path).mkdirs();   
-       iBoxDB.LocalServer.DB.root(path); 
+       DB.root(path); 
     }
 } </code></pre>
 
@@ -351,7 +375,7 @@ public class StartListener implements ServletContextListener {
 
 
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
-                <pre><code class="cs"> using iBoxDB.LocalServer;
+                <pre><code class="cs"> using IBoxDB.LocalServer;
 
  var db = new DB();
  db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
@@ -362,7 +386,7 @@ public class StartListener implements ServletContextListener {
  o1.Name = &quot;Kelly&quot;;
  auto.Update(&quot;Table&quot;, o1);
  auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
-                <pre><code class="java"> import iBoxDB.LocalServer.*;
+                <pre><code class="java"> import iboxdb.localserver.*;
 
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
@@ -376,7 +400,7 @@ public class StartListener implements ServletContextListener {
 
                 <h5>Install</h5>
                 <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
-                <pre><code class="java">Java: Add JavaDB/iBoxDB.jar to Project</code></pre>
+                <pre><code class="java">Java: Add JavaDB/iboxdb.jar to Project</code></pre>
                  
 
                 <h5>Benchmark with MySQL</h5>

@@ -86,6 +86,7 @@
                 <li>Automatically create databases</li>
                 <li>Zero configuration, copy and run, purely managed code</li>
                 <li>Dynamic columns</li>
+                <li>Prototype columns</li>
                 <li>Different types with different indexes can be stored in same table</li>
                 <li>Persistence + ORM + Cache + Embeddable, ONE STOP solution</li>
                 <li>Ason, Array Script Object Notation</li>
@@ -204,6 +205,21 @@
    .stream(box.select(Member.class,&quot;from Member&quot;).spliterator(), true)
    .collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
                 </div>
+
+                <h5>Prototype Columns</h5>
+                <div>
+                    <pre><code class="java">  //define prototype, Id is Long		
+  Ason prototype = new Ason("Id:", 0L, "Name:", "Guest");
+
+  Ason record = prototype.select();
+  //set Id as String,
+  record.set("Id", "123");
+  //will automatically convert to Long as the prototype
+  System.out.println("Output: " + record.get("Id").getClass());
+  //Output: class java.lang.Long
+</code></pre>
+                </div>
+
 
                 <h5>Mirror Copy</h5>
                 <div>

@@ -3,14 +3,17 @@
 ##### KeyOnly.java Output     [Link](https://github.com/iboxdb/forjava/blob/master/demos/KeyOnly.java)
 
 ```
-Insert TotalObjects: 1,000,000 FileSize: 158MB
-Elapsed 10.314s, AVG 96,955 o/sec
+Insert TotalObjects: 1,000,000 FileSize: 161MB
+Elapsed 14.981s, AVG 66,751 o/sec
 
 Select TotalObjects: 2,000,000
-Elapsed 2.493s, AVG 802,246 o/sec
+Elapsed 1.312s, AVG 1,524,390 o/sec
 
 Select TotalObjects: 2,000,000 -Reopen
-Elapsed 2.725s, AVG 733,944 o/sec
+Elapsed 2.822s, AVG 708,717 o/sec
+
+Select TotalObjects: 2,000,000 -Reopen2
+Elapsed 0.514s, AVG 3,891,050 o/sec
 ```
 
 

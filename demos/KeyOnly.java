@@ -1,25 +1,30 @@
-package iBoxDB;
+package example;
 
-import iBoxDB.LocalServer.*;
-import iBoxDB.LocalServer.Replication.IBStreamReader;
-import java.text.NumberFormat;
-import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import iboxdb.localserver.*;
+import iboxdb.localserver.replication.*;
+import java.io.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
+import java.text.*;
+import java.util.*;
 
 public class KeyOnly {
 
-    public static void main() throws InterruptedException {
-        System.out.println(java.lang.Runtime.getRuntime().maxMemory());
-        DB.root("/tmp/");
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("MEM: " + helper.format(java.lang.Runtime.getRuntime().maxMemory()));
+        System.out.println("CPU: " + java.lang.Runtime.getRuntime().availableProcessors());
+        String path = "../DATA_TEST";
+
+        new File(path).mkdirs();
+        System.out.println("Path: " + new File(path).getAbsolutePath());
+        DB.root(path);
         helper.deleteDB();
 
         DB db = new DB(1);
-        // JVM=1G, DB=0.5G
-        db.getConfig().DBConfig.CacheLength = 512 * 1024 * 1024;
-        db.getConfig().ensureTable(ShortMSG.class, "/shortmsg", "productId", "time", "userId", "msg(30)");
+        // JVM=2G, DB=0.5G
+        DatabaseConfig cfg = db.getConfig();
+        cfg.CacheLength = cfg.mb(512);
+        cfg.ensureTable(ShortMSG.class, "/shortmsg", "productId", "time", "userId", "msg(30)");
         final AutoBox auto = db.open();
 
         final long count = 100;
@@ -34,10 +39,10 @@ public class KeyOnly {
         long avg = (long) (total / sec);
         IBStreamReader reader = auto.getDatabase().createFileReader();
         long length = reader.length();
-        System.out.println("Insert TotalObjects: " + JDB.helper.format(total)
-                + " FileSize: " + JDB.helper.format(length / 1024.0 / 1024.0) + "MB");
-        System.out.println("Elapsed " + JDB.helper.getDou(sec) + "s, AVG "
-                + JDB.helper.format(avg) + " o/sec");
+        System.out.println("Insert TotalObjects: " + helper.format(total)
+                + " FileSize: " + helper.format(length / 1024.0 / 1024.0) + "MB");
+        System.out.println("Elapsed " + helper.getDou(sec) + "s, AVG "
+                + helper.format(avg) + " o/sec");
         reader.close();
 
         System.out.println();
@@ -49,9 +54,9 @@ public class KeyOnly {
 
         sec = (System.currentTimeMillis() - begin) / 1000.0;
         avg = (long) (total / sec);
-        System.out.println("Select TotalObjects: " + JDB.helper.format(total));
-        System.out.println("Elapsed " + JDB.helper.getDou(sec) + "s, AVG "
-                + JDB.helper.format(avg) + " o/sec");
+        System.out.println("Select TotalObjects: " + helper.format(total));
+        System.out.println("Elapsed " + helper.getDou(sec) + "s, AVG "
+                + helper.format(avg) + " o/sec");
 
         //Reopen Select
         db.close();
@@ -67,9 +72,9 @@ public class KeyOnly {
 
         sec = (System.currentTimeMillis() - begin) / 1000.0;
         avg = (long) (total / sec);
-        System.out.println("Select TotalObjects: " + JDB.helper.format(total) + " -Reopen");
-        System.out.println("Elapsed " + JDB.helper.getDou(sec) + "s, AVG "
-                + JDB.helper.format(avg) + " o/sec");
+        System.out.println("Select TotalObjects: " + helper.format(total) + " -Reopen");
+        System.out.println("Elapsed " + helper.getDou(sec) + "s, AVG "
+                + helper.format(avg) + " o/sec");
 
         System.out.println();
         begin = System.currentTimeMillis();
@@ -78,9 +83,9 @@ public class KeyOnly {
 
         sec = (System.currentTimeMillis() - begin) / 1000.0;
         avg = (long) (total / sec);
-        System.out.println("Select TotalObjects: " + JDB.helper.format(total) + " -Reopen2");
-        System.out.println("Elapsed " + JDB.helper.getDou(sec) + "s, AVG "
-                + JDB.helper.format(avg) + " o/sec");
+        System.out.println("Select TotalObjects: " + helper.format(total) + " -Reopen2");
+        System.out.println("Elapsed " + helper.getDou(sec) + "s, AVG "
+                + helper.format(avg) + " o/sec");
 
     }
 
@@ -91,20 +96,17 @@ public class KeyOnly {
         final AtomicLong total = new AtomicLong(0);
         for (long proId = 1; proId <= count; proId++) {
             final long fproId = proId;
-            pool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try (Box box = auto.cube()) {
-                        for (ShortMSG smsg : box.select(ShortMSG.class, "from /shortmsg where productId==?", fproId)) {
-                            if (smsg.productId != fproId) {
-                                System.out.println("Unreachable");
-                            }
-                            String cs = smsg.productId + "-" + (smsg.time.getTime()) + "-" + smsg.userId;
-                            if (!smsg.msg.equals(cs)) {
-                                System.out.println("Unreachable");
-                            }
-                            total.incrementAndGet();
+            pool.execute(() -> {
+                try (Box box = auto.cube()) {
+                    for (ShortMSG smsg : box.select(ShortMSG.class, "from /shortmsg where productId==?", fproId)) {
+                        if (smsg.productId != fproId) {
+                            System.out.println("Unreachable");
                         }
+                        String cs = smsg.productId + "-" + (smsg.time.getTime()) + "-" + smsg.userId;
+                        if (!smsg.msg.equals(cs)) {
+                            System.out.println("Unreachable");
+                        }
+                        total.incrementAndGet();
                     }
                 }
             });
@@ -123,21 +125,18 @@ public class KeyOnly {
             for (long ft = 1; ft <= count; ft++) {
                 final long fproId = proId;
                 final long fft = ft;
-                pool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try (Box box = auto.cube()) {
-                            for (long userid = 1; userid <= count; userid++) {
-                                ShortMSG smsg = new ShortMSG();
-                                smsg.productId = fproId;
-                                smsg.time = new Date(fakeTime + fft);
-                                smsg.userId = userid;
-                                smsg.msg = smsg.productId + "-" + (fakeTime + fft) + "-" + smsg.userId;
-                                box.d("/shortmsg").insert(smsg);
-                            }
-                            if (box.commit().equals(CommitResult.OK)) {
-                                total.addAndGet(count);
-                            }
+                pool.execute(() -> {
+                    try (Box box = auto.cube()) {
+                        for (long userid = 1; userid <= count; userid++) {
+                            ShortMSG smsg = new ShortMSG();
+                            smsg.productId = fproId;
+                            smsg.time = new Date(fakeTime + fft);
+                            smsg.userId = userid;
+                            smsg.msg = smsg.productId + "-" + (fakeTime + fft) + "-" + smsg.userId;
+                            box.d("/shortmsg").insert(smsg);
+                        }
+                        if (box.commit().equals(CommitResult.OK)) {
+                            total.addAndGet(count);
                         }
                     }
                 });
@@ -159,17 +158,14 @@ public class KeyOnly {
                     final long fproId = proId;
                     final long fft = ft;
                     final long fuserid = userid;
-                    pool.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            ShortMSG smsg = new ShortMSG();
-                            smsg.productId = fproId;
-                            smsg.time = new Date(fakeTime + fft);
-                            smsg.userId = fuserid;
-                            smsg.msg = smsg.productId + "-" + (fakeTime + fft) + "-" + smsg.userId;
-                            if (auto.insert("/shortmsg", smsg)) {
-                                total.incrementAndGet();
-                            }
+                    pool.execute(() -> {
+                        ShortMSG smsg = new ShortMSG();
+                        smsg.productId = fproId;
+                        smsg.time = new Date(fakeTime + fft);
+                        smsg.userId = fuserid;
+                        smsg.msg = smsg.productId + "-" + (fakeTime + fft) + "-" + smsg.userId;
+                        if (auto.insert("/shortmsg", smsg)) {
+                            total.incrementAndGet();
                         }
                     });
                 }

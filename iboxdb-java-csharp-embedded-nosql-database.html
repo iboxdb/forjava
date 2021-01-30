@@ -444,6 +444,82 @@ click Set - OK restart
 </code></pre>
 
 
+
+      <a href="javascript:void(0)" onclick="javascript:code22.style.display='block'">Dataset Combiner</a>
+            <br />
+            <pre style="display: none" id="code22"><code class="cs">//combining dataset
+public class Combiner&lt;T&gt;
+{
+    HashSet&lt;object&gt; ids;
+    Func&lt;T, object&gt; getid;
+    List&lt;T&gt; results;
+    public Combiner(Func&lt;T, object&gt; getid)
+    {
+        this.getid = getid;
+        this.ids = new HashSet&lt;object&gt;();
+        this.results = new List&lt;T&gt;();
+    }
+    public void Add(IEnumerable&lt;T&gt; result)
+    {
+        foreach (var t in result)
+        {
+            if (getid != null)
+            {
+                var id = getid(t);
+                if (ids.Contains(id)) { continue; }
+                ids.Add(id);
+            }
+            results.Add(t);
+        }
+    }
+    public List&lt;T&gt; Select()
+    {
+        return results;
+    }
+    public IEnumerable&lt;T&gt; OrderBy&lt;TKey&gt;(Func&lt;T, TKey&gt; keySelector)
+    {
+        return Enumerable.OrderBy(results, keySelector);
+    }
+    public IEnumerable&lt;IGrouping&lt;TKey, T&gt;&gt; 
+    		GroupBy&lt;TKey&gt;(Func&lt;T, TKey&gt; keySelector)
+    {
+        return Enumerable.GroupBy(results, keySelector);
+    }
+}
+
+class Item
+{
+    public long Id;
+    public string Name;
+    public string Location;
+}
+
+static void Main(string[] args)
+{
+    DB db = new DB();
+    db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;)
+     .EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Name&quot;)
+     .EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Location&quot;);
+
+    AutoBox auto = db.Open();
+      
+    using(Box box = auto.Cube())
+    {
+        Combiner&lt;Item&gt; combiner = new Combiner&lt;Item&gt;(t =&gt; t.Id);
+        combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Name==?&quot;, &quot;Name4&quot;));
+        combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 1L));
+        combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 2L));
+        combiner.Add(
+         box.Select&lt;Item&gt;(&quot;from Item where Location==?&quot;, &quot;Location6&quot;));
+        foreach (var t in combiner.OrderBy(t =&gt; t.Id))
+        {
+            Console.WriteLine(DB.ToString(t));
+        }
+    }
+}   
+</code></pre>
+
+
             <a href="javascript:void(0)" onclick="javascript:code1.style.display='block'">Customize .NET Strong Name</a>
             <br />
             <pre style="display: none" id="code1"><code class="ss"> sn -k kp.snk 

@@ -185,7 +185,7 @@
   box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)</code></pre>
 
     <pre><code class="cs">  //combining Results would faster than OR,
-  //depend on the scale of dataset and Index configure, not always.	
+  //depends on the scale of dataset and corresponded Index configure.	
   //where Id == ? | Id == ? | Id == ?
   foreach(var id in [ 1, 2, 3 ])
     combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>

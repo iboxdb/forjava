@@ -470,7 +470,7 @@ try (Box box = auto.cube()) {
 }
 auto.getDatabase().close();
 
-db = new DB(1);
+db = new DB(100);
 auto = db.open();
 try (Box box = auto.cube()) {
     var local = box.d("Table", 1L).select();

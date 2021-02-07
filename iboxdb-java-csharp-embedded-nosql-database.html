@@ -444,6 +444,48 @@ click Set - OK restart
 </code></pre>
 
 
+      <a href="javascript:void(0)" onclick="javascript:code23.style.display='block'">Creating Big Test Data</a>
+            <br />
+            <pre style="display: none" id="code23"><code class="java">//-Xmx6G
+var db = new DB(100);
+db.getConfig().ensureTable(new Ason("Id:", 0L), "Table");
+//Disable [SwapFileBuffer] can insert very big object
+//ONLY for creating test data.
+db.getConfig().SwapFileBuffer = 0;
+var auto = db.open();
+try (Box box = auto.cube()) {
+    var ason = new Ason("Id:", 0L, 
+    	"Bytes:", new byte[Integer.MAX_VALUE / 3]);
+    ason.set("Id", 1L);
+    ((byte[]) ason.get("Bytes"))[1] = 55;
+    box.d("Table").insert(ason);
+    ason.set("Id", 2L);
+    ((byte[]) ason.get("Bytes"))[1] = 66;
+    box.d("Table").insert(ason);
+    ason.set("Id", 3L);
+    ((byte[]) ason.get("Bytes"))[1] = 77;
+    box.d("Table").insert(ason);
+    CommitResult cr = box.commit();
+    System.out.println("Commit : " + cr);
+}
+auto.getDatabase().close();
+
+db = new DB(1);
+auto = db.open();
+try (Box box = auto.cube()) {
+    var local = box.d("Table", 1L).select();
+    System.out.println(((byte[]) local.get("Bytes")).length);
+    System.out.println(((byte[]) local.get("Bytes"))[1]);
+
+    local = box.d("Table", 2L).select();
+    System.out.println(((byte[]) local.get("Bytes")).length);
+    System.out.println(((byte[]) local.get("Bytes"))[1]);
+
+    local = box.d("Table", 3L).select();
+    System.out.println(((byte[]) local.get("Bytes")).length);
+    System.out.println(((byte[]) local.get("Bytes"))[1]);
+}</code></pre>
+
 
       <a href="javascript:void(0)" onclick="javascript:code22.style.display='block'">Dataset Combiner</a>
             <br />

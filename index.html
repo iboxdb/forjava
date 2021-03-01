@@ -53,6 +53,7 @@
 
             <h3>Project Description</h3>
 
+            <div>
             <p>iBoxDB is a fast acid table-style document NoSQL Embedded Database, easily store objects and documents, traditional table with unstructured data, zero configuration, pure JAVA and DotNET engines, no dependencies.</p>
 
             <p>
@@ -66,7 +67,7 @@
                 For &nbsp; JAVA &nbsp; C# &nbsp; Android &nbsp; Unity &nbsp; Xamarin &nbsp; Mono &nbsp; Linux &nbsp; Windows
 
             </p>
-
+            </div>
 
             <h3>Features</h3>
 
@@ -103,7 +104,7 @@
 
                 <h3 id="Examples">Examples</h3>
 
-                <h5>Each box is an ISOLATED data space (transaction-based)</h5>
+                <h4>Each box is an ISOLATED data space (transaction-based)</h4>
                 <div>
                     <pre><code class="cs">  using(var box = auto.Cube())
   {                            
@@ -117,6 +118,7 @@
   }  </code></pre>
                 </div>
 
+                <br />
                 <h5>Normal Object</h5>
                 <div>
                     <pre><code class="cs">  Member m = new Member();  
@@ -131,6 +133,7 @@
   box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
+                <br />
                 <h5>Dynamic Object (document database)</h5>
                 <div>
                     <pre><code class="cs">  //Game : Dictionary&lt;string, object&gt;
@@ -142,6 +145,7 @@
   box.d(&quot;Product&quot;).insert(game);  </code></pre>
                 </div>
 
+                <br />
                 <h5>Key Value Style Query</h5>
                 <div>
                     <pre><code class="cs">  box[&quot;Table&quot;, 2L].Select&lt;Member&gt;();
@@ -153,8 +157,8 @@
   box.d(&quot;Table2&quot;, 88, &quot;ABC&quot;).select(Product.class);  </code></pre>
                 </div>
 
+                <br />
                 <h5>SQL Like</h5>
-
                 <div>
                     <pre><code class="java">  /* 
   from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
@@ -168,6 +172,7 @@
 
                 </div>
 
+                <br />
                 <h5>Query</h5>
                 <pre><code class="cs">  //query
   box.Select(&quot;from Member&quot;);
@@ -176,6 +181,7 @@
   //selecting tracer, startswith '!'
   box.Select(&quot;!from Member&quot;)  </code></pre>
 
+  				<br />
                 <h5>Index, make Select hundred times faster in average</h5>
                 <pre><code class="cs">  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
   config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
@@ -189,17 +195,21 @@
   //where Id == ? | Id == ? | Id == ?
   foreach(var id in [ 1, 2, 3 ])
     combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
+
+    			<br />
                 <h5>Custom QueryFunction</h5>
                 <div>
                     <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new IFunction(&quot;Value&quot;))</code></pre>
                 </div>
 
+                <br />
                 <h5>Compatible with LINQ (.NET)</h5>
                 <div>
                     <pre><code class="cs">  from o in box.Select&lt;Member&gt;(&quot;from Member&quot;)
   where o.Text.Contains(text) select o;</code></pre>
                 </div>
 
+                <br />
                 <h5>Compatible with Stream (Java)</h5>
                 <div>
                     <pre><code class="java">  StreamSupport
@@ -207,6 +217,7 @@
    .collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
                 </div>
 
+                <br />
                 <h5>Prototype Columns</h5>
                 <div>
                     <pre><code class="java">  //define prototype, Id is Long		
@@ -221,12 +232,13 @@
 </code></pre>
                 </div>
 
-
+                <br />
                 <h5>Mirror Copy</h5>
                 <div>
                     <pre><code class="cs">  auto.GetDatabase().CopyTo(new Mirror(bakAddr, bakRoot), buffer) </code></pre>
                 </div>
 
+                <br />
                 <h5>Directly Select</h5>
                 <div>
                     <pre><code class="cs">  //Select records from a samll file directly
@@ -234,6 +246,7 @@
   IEnumerable records = DB.Select(fileAddress) </code></pre>
                 </div>
 
+                <br />
                 <h5>Transaction Huggers</h5>
                 <div>
                     <pre><code class="cs">  //Three transactions committed together
@@ -243,6 +256,7 @@
   box3.Commit(); </code></pre>
                 </div>
 
+                <br />
                 <h5>Snapshot-Serializable Transaction</h5>
                 <table>
                     <tr>
@@ -267,6 +281,7 @@
                         <td>Serializable</td>
                     </tr>
                 </table>
+
 
                 <h5>Update Increment</h5>
 
@@ -332,7 +347,6 @@
                     </tr>
                 </table>
 
-
                 <h5>IO</h5>
                 <table style="margin: 0px; padding: 0px; width: 90%">
                     <tr>
@@ -356,7 +370,7 @@
                     </tr>
                 </table>
 
-
+                <br />
                 <h5>Database Path</h5>
                 C# &amp; JAVA,&nbsp;  <strong>place outside IDE working directory</strong> can get better performance
                 <pre><code class="cs">//different path has hugely different writing speed on VM.
@@ -387,10 +401,7 @@ public class StartListener implements ServletContextListener {
     }
 } </code></pre>
 
-
-
-
-
+				<br />
                 <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
                 <pre><code class="cs"> using IBoxDB.LocalServer;
 
@@ -415,11 +426,12 @@ public class StartListener implements ServletContextListener {
  auto.update(&quot;Table&quot;, o1);
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
+ 				<br />
                 <h5>Install</h5>
                 <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
                 <pre><code class="java">Java: Add JavaDB/iboxdb.jar to Project</code></pre>
                  
-
+				<br />
                 <h5>Benchmark with MySQL</h5>
                 <pre><code class="sql">iBoxDB
  Insert: 1,000,000 AVG: 47,016 objects/s 
@@ -432,7 +444,7 @@ MySQL
  Delete: 1,000,000 AVG: 6,044 objects/s 
 </code></pre>
 
-
+				<br />
                 <h5>Supported Types</h5>
                 <table style="margin: 0px; padding: 0px; width: 90%">
                     <tr>
@@ -569,12 +581,12 @@ MySQL
                     </tr>
                 </table>
 
-               
+                <br />
                 <h5>Composite Key Supported</h5>
                 <img src="images/compositekey.png" alt="Database Composite Key" />
                 <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
-                <br />
 
+                <br />
                 <h5>Replication Master-Slave , Master-Master</h5>
                 <img src="images/p1.png" alt="Database Replication" />
                 <br />
@@ -583,7 +595,7 @@ MySQL
 
                 <br />
                 <br />
-                <div style="width:100%"><a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download"> NEXT - &gt; </a></div>
+                <div style="width:100%"><a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download" style="font-size:130%"> NEXT - &gt; </a></div>
             </div>
         </section>
     </div>
@@ -613,12 +625,10 @@ MySQL
     <div class="outer" style="position: relative; top: -60px; left: -1px">       
       <div class="inner">
         <!-- toolbox -->
-         <script src="highlight/compact_share_buttons.packS.jS?SRC=USER"></script>
-
+        <script src="highlight/compact_share_buttons.packS.jS?SRC=USER"></script>
       </div>   
     </div>
-
-
+     
     <!-- Global Links -->
     <div style="width: 1px; height: 1px; overflow: hidden">
 
@@ -634,8 +644,7 @@ MySQL
         Just Enough to Get the Job Done.
     </div>
 
-
-    <script src="highlight/highlight.packS.jS?SRC=USER"></script>
+	<script src="highlight/highlight.packS.jS?SRC=USER" ></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
 </body>

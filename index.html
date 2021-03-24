@@ -405,9 +405,9 @@ public class StartListener implements ServletContextListener {
  AutoBox auto = db.Open();
 
  auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
- var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.Update(&quot;Table&quot;, o1);
+ var record = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.Update(&quot;Table&quot;, record);
  auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
                 <pre><code class="java"> import iboxdb.localserver.*;
 
@@ -416,9 +416,9 @@ public class StartListener implements ServletContextListener {
  AutoBox auto = db.open();
 
  auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
- Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.update(&quot;Table&quot;, o1);
+ Record record = auto.get(Record.class, &quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.update(&quot;Table&quot;, record);
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
  				<br />

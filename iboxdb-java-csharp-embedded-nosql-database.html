@@ -97,7 +97,56 @@
             <br />
             <br />
              
-             
+            
+            <h3>Links</h3>
+            <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search Java</a>
+            <br />
+            <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search C#</a>
+            <br />
+            <a href="https://github.com/iboxdb/ason" target="_blank">Ason</a>
+            <br />
+            <a href="https://github.com/iboxdb/forjava/wiki/Use-multi-thread-to-increase-speed-and-use-CommitEvent-to-decrease-conflict#ss-transaction" target="_blank">Snapshot and Serializable Isolations in one Transaction</a>
+            <br />
+            <a href="https://github.com/iboxdb/forjava/tree/master/demos" target="_blank">Key Only Example</a>
+            <br />          
+            <a href="https://github.com/iboxdb/aspnet-cross-platform-db/blob/master/blazorwasm/IApp.cs" target="_blank">Blazor Wasm Client</a>
+            <br />
+            <a href="https://github.com/iboxdb/jmegradle" target="_blank">Gradle Demo jMonkeyEngine</a>
+            <br />
+            <a href="https://www.nuget.org/packages/iBoxDB/" target="_blank">Nuget Package</a>
+            <br />
+            <a href="https://sourceforge.net/p/datastorexpo/code/" target="_blank">.NET Linq, integrating with SQL ORM -XPO</a>
+            <!--
+            <br />
+            <a href="https://github.com/iboxdb/teadb/" target="_blank">Maven Demo</a>
+            <br />
+            <a href="https://assetstore.unity.com/packages/tools/integration/iboxdb-150888" target="_blank">Unity Asset Store</a>
+            <br />
+            <a href="https://github.com/iboxdb/forjava/tree/master/java9" target="_blank">Java9 [module-info.java] Update</a>
+            -->
+
+
+
+            <br />
+            <br />
+            <h3>Benchmark Code</h3>
+             <a href="https://sourceforge.net/p/teadb/code/" target="_blank">Version 3.0 With MySQL Java Maven</a>
+            <br />
+
+            <a href="https://sourceforge.net/p/benchmarksql3/code/" target="_blank">Version 3.0 With SQLite C#</a>
+            <br />
+            <br />
+
+            <a href="https://github.com/iboxdb/teadb" target="_blank">Version 2.X With MySQL Java Maven</a>
+            <br />
+
+            <a href="https://github.com/iboxdb/leafdb" target="_blank">Version 2.X With MongoDB Java</a>
+            <br />
+
+            <a href="https://github.com/iboxdb/benchmarksql" target="_blank">Version 2.X With SQLite C#</a>
+             <br />
+             <br />
+
 
             <h3>Examples</h3>
 
@@ -258,7 +307,7 @@ void OnApplicationClose()
 
             <a href="javascript:void(0)" onclick="javascript:code13.style.display='block'">JSP Config</a>
             <br />
-            <pre style="display: none" id="code13"><code class="java,xml">//db.jsp
+            <pre style="display: none" id="code13"><code class="jsp">//db.jsp
 &lt;%@page contentType=&quot;text/html&quot; pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot; %&gt;
 &lt;%@page import=&quot;iboxdb.localserver.*&quot; %&gt;
 &lt;%!
@@ -402,14 +451,6 @@ using (var auto = db.Open()){
 
 
 
-	 <a href="javascript:void(0)" onclick="javascript:code19.style.display='block'">Weak Object</a>
-            <br />
-            <pre style="display: none" id="code19"><code class="java">//Strongly typed
-box.select("from Table where Id > ?" , 1L);
-//Weak Object
-box.select("from Table where Id > ?" , new Variant("1"));             
-</code></pre>
-
        <a href="javascript:void(0)" onclick="javascript:code18.style.display='block'">Big Cache</a>
             <br />
             <pre style="display: none" id="code18"><code class="java"> DatabaseConfig cfg = db.getConfig();
@@ -507,8 +548,7 @@ public class Combiner&lt;T&gt;
             if (getid != null)
             {
                 var id = getid(t);
-                if (ids.Contains(id)) { continue; }
-                ids.Add(id);
+                if (!ids.Add(id)) { continue; }
             }
             results.Add(t);
         }
@@ -570,55 +610,7 @@ static void Main(string[] args)
 
 
 
-
-            <br />
-            <h3>Links</h3>
-            <a href="https://github.com/iboxdb/ftserver" target="_blank">Full Text Search Java</a>
-            <br />
-            <a href="https://github.com/iboxdb/ftserver-cs" target="_blank">Full Text Search C#</a>
-            <br />
-            <a href="https://github.com/iboxdb/ason" target="_blank">Ason</a>
-            <br />
-            <a href="https://github.com/iboxdb/forjava/wiki/Use-multi-thread-to-increase-speed-and-use-CommitEvent-to-decrease-conflict#ss-transaction" target="_blank">Snapshot and Serializable Isolations in one Transaction</a>
-            <br />
-            <a href="https://github.com/iboxdb/forjava/tree/master/demos" target="_blank">Key Only Example</a>
-            <br />          
-            <a href="https://github.com/iboxdb/aspnet-cross-platform-db/blob/master/blazorwasm/IApp.cs" target="_blank">Blazor Wasm Client</a>
-            <br />
-            <a href="https://github.com/iboxdb/jmegradle" target="_blank">Gradle Demo jMonkeyEngine</a>
-            <br />
-            <a href="https://www.nuget.org/packages/iBoxDB/" target="_blank">Nuget Package</a>
-            <br />
-            <a href="https://sourceforge.net/p/datastorexpo/code/" target="_blank">.NET Linq, integrating with SQL ORM -XPO</a>
-            <!--
-            <br />
-            <a href="https://github.com/iboxdb/teadb/" target="_blank">Maven Demo</a>
-            <br />
-            <a href="https://assetstore.unity.com/packages/tools/integration/iboxdb-150888" target="_blank">Unity Asset Store</a>
-            <br />
-            <a href="https://github.com/iboxdb/forjava/tree/master/java9" target="_blank">Java9 [module-info.java] Update</a>
-            -->
-
-
-
-            <br />
-            <br />
-            <h3>Benchmark Code</h3>
-             <a href="https://sourceforge.net/p/teadb/code/" target="_blank">Version 3.0 With MySQL Java Maven</a>
-            <br />
-
-            <a href="https://sourceforge.net/p/benchmarksql3/code/" target="_blank">Version 3.0 With SQLite C#</a>
-            <br />
-            <br />
-
-            <a href="https://github.com/iboxdb/teadb" target="_blank">Version 2.X With MySQL Java Maven</a>
-            <br />
-
-            <a href="https://github.com/iboxdb/leafdb" target="_blank">Version 2.X With MongoDB Java</a>
-            <br />
-
-            <a href="https://github.com/iboxdb/benchmarksql" target="_blank">Version 2.X With SQLite C#</a>
-
+            
              <!-- Global Links -->
     <div style="width: 1px; height: 1px; overflow: hidden">
     	<a href="https://www.iboxdb.com/" target="_blank">iBoxDB Embedded NoSQL Database</a>

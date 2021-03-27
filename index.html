@@ -102,7 +102,7 @@
 
             <div>
 
-                <h3 id="Examples">Examples</h3>
+                <h3 id="Examples">Examples, &nbsp; CSharp &nbsp; and &nbsp; Java</h3>
 
                 <h4>Each box is an ISOLATED data space (transaction-based)</h4>
                 <div>
@@ -112,6 +112,7 @@
      CommitResult cr = box.Commit();
   }
 </code></pre>
+<br />
                     <pre><code class="java">  try(Box box = auto.cube()){
      ...
      CommitResult cr = box.commit();
@@ -127,6 +128,7 @@
   m.Password = EncodePassowrd(&quot;123&quot;);
   box[&quot;Member&quot;].Insert(m);
 </code></pre>
+<br />
                     <pre><code class="java">  Member m = new Member();
   m.Id = box.newId();
   m.Name = &quot;Kevin&quot;;
@@ -140,6 +142,7 @@
   game[&quot;GameType&quot;] = &quot;ACT&quot;;
   box[&quot;Product&quot;].Insert(game);
 </code></pre>
+<br />
                     <pre><code class="java">  //Game extends HashMap&lt;String,Object&gt;
   game.put(&quot;GameType&quot;, &quot;ACT&quot;);
   box.d(&quot;Product&quot;).insert(game);  </code></pre>
@@ -152,11 +155,17 @@
    //Composite Key
   box[&quot;Table2&quot;, 99, &quot;ABC&quot;].Select&lt;Product&gt;();
 </code></pre>
+<br />
                     <pre><code class="java">  box.d(&quot;Table&quot;, 3L).select(Member.class);
   //Composite Key
   box.d(&quot;Table2&quot;, 88, &quot;ABC&quot;).select(Product.class);  </code></pre>
                 </div>
 
+                <br />
+                <h5>Composite Key Supported</h5>
+                <pre><code class="java">  config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
+                <img src="images/compositekey.png" alt="Database Composite Key" />
+                
                 <br />
                 <h5>SQL Like</h5>
                 <div>
@@ -179,17 +188,25 @@
   //load to memory first, startswith '*'
   box.Select(&quot;*from Member&quot;);
   //selecting tracer, startswith '!'
-  box.Select(&quot;!from Member&quot;)  </code></pre>
+  box.Select(&quot;!from Member&quot;);  </code></pre>
+
+                <br />
+                <h5>Weak Object</h5>
+                <pre><code class="java">  //Strongly typed
+  box.select("from Table where Id > ?" , 1L);
+  //Weak Object
+  box.select("from Table where Id > ?" , new Variant("1")); </code></pre>
+
 
   				<br />
                 <h5>Index, make Select hundred times faster in average</h5>
                 <pre><code class="cs">  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
   config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
   box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;,arg1,arg2)</code></pre>
-
+  <br />
   <pre><code class="cs">  //Id on the Left would faster in many cases
   box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)</code></pre>
-
+  <br />
     <pre><code class="cs">  //combining Results would faster than OR,
   //depends on the scale of dataset and corresponded Index configure.	
   //where Id == ? | Id == ? | Id == ?
@@ -218,7 +235,7 @@
                 </div>
 
                 <br />
-                <h5>Prototype Columns</h5>
+                <h5>Ason and Prototype Columns</h5>
                 <div>
                     <pre><code class="java">  //define prototype, Id is Long		
   Ason prototype = new Ason("Id:", 0L, "Name:", "Guest");
@@ -397,7 +414,7 @@ public class StartListener implements ServletContextListener {
 } </code></pre>
 
 				<br />
-                <h5>Getting Started&nbsp;&nbsp; C# and Java</h5>
+                <h5>Getting Started</h5>
                 <pre><code class="cs"> using IBoxDB.LocalServer;
 
  var db = new DB();
@@ -409,7 +426,8 @@ public class StartListener implements ServletContextListener {
  record.Name = &quot;Kelly&quot;;
  auto.Update(&quot;Table&quot;, record);
  auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
-                <pre><code class="java"> import iboxdb.localserver.*;
+ <br />
+             <pre><code class="java"> import iboxdb.localserver.*;
 
  DB db = new DB();
  db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
@@ -577,15 +595,11 @@ MySQL
                 </table>
 
                 <br />
-                <h5>Composite Key Supported</h5>
-                <img src="images/compositekey.png" alt="Database Composite Key" />
-                <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
-
-                <br />
                 <h5>Replication Master-Slave , Master-Master</h5>
                 <img src="images/p1.png" alt="Database Replication" />
                 <br />
 
+                <h5>Cross Platform</h5>
                 <img src="images/p3.png" alt="NoSQL Application Database for JAVA, .NET, Android, Mono, Unity3D, Xamarin, Linux, Windows" />
 
                 <br />
@@ -640,7 +654,7 @@ MySQL
     </div>
     <!-- Key Words -->
     <div style="width: 1px; height: 1px; overflow: hidden">
-       Update 3-22-2021.
+       Update 3-24-2021.
     </div>
 
 	<script src="highlight/highlight.packS.jS?SRC=USER" ></script>

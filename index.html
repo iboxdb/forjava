@@ -170,14 +170,14 @@
                 <br />
                 <h5>SQL Like</h5>
                 <div>
-                    <pre><code class="java">  /* 
+                    <pre><code class="cs">  /* 
   from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
 
   from [table] where [condition] 
                       order by [field1] desc,[field2] limit [0,10]
   [Condition:] == != &lt; &lt;= &gt; &gt;= &amp; | ( )
-  */ </code></pre>
-                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
+  */   
+  box.Select&lt;Member&gt;(&quot;from Member where Name==?&quot;, &quot;MyName&quot;);</code></pre>
                     <pre><code class="java">  box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
 
                 </div>
@@ -372,7 +372,7 @@
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> BoxFileStreamConfig
+                            <pre style="margin: 0px; padding: 0px;"><code class="cs"> <b>BoxFileStreamConfig</b>
  BoxMemoryStreamConfig
  ReadonlyStreamConfig
  CacheStreamConfig </code></pre>
@@ -385,21 +385,22 @@
                 C# &amp; JAVA,&nbsp;  <strong>place outside IDE working directory</strong> can get better performance
                 <pre><code class="cs">//different path has hugely different writing speed on VM.
 IBoxDB.LocalServer.DB.Root(&quot;/data/&quot;) </code></pre>
+				<br />
                 ASP.NET Cross Platform
                 <pre><code class="cs">DB.Root(MapPath(&quot;~/App_Data/&quot;))</code></pre>
-
+                <br />
                 Xamarin
                 <pre><code class="cs">DB.Root(System.Environment.GetFolderPath( 
        System.Environment.SpecialFolder.LocalApplicationData/Personal))</code></pre>
-
+				<br />
                 Unity3D
                 <pre><code class="cs">DB.Root(Application.persistentDataPath)</code></pre>
-
+                <br />
                 Android
                 <pre><code class="java">DB.root(android.os.Environment.getDataDirectory()
        .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;) </code></pre>
 
-
+       			<br />
                 JSP WebApplication
                 <pre><code class="java">@WebListener()
 public class StartListener implements ServletContextListener {
@@ -658,7 +659,7 @@ MySQL
     </div>
     <!-- Key Words -->
     <div style="width: 1px; height: 1px; overflow: hidden">
-       Update 5-27-2021.
+       Update 5-27-2021-B.
 <img src="https://s05.flagcounter.com/mini/Ep/bg_373737/txt_F2F2F2/border_373737/flags_0/"  border="0">
     </div>
 

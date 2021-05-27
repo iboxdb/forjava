@@ -286,8 +286,8 @@
                 <h5>Snapshot-Serializable Transaction</h5>
                 <table style="width: 100%">
                     <tr>
-                        <th style="width: 50%">Transaction Step</th>
-                        <th style="width: 50%">Isolation Level</th>
+                        <th>Transaction Step</th>
+                        <th>Isolation Level</th>
                     </tr>
                     <tr>
                         <td>Application Point</td>
@@ -297,37 +297,31 @@
                         <td>Database Point</td>
                         <td>Serializable</td>
                     </tr>
-
-                    <tr>
-
-                        <td colspan="2">
-                            <pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
+                 
+                </table>
+                <pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
   //Snapshot...
   box.Commit( ()=>{
     //Serializable...  
-  });                            
+  }); 
 }</code></pre>
-                        </td>
-                    </tr>
-                </table>
-
                 <br />
                 <h5>Update Increment</h5>
 
                 <table style="width: 100%">
                     <tr>
-                        <th ></th>
-                        <th style="font-weight: bold">UpdateIncrement</th>
-                        <th >AutoIncrement</th>
+                        <th> </th>
+                        <th style="font-weight: bold">Update Increment</th>
+                        <th>Auto Increment</th>
                     </tr>
                     <tr>
-                        <td>ApplyTo</td>
+                        <td>Apply To</td>
                         <td>index</td>
                         <td>key</td>
                     </tr>
                     <tr>
                         <td>Trigger</td>
-                        <td>insert/update</td>
+                        <td>insert / update</td>
                         <td>insert</td>
                     </tr>
                     <tr>
@@ -336,13 +330,13 @@
                         <td>number</td>
                     </tr>
                     <tr>
-                        <td>ValueFrom</td>
-                        <td>database newId(MaxPos,1)</td>
-                        <td>table max(ID)+1</td>
+                        <td>Value From</td>
+                        <td>database newId (MaxPos,1)</td>
+                        <td>table max (ID)+1</td>
                     </tr>
 
                     <tr>
-                        <td>GeneratorTime</td>
+                        <td>Generator Time</td>
                         <td>serializable transaction commit</td>
                         <td>data insert, differed from commit order</td>
                     </tr>
@@ -365,8 +359,8 @@
                     </tr>
                     <tr>
                         <td>Usage</td>
-                        <td>read/write different records</td>
-                        <td>read/write same record</td>
+                        <td>read / write different records</td>
+                        <td>read / write same record</td>
                     </tr>
                 </table>
 
@@ -465,8 +459,8 @@ MySQL
                 <h5>Supported Types</h5>
                 <table style="margin: 0px; padding: 0px; width: 100%">
                     <tr>
-                        <th style="width: 50%">.NET </th>
-                        <th style="width: 50%">JAVA </th>
+                        <th >.NET </th>
+                        <th >JAVA </th>
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
@@ -479,9 +473,9 @@ MySQL
  int
  uint
  long
- ulong              
+ ulong
  float
- double        
+ double
  decimal
  DateTime
  Guid
@@ -584,7 +578,8 @@ MySQL
 
 
 
-                            </code></pre>                           
+
+</code></pre>                           
                     </td>         
                     <td style="margin: 0px; padding: 0px; vertical-align: top;">
                             <pre style="margin: 0px; padding: 0px;">

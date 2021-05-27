@@ -2,10 +2,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,MVCC,Java,Android,Unity3D,Xamarin,数据库事务,应用程序,文档数据库">
-    <meta name="description" content="iBoxDB 双核数据库引擎，支持JAVA C# Unity3D Android Mono Xamarin Linux ASP.NET Core Linux Windows">
+    <meta name="description" content="双核数据库引擎 - iBoxDB 支持JAVA C# Unity3D Android Mono Xamarin Linux ASP.NET Core Linux Windows">
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="bookmark" href="favicon.ico" />
@@ -85,7 +84,7 @@
 
             <div>
 
-
+            <br>
                 <h3>示例</h3>
 
                 <h5>每个 BOX 都是一个完全隔离的独立数据空间</h5>
@@ -102,6 +101,7 @@
   }  </code></pre>
                 </div>
 
+                <br>
                 <h5>普通对象操作</h5>
                 <div>
                     <pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {  
@@ -117,6 +117,7 @@
   box.d(&quot;Member&quot;).insert(m); </code></pre>
                 </div>
 
+                <br>
                 <h5>动态列的文档数据</h5>
                 <div>
                     <pre><code class="cs">  game[&quot;GameType&quot;] = &quot;ACT&quot;;
@@ -126,6 +127,7 @@
   box.d(&quot;Product&quot;).insert(game);  </code></pre>
                 </div>
 
+                <br>
                 <h5>键-值风格的查询</h5>
 
                 <div>
@@ -138,6 +140,13 @@
   box.d(&quot;Table2&quot;, 88, &quot;ABC&quot;).select(Product.class);  </code></pre>
                 </div>
 
+                <br>
+                <h5>复合键支持</h5>
+                <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
+                <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
+
+
+                <br>
                 <h5>SQL 风格数据查询</h5>
                 <div>
                     <pre><code class="cs">  //from TABLE where A&gt;? &amp; B&lt;=? order by C limit 0,10
@@ -149,11 +158,20 @@
   box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
                 </div>
 
+                <br>
+                <h5>弱类型支持</h5>
+                <pre><code class="java">  //使用强类型
+  box.select("from Table where Id > ?" , 1L);
+  //使用弱类型
+  box.select("from Table where Id > ?" , new Variant("1")); </code></pre>
+
+  				<br>
                 <h5>自定义查询函数</h5>
                 <div>
                     <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new Query(&quot;Value&quot;));</code></pre>
                 </div>
 
+                <br>
                 <h5>兼容 LINQ (.NET)</h5>
                 <div>
                     <pre><code class="cs">  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
@@ -161,6 +179,7 @@
   select o;</code></pre>
                 </div>
 
+                <br>
                 <h5>兼容 Stream (Java8)</h5>
                 <div>
                     <pre><code class="java">  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
@@ -168,9 +187,31 @@
    Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
                 </div>
 
+                <br>
+                <h5>Ason 和 原型对象</h5>
+                <div>
+                    <pre><code class="java">  //定义原型, Id 是 Long		
+  Ason prototype = new Ason("Id:", 0L, "Name:", "Guest");
+
+  Ason record = prototype.select();
+  //设置 Id 为 String,
+  record.set("Id", "123");
+  //自动转为定义原型的 Long
+  System.out.println("Output: " + record.get("Id").getClass());
+  //输出: class java.lang.Long
+</code></pre>
+                </div>
+
+                <br />
+                <h5>数据库热备份</h5>
+                <div>
+                    <pre><code class="cs">  auto.GetDatabase().CopyTo(new Mirror(bakAddr, bakRoot), buffer) </code></pre>
+                </div>
+
+                <br>
                 <h5>更新自增</h5>
 
-                <table>
+                <table style="width: 100%">
                     <tr>
                         <th></th>
                         <th>作用域 </th>
@@ -179,42 +220,47 @@
                         <th>数据来源 </th>
                     </tr>
                     <tr>
+                        <td style="font-weight: bold">更新自增</td>
+                        <td >索引</td>
+                        <td>插入/更新</td>
+                        <td>长整数</td>
+                        <td >Database NewId (MaxPos,1)</td>
+                    </tr>
+                    <tr>
                         <td>主键自增</td>
                         <td>主键</td>
                         <td>插入</td>
                         <td>数字</td>
-                        <td>Table Max(ID)+1</td>
+                        <td>Table Max (ID)+1</td>
                     </tr>
-                    <tr>
-                        <td style="font-weight: bold">更新自增</td>
-                        <td style="white-space: nowrap">非主键</td>
-                        <td>插入/更新</td>
-                        <td>长整数</td>
-                        <td style="white-space: nowrap">Database NewId(MaxPos,1)</td>
-                    </tr>
+
                 </table>
 
+                <br>
                 <h5>查询追溯</h5>
 
-                <table>
+                <table style="width: 100%">
                     <tr>
                         <th></th>
                         <th>线程 </th>
                         <th>用法 </th>
                     </tr>
                     <tr>
-                        <td>数据锁 </td>
-                        <td>阻塞 </td>
-                        <td>读写同一数据行</td>
-                    </tr>
-                    <tr>
                         <td style="font-weight: bold">查询追溯</td>
                         <td>不阻塞 </td>
                         <td>读写不同的数据行 </td>
                     </tr>
+                    <tr>
+                        <td>数据锁 </td>
+                        <td>阻塞 </td>
+                        <td>读写同一数据行</td>
+                    </tr>
+
                 </table>
+
+                <br>
                 <h5>Snapshot-Serializable 两级事务</h5>
-                <table>
+                <table style="width: 100%">
                     <tr>
                         <th>程序区域</th>
                         <th>隔离级别</th>
@@ -229,17 +275,23 @@
                         <td>Serializable</td>
                     </tr>
                 </table>
+                  <pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
+  //Snapshot...
+  box.Commit( ()=>{
+    //Serializable...  
+  }); 
+}</code></pre>
 
+				<br>
                 <h5>数据类型支持</h5>
-                <table style="margin: 0px; padding: 0px; width: 90%">
+                <table style="margin: 0px; padding: 0px; width: 100%;">
                     <tr>
-                        <th>.NET </th>
-                        <th>JAVA </th>
+                        <th >.NET </th>
+                        <th >JAVA </th>
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- bool
+                            <pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> bool
  char
  byte
  sbyte
@@ -248,9 +300,9 @@
  int
  uint
  long
- ulong              
+ ulong
  float
- double        
+ double
  decimal
  DateTime
  Guid
@@ -264,7 +316,7 @@
  int? 
  uint? 
  long? 
- ulong?      
+ ulong?
  float? 
  double? 
  decimal?
@@ -272,15 +324,31 @@
  Guid? 
  string 
        
- //non-indexable
+ //non indexable
+ Dictionary
+ &lt;string, object&gt;
  MemoryStream
- Dictionary&lt;string, object&gt;
-             </pre>
+ byte[]
+ string[]
+ <!--
+ bool[] 
+ char[]
+ sbyte[] 
+ short[]
+ ushort[] 
+ int[] 
+ uint[] 
+ long[]
+ ulong[]
+ float[]
+ double[] 
+ decimal[] 
+ DateTime[] 
+ Guid[]--> </code></pre>
                         </td>
 
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;">
- boolean 
+                            <pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> boolean 
  Boolean
  byte 
  Byte
@@ -298,14 +366,17 @@
  Double
  UUID
  Date
+
  //dynamic length
  BigDecimal
  BigInteger
  String
  
- //Non-Indexable
+ //non indexable
+ HashMap
+ &lt;String, Object&gt;
+ MemoryStream
  byte[]
- HashMap&lt;String,Object&gt;
  Object[]
 
 
@@ -316,54 +387,83 @@
 
 
 
-                            </pre>
+
+</code></pre>
                         </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2"> ORM </th>
+                    </tr>
+                    <tr>
+                    <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px; font-size:13px">
+<code class="cs">//Name
+*.Name
+
+//name
+*.name
+
+
+
+
+</code></pre>                           
+                    </td>         
+                    <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px; font-size:13px">
+<code class="java">//Name
+*.Name
+*.Name(val)
+*.setName(val)
+
+//name
+*.name
+*.name(val)
+*.setname(val)</code></pre>
+                    </td>
                     </tr>
                 </table>
 
 
+                <br>
                 <h5>数据持久层</h5>
-                <table style="margin: 0px; padding: 0px; width: 90%">
+                <table style="margin: 0px; padding: 0px; width: 100%">
                     <tr>
-                        <th>.NET </th>
-                        <th>JAVA </th>
+                        <th>IO</th>
                     </tr>
                     <tr>
                         <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig
- class BoxMemoryStreamConfig
- class ReadonlyStreamConfig
- class CacheStreamConfig </code></pre>
-                        </td>
-
-                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="ss"> class BoxFileStreamConfig 
- class BoxMemoryStreamConfig
- class ReadonlyStreamConfig
- class CacheStreamConfig </code></pre>
+                            <pre style="margin: 0px; padding: 0px;"><code class="cs"> <b>BoxFileStreamConfig</b>
+ BoxMemoryStreamConfig
+ ReadonlyStreamConfig
+ CacheStreamConfig </code></pre>
                         </td>
                     </tr>
                 </table>
 
-
+                <br>
                 <h5>数据库路径设置</h5>
                 C# &amp; JAVA,&nbsp;  把数据库文件放到项目工作目录外会有更好性能
                    <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
+
+                   <br>
                 ASP.NET Cross Platform
                 <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
 
+                <br>
                 Xamarin
                 <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
        System.Environment.SpecialFolder.Personal));</code></pre>
 
+       <br>
                 Unity3D
                 <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
 
+                <br>
                 Android
                 <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
        .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
 
-
+<br>
                 JSP WebApplication
                 <pre><code class="java">@WebListener()
 public class StartListener implements ServletContextListener {
@@ -374,6 +474,8 @@ public class StartListener implements ServletContextListener {
        iBoxDB.LocalServer.DB.root(path); 
     }
 } </code></pre>
+
+<br>
                 <h5>查询方式</h5>
                 <pre><code class="cs">//查询
 box.Select(&quot;from Member&quot;);
@@ -382,40 +484,45 @@ box.Select(&quot;*from Member&quot;);
 //查询追溯, 以 '!' 开始
 box.Select(&quot;!from Member&quot;)  </code></pre>
 
-
+<br>
                 <h5>支持索引提升查询速度</h5>
                 <pre><code class="cs">config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
 config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
 box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
 
+<br>
                 <h5>快速入门&nbsp;&nbsp; C# and JAVA</h5>
-                <pre><code class="cs"> using iBoxDB.LocalServer;
+                <pre><code class="cs"> using IBoxDB.LocalServer;
 
  var db = new DB();
- db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;ID&quot;);
+ db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.Open();
- auto.Insert(&quot;Table&quot;, new Record { ID = 1L, Name = &quot;Andy&quot; });
- var o1 = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.Update(&quot;Table&quot;, o1);
+
+ auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
+ var record = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.Update(&quot;Table&quot;, record);
  auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
-                <pre><code class="java"> import iBoxDB.LocalServer.*;
+ <br />
+             <pre><code class="java"> import iboxdb.localserver.*;
 
  DB db = new DB();
- db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;ID&quot;);
+ db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
  AutoBox auto = db.open();
+
  auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
- Record o1 = auto.get(Record.class, &quot;Table&quot;, 1L);
- o1.Name = &quot;Kelly&quot;;
- auto.update(&quot;Table&quot;, o1);
+ Record record = auto.get(Record.class, &quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.update(&quot;Table&quot;, record);
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
 
+ <br>
          <h5>安装使用</h5>
                 <pre><code class="cs">.NET: 在项目中引用 NETDB/iBoxDB.DLL  </code></pre>
                 <pre><code class="java">Java: 在项目中引用 JavaDB/iBoxDB.jar </code></pre>
                  
-
+                 <br>
                 <h5>与 MySQL 的性能参照</h5>
                   <pre><code class="sql">iBoxDB
  Insert: 1,000,000 AVG: 47,016 objects/s 
@@ -429,11 +536,7 @@ MySQL
 </code></pre>
 
 
-                <h5>复合键支持</h5>
-                <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
-                <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
                 <br />
-
                 <h5>数据库同步，主从与多主</h5>
                 <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" /><br />
 

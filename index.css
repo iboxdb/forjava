@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 10px 0;
     font-weight: 700;
     color: #222222;
-    font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     letter-spacing: -1px;
 }
 
@@ -94,12 +94,6 @@ a {
     text-shadow: none;
     transition: color 0.5s ease;
     transition: text-shadow 0.5s ease;
-    -webkit-transition: color 0.5s ease;
-    -webkit-transition: text-shadow 0.5s ease;
-    -moz-transition: color 0.5s ease;
-    -moz-transition: text-shadow 0.5s ease;
-    -o-transition: color 0.5s ease;
-    -o-transition: text-shadow 0.5s ease;
 }
 
     a:hover, a:focus {
@@ -122,15 +116,10 @@ strong {
 img {
     position: relative;
     margin: 0 auto;
-    max-width: 739px;
+    width: 100%;
     padding: 5px;
     margin: 10px 0 10px 0;
     border: 1px solid #ebebeb;
-    /****
-    box-shadow: 0 0 5px #ebebeb;
-    -webkit-box-shadow: 0 0 5px #ebebeb;
-    -moz-box-shadow: 0 0 5px #ebebeb;
-    ****/
 }
 
 .imgno {
@@ -150,21 +139,12 @@ p img {
 }
 
 pre {
-    width: 100%;
+    max-width: 100%;
     color: #222;
     background-color: #fff;
-    font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+    font-family: Monaco, Terminal, monospace;
     font-size: 18px;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-}
-
-pre {
-    width: 100%;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
-    overflow: auto;
+	overflow: auto;
 }
 
 code {
@@ -227,7 +207,7 @@ table {
 }
 
 th {
-    font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     padding: 10px;
     background: #373737;
     color: #fff;
@@ -248,12 +228,12 @@ Full-Width Styles
 *******************************************************************************/
 
 .outer {
-    width: 100%;
+    max-width: 100%;
 }
 
 .inner {
     position: relative;
-    max-width: 800px;
+    max-width: 850px;
     padding: 20px 10px;
     margin: 0 auto;
 }

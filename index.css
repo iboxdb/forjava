@@ -123,6 +123,11 @@ img {
     border: 1px solid #ebebeb;
 }
 
+.imgwidth {
+   width: auto;
+   border: none;
+}
+
 .imgno {
     border: none;
     box-shadow: none;

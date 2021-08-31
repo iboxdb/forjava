@@ -60,7 +60,6 @@
             <h3 id="nosql_download">Download</h3>
 
 
-
             <span class="dlversion">[FREE] iBoxDB.NET v3.0&nbsp;&nbsp; iBoxDB.JAVA v3.0</span>
             <br />
             [<a href="https://sourceforge.net/settings/mirror_choices?projectname=application-database&filename=iBoxDBv30_30.zip&selected=pilotfiber" target="_blank">Download</a>]
@@ -82,7 +81,9 @@
             <script src="highlight/compact_share_buttons.packS.jS?SRC=USER"></script>
             </div>
             <br />
-
+            <div id="paypal-button-container-P-5FF55331H20830440MEXASQY"  style="width:50%" ></div>
+            <br />
+            <br />
 
             <span class="dlversion">[FREE] iBoxDB.NET v2.33&nbsp;&nbsp; iBoxDB.JAVA v2.27</span>
             <br />
@@ -535,40 +536,7 @@ try (Box box = auto.cube()) {
             <pre style="display: none" id="code22"><code class="cs">//combining dataset
 public class Combiner&lt;T&gt;
 {
-    HashSet&lt;object&gt; ids;
-    Func&lt;T, object&gt; getid;
-    List&lt;T&gt; results;
-    public Combiner(Func&lt;T, object&gt; getid)
-    {
-        this.getid = getid;
-        this.ids = new HashSet&lt;object&gt;();
-        this.results = new List&lt;T&gt;();
-    }
-    public void Add(IEnumerable&lt;T&gt; result)
-    {
-        foreach (var t in result)
-        {
-            if (getid != null)
-            {
-                var id = getid(t);
-                if (!ids.Add(id)) { continue; }
-            }
-            results.Add(t);
-        }
-    }
-    public List&lt;T&gt; Select()
-    {
-        return results;
-    }
-    public IEnumerable&lt;T&gt; OrderBy&lt;TKey&gt;(Func&lt;T, TKey&gt; keySelector)
-    {
-        return Enumerable.OrderBy(results, keySelector);
-    }
-    public IEnumerable&lt;IGrouping&lt;TKey, T&gt;&gt; 
-    		GroupBy&lt;TKey&gt;(Func&lt;T, TKey&gt; keySelector)
-    {
-        return Enumerable.GroupBy(results, keySelector);
-    }
+    public Combiner(Func&lt;T, object&gt; getid){}
 }
 
 class Item
@@ -595,10 +563,6 @@ static void Main(string[] args)
         combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 2L));
         combiner.Add(
          box.Select&lt;Item&gt;(&quot;from Item where Location==?&quot;, &quot;Location6&quot;));
-        foreach (var t in combiner.OrderBy(t =&gt; t.Id))
-        {
-            Console.WriteLine(DB.ToString(t));
-        }
     }
 }   
 </code></pre>
@@ -642,6 +606,37 @@ static void Main(string[] args)
 
     <script src="highlight/highlight.packS.jS?SRC=USER"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-     
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AYrgiVHQBkE6fchT2WVSLrPOFZbXMc_JE9d2fX-1Hb0s5VrzeTRems6L6ef81XCIGHUFt2dwYRKewPNI&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+
+try{
+
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-5FF55331H20830440MEXASQY'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-5FF55331H20830440MEXASQY'); // Renders the PayPal button
+
+}catch(paypale)
+{
+
+}
+
+</script>
+
+
 </body>
 </html>

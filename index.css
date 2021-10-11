@@ -276,6 +276,17 @@ Full-Width Styles
     background-image: url( "images/ico.png");
 }
 
+#downloads a{
+   border: 1px solid #FFFFFF; 
+   padding: 5px 15px 5px 15px; 
+   top: 103px; 
+   position: relative; 
+   font-size: x-large; 
+   background-color: #333333; 
+   color: #FFFFFF; 
+   font-weight: lighter;
+}
+
 #logo {
     position: absolute;
     width: 100px;

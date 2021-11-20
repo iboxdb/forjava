@@ -470,6 +470,19 @@ using (var auto = db.Open()){
 </code></pre>
 
 
+       <a href="javascript:void(0)" onclick="javascript:code19.style.display='block'">Mobile Cache</a>
+            <br />
+            <pre style="display: none" id="code19"><code class="java"> DB.root(path);
+ DB db =  new DB();
+ DatabaseConfig config = db.getConfig();
+ //mobiles have only 256MB memory, set Cache to 16 or 32MB.
+ config.CacheLength = config.mb(32);
+ config.FileIncSize = 1024 * 64;
+ config.ReadStreamCount = 1;
+ App.auto = db.open();
+</code></pre>
+
+
       <a href="javascript:void(0)" onclick="javascript:code17.style.display='block'">Schemata</a>
             <br />
             <pre style="display: none" id="code17"><code class="java">auto.getDatabase().getSchemata() 

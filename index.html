@@ -440,6 +440,17 @@ public class StartListener implements ServletContextListener {
  auto.delete(&quot;Table&quot;, 1L);  </code></pre>
 
  				<br />
+                <h5>Memory Usage</h5>
+                <pre><code class="java"> DatabaseConfig cfg = db.getConfig();
+ //Cache Memory, set less 1/3 total
+ cfg.CacheLength = cfg.mb(1024L);
+ //Read Pool, set <b>8+</b> to low memory machine
+ cfg.ReadStreamCount = 8;
+ //Write Pool, set <b>4-</b> to low memory machine
+ cfg.WriteStreamCount = 1;</code></pre>
+
+
+ 				<br />
                 <h5>Install</h5>
                 <pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
                 <pre><code class="java">Java: Add JavaDB/iboxdb.jar to Project</code></pre>

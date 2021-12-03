@@ -608,6 +608,12 @@ MySQL
                     </td>
                     </tr>
                 </table>
+                <pre><code class="java"> DatabaseConfig cfg;
+ //Create Table
+ ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
+ //Create Index with length 64
+ ensureIndex(Record.class, &quot;Table&quot;, &quot;Name(64)&quot;);
+ </code></pre>
 
                 <br />              
                 <h5>Cross Platform</h5>

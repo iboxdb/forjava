@@ -257,6 +257,9 @@ Full-Width Styles
     text-shadow: #111 0px 0px 10px;
     text-indent: 100px;
 }
+#project_title_h2 {
+  color: #fff;
+}
 
 #project_tagline {
     color: #fff;

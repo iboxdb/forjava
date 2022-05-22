@@ -92,7 +92,7 @@
                 <li>Concurrency control, thread safe</li>
                 <li>Multiple applications supported</li>
                 <li>Memory management</li>
-                <li>Scalable hot MasterMaster and MasterSlave replications</li>
+                <li>Programmable replication</li>
                 <li>Hot mirror copy</li>
                 <li>On disk and in memory databases supported</li>
                 <li>Automatically create databases</li>
@@ -455,9 +455,9 @@ public class StartListener implements ServletContextListener {
  cfg.CacheLength = cfg.mb(1024L);
  //Mobile Device 64MB 
  cfg.CacheLength = cfg.mb(64L);
- //Read Pool, set <b>8+</b> to low memory machine
+ //Read Pool, set <b>8+</b> to low Cache machine
  cfg.ReadStreamCount = 8;
- //Write Pool, set <b>4-</b> to low memory machine
+ //Write Pool, set <b>4-</b> to low Cache machine
  cfg.WriteStreamCount = 1;</code></pre>
 
 

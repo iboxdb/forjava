@@ -84,11 +84,11 @@
             <a href="https://sourceforge.net/projects/ftserver-android/" target="_blank">Self Hosted Search Engine Android</a>
             <br />
 
-            <h3>Benchmark Code</h3>
-            <a href="https://sourceforge.net/p/teadb/code/" target="_blank">Version 3 With MySQL Java Maven</a>
+            <h3>Code is cheap, show me the benchmark</h3>
+            <a href="https://sourceforge.net/p/teadb/code/" target="_blank">Benchmark With MySQL Java Maven</a>
             <br />
 
-            <a href="https://sourceforge.net/p/benchmarksql3/code/" target="_blank">Version 3 With SQLite C#</a>
+            <a href="https://sourceforge.net/p/benchmarksql3/code/" target="_blank">Benchmark With SQLite C# NETCore</a>
             <br />
             <br />
              
@@ -445,7 +445,9 @@ using (var auto = db.Open()){
  //mobiles have only 256MB memory, set Cache to 16 or 32MB.
  config.CacheLength = config.mb(32);
  config.FileIncSize = 1024 * 64;
+ config.SwapFileBuffer = 1024 * 64;
  config.ReadStreamCount = 1;
+ config.WriteStreamCount = 1;
  App.auto = db.open();
 </code></pre>
 

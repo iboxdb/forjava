@@ -221,7 +221,15 @@
   box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;,arg1,arg2)</code></pre>
   <br />
   <pre><code class="cs">  //Id on the Left would faster in many cases
-  box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)</code></pre>
+  box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)
+
+  //Key is primary Index, can create composite Index with Key
+  //but Key is unique, the second field is rarely used
+  config.EnsureIndex(..., &quot;Id&quot;,&quot;Field&quot;)
+  //switch the order might help in some cases
+  config.EnsureIndex(..., &quot;Field&quot;,&quot;Id&quot;)
+  //see detail of Array comparison
+  //KeyValue databases always have Key</code></pre>
   <br />
     <pre><code class="cs">  //combining Results would faster than OR,
   //depends on the scale of dataset and corresponded Index configure.	

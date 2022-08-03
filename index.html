@@ -446,6 +446,20 @@ public class StartListener implements ServletContextListener {
     }
 } </code></pre>
 
+ 				<br />
+                Godot
+                <pre><code class="cs">&lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;3.5.0&quot; /&gt;  
+public override void _Ready(){
+    var t = new Godot.File();
+    t.Open(&quot;user://DBROOT.tmp&quot; ,Godot.File.ModeFlags.Write); 
+    var dir = System.IO.Path.GetDirectoryName(t.GetPathAbsolute());
+    t.Close();
+    dir = System.IO.Path.Combine(dir, &quot;DBROOT&quot;);
+    System.IO.Directory.CreateDirectory(dir);
+    IBoxDB.LocalServer.DB.Root(dir);
+}</code></pre>
+
+
 				<br />
                 <h5>Getting Started</h5>
                 <pre><code class="cs"> using IBoxDB.LocalServer;

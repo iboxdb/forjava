@@ -459,6 +459,13 @@ public override void _Ready(){
     IBoxDB.LocalServer.DB.Root(dir);
 }</code></pre>
 
+				<br />
+                jMonkeyEngine
+                <pre><code class="java">File dir = JmeSystem.getStorageFolder(StorageFolderType.Internal);
+dir = new File(dir, &quot;ProjectName&quot;);
+dir = new File(dir, &quot;DatabaseName&quot;);
+dir.mkdir();       
+DB.root(dir.getAbsolutePath()); </code></pre>
 
 				<br />
                 <h5>Getting Started</h5>

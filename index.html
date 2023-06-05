@@ -473,7 +473,7 @@ public class StartListener implements ServletContextListener {
 
  				<br />
                 Godot
-                <pre><code class="xml">&lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;3.5.0&quot; /&gt;  
+                <pre><code class="xml">&lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;&quot; /&gt;  
 var dir = Godot.OS.GetUserDataDir();
 dir = Path.Combine(dir, &quot;DBROOT&quot;);
 Directory.CreateDirectory(dir);
@@ -595,9 +595,10 @@ MySQL
  //non indexable
  Dictionary
  &lt;string, object&gt;
- MemoryStream
  byte[]
  string[]
+ //file
+ MemoryStream
  <!--
  bool[] 
  char[]
@@ -643,9 +644,10 @@ MySQL
  //non indexable
  HashMap
  &lt;String, Object&gt;
- MemoryStream
  byte[]
  Object[]
+ //file
+ MemoryStream
 
 
 

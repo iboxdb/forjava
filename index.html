@@ -444,7 +444,11 @@
 //new File(path).mkdirs(); 
 //Directory.CreateDirectory(path)
 IBoxDB.LocalServer.DB.Root(&quot;/data/&quot;) </code></pre>
-				<br />
+
+<b>Important: Add this Database Path as Exclusion into Scan-System, 
+these systems are not designed for high performance, for example, Windows Defender.
+</b>
+				<br /><br />
                 ASP.NET Cross Platform
                 <pre><code class="cs">DB.Root(MapPath(&quot;~/App_Data/&quot;))</code></pre>
                 <br />

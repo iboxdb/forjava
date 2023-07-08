@@ -705,6 +705,18 @@ MySQL
  //Indexing for byte[] or others, 
  //using ToBase64String(byte[]) Converts it to String. </code></pre>
 
+ 				<br />
+ 				<h5>.NET AOT Register Types</h5>
+<pre><code class="cs"> public static object Register
+  &lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;() 
+  where T : new()
+ {
+   return new T();
+ }
+ //Trigger DynamicallyAccessedMemberTypes.All
+ Register&lt;T1&gt;();
+ EnsureTable&lt;T1&gt;(&quot;T1&quot;, &quot;Id&quot;); </code></pre>
+
                 <br />              
                 <h5>Cross Platform</h5>
                 <img src="images/p3.png" alt="NoSQL Application Database for JAVA, .NET, Android, Mono, Unity3D, Xamarin, Linux, Windows" />

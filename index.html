@@ -125,6 +125,7 @@
                     <pre><code class="cs">  using(var box = auto.Cube())
   {                            
      //select, insert, update, delete ...
+     //replace()=(insert or update)
      CommitResult cr = box.Commit();
   }
 </code></pre>
@@ -134,7 +135,8 @@
      CommitResult cr = box.commit();
   }  </code></pre>
                 </div>
-
+                as above, <b>box</b> is method's local variable, don't define as global variable.
+                one box for one delivery. <b>AutoBox</b> can be defined globally in one process application.
 
                 <br />
                 <h5>Advertising</h5>

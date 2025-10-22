@@ -258,9 +258,19 @@ Full-Width Styles
     text-indent: 100px;
 }
 
+#project_title_h1 {
+   margin: 0;
+   color: #fff;
+   font-size: 35px;
+}
 #project_title_h2 {
   color: #fff;
   font-size: 25px;
+}
+
+#project_title_h2 div{
+	margin: 0px;
+    border-left: 1px solid #555;
 }
 
 #project_tagline {

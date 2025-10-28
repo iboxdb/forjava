@@ -4,12 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,MVCC,Java,Android,Unity3D,Xamarin,数据库事务,应用程序,文档数据库">
-    <meta name="description" content="双核数据库引擎 - iBoxDB 支持JAVA C# Unity3D Android Mono Xamarin Linux ASP.NET Core Linux Windows">
+    <meta name="description" content="双核数据库引擎 - iBoxDB NoSQL 支持 JAVA C# Unity Android Mono .NET Linux Windows">
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="bookmark" href="favicon.ico" />
 
-    <title>高性能嵌入式数据库</title>
+    <title>高性能嵌入式数据库 NoSQL Java NET 双核 ACiD</title>
 
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="highlight/styles/vs.css">
@@ -23,6 +23,13 @@
 
         	<a href="index.html"><div id="logo"></div>
             <h1 id="project_title">iBoxDB</h1></a>
+
+			<h1 id="project_title_h1"> e^d = Ne^(Kd) </h1>
+            <h2 id="project_title_h2"><div> &nbsp; &nbsp;
+            cos { (1/2) ( y^(1/d) + (y^(-1/d)) ( 1 - (1-y)^(2/d) ) ) } <br> &nbsp; &nbsp; 
+            projection { x = x*cos( a ) + k*cos( XtoK + a ) } 
+            </h2>
+
             <h2 id="project_tagline">双核高效应用程序数据库引擎</h2>
             <div id="downloads">
                 <a href="iboxdb-java-csharp-embedded-nosql-database.html#nosql_download">下载数据库</a>
@@ -56,11 +63,11 @@
             <h3>特性</h3>
 
             <ul>
-                <li>增删改查</li>
+                <li>NoSQL 增删改查</li>
                 <li>键表与键值表</li>
                 <li>唯一或可重复的索引</li>
                 <li>唯一或可重复的复合索引</li>
-                <li>SQL风格的数据查询语言</li>
+                <li>SQL 风格数据查询语言</li>
                 <li>数据库事务支持</li>
                 <li>并发控制，多线程安全</li>
                 <li>多进程安全</li>
@@ -75,6 +82,8 @@
                 <li>Ason, 快速动态对象实例化</li>
                 <li>结果集支持 LINQ 与 STREAM</li>
                 <li>高性能无外部系统依赖</li>
+                <li>事务抱团</li>
+                <li>快读查询</li>
                 <li>更新自增</li>
                 <li>查询追溯</li>
                 <li>两级事务隔离</li>
@@ -88,18 +97,21 @@
 
                 <h5>每个 BOX 都是一个完全隔离的独立数据空间</h5>
                 <div>
-                    <pre><code class="cs">  using(var box = db.Cube())
+                    <pre><code class="cs">  using(var box = auto.Cube())
   {                            
      //select, insert, update, delete ...
+     //replace()=(insert or update)
      var result = box.Commit();
   }
-</code></pre>
-                    <pre><code class="java">  try(Box box = db.cube()){
+</code></pre> <br> 
+                    <pre><code class="java">  try(Box box = auto.cube()){
      ...
      CommitResult r = box.commit();
   }  </code></pre>
                 </div>
+				Box 是本地变量，每个 Box 都是单独的事务。AutoBox 在单进程应用程序中可以用作全局变量。
 
+				<br>
                 <br>
                 <h5>普通对象操作</h5>
                 <div>
@@ -109,7 +121,7 @@
        Password = EncodePassowrd(&quot;123&quot;)
      }
   );
-</code></pre>
+</code></pre> <br>
                     <pre><code class="java">  Member m = new Member();
   m.ID = box.newId();
   m.setName(&quot;Kevin&quot;);
@@ -119,10 +131,12 @@
                 <br>
                 <h5>动态列的文档数据</h5>
                 <div>
-                    <pre><code class="cs">  game[&quot;GameType&quot;] = &quot;ACT&quot;;
+                    <pre><code class="cs">  //Game : Dictionary&lt;string, object&gt;
+  game[&quot;GameType&quot;] = &quot;ACT&quot;;
   box[&quot;Product&quot;].Insert(game);
-</code></pre>
-                    <pre><code class="java">  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
+</code></pre> <br>
+                    <pre><code class="java">  //Game extends HashMap&lt;String,Object&gt;
+  game.put(&quot;GameType&quot;, &quot;ACT&quot;);
   box.d(&quot;Product&quot;).insert(game);  </code></pre>
                 </div>
 
@@ -133,7 +147,7 @@
                     <pre><code class="cs">  box[&quot;Table&quot;, 2L].Select&lt;Member&gt;();
    //支持复合键
   box[&quot;Table2&quot;, 99, &quot;ABC&quot;].Select&lt;Product&gt;();
-</code></pre>
+</code></pre> <br>
                     <pre><code class="java">  box.d(&quot;Table&quot;, 3L).select(Member.class);
    //支持复合键
   box.d(&quot;Table2&quot;, 88, &quot;ABC&quot;).select(Product.class);  </code></pre>
@@ -141,10 +155,9 @@
 
                 <br>
                 <h5>复合键支持</h5>
+				<pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
                 <img src="images/compositekey.png" alt="iBoxDB Fast ACID NoSQL Application Database Composite Key" />
-                <pre><code class="java">config.ensureTable(Item.class, &quot;Item&quot;, &quot;UID&quot;, &quot;Type&quot;)</code></pre>
-
-
+                
                 <br>
                 <h5>SQL 风格数据查询</h5>
                 <div>
@@ -157,6 +170,17 @@
   box.select(Member.class, &quot;from Member where Name==?&quot;, &quot;MyName&quot;); </code></pre>
                 </div>
 
+                <h5>查询</h5>
+                <pre><code class="cs">  box.Select(&quot;from Member&quot;);  </code></pre>
+
+  				<h5>查询选项</h5>
+                <pre><code class="cs">  //先加载到内存，使用 “*”.
+  //因为操作系统有预读，这选项一般不需要, 
+  box.Select(&quot;*from Member&quot;);
+  //查询追溯 使用 “!”.
+  box.Select(&quot;!from Member&quot;);  </code></pre>
+
+
                 <br>
                 <h5>弱类型支持</h5>
                 <pre><code class="java">  //使用强类型
@@ -164,10 +188,55 @@
   //使用弱类型
   box.select("from Table where Id > ?" , new Variant("1")); </code></pre>
 
+
+  				<br />
+                <h5>支持索引提升查询速度，平均快一百倍</h5>
+
+                <pre><code class="cs">  //索引
+  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;)
+  config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;)</code></pre>
+
+                <pre><code class="cs">  //复合索引
+  config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
+  config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)</code></pre>
+  				<pre><code class="cs"> //两种索引都可以加速查询,随意选择.
+ //但一个查询只会加载一个索引, 
+ //同时使用两个会产生浪费.
+ //一般索引已经足够快.
+ //复合索引一般用于关联表主键，两个条件相等的情况
+  box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;,arg1,arg2)</code></pre>
+
+  <br />
+  <pre><code class="cs">  //Id 在左边一般会更快
+  box.Select(&quot;from Member where Id == ? &amp; Field == ?&quot;,id,arg)
+
+  //主键同时也是主索引，可以创建复合索引包含主键
+  //但主键是唯一的，所以第二个字段一般很少用到
+  config.EnsureIndex(..., &quot;Id&quot;,&quot;Field&quot;)
+  //交换顺序在一些情况下可能有用
+  config.EnsureIndex(..., &quot;Field&quot;,&quot;Id&quot;)
+  //具体可查看数组比较的方法
+  //键值数据库一定有主键</code></pre>
+  <br />
+    <pre><code class="cs">  //合并结果会比 OR 条件更快,
+  //取决于数据集的大小与索引设置.	
+  //where Id == ? | Id == ? | Id == ?
+  foreach(var id in [ 1, 2, 3 ])
+    combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
+
+
   				<br>
                 <h5>自定义查询函数</h5>
                 <div>
-                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new Query(&quot;Value&quot;));</code></pre>
+                    <pre><code class="cs">  box.Select&lt;Member&gt;(&quot;from Member where [Tags]&quot;, new IFunction(&quot;Value&quot;));</code></pre>
+                </div>
+
+				<br />
+                <h5>自定义表-对象绑定</h5>
+                <div>
+                    <pre><code class="cs">  public bool Insert(Member m){
+    return auto.Insert(nameof(Member), m);
+  }</code></pre>
                 </div>
 
                 <br>
@@ -204,7 +273,33 @@
                 <br />
                 <h5>数据库热备份</h5>
                 <div>
-                    <pre><code class="cs">  auto.GetDatabase().CopyTo(new Mirror(bakAddr, bakRoot), buffer) </code></pre>
+                    <pre><code class="cs">  auto.GetDatabase().CopyTo(bakAddr, bakRoot, buffer) </code></pre>
+                </div>
+
+ 				<br />
+                <h5>快读查询</h5>
+                <div>
+                    <pre><code class="cs">  //从小文件中直接查询数据，
+  //不用启动数据库引擎                   
+  IEnumerable records = DB.Select(fileAddress) </code></pre>
+                </div>
+
+                <br />
+                <h5>事务抱团</h5>
+                <div>
+                    <pre><code class="cs">  //三个事务一起提交
+  long huggersBuffer = 1024L * 1024L * 32L;                   
+  box1.Commit(huggersBuffer);
+  box2.Commit(huggersBuffer);
+  box3.Commit(); </code></pre>
+                </div>
+
+                <br />
+                <h5>可编程热同步,下载文件了解详细内容</h5>
+                <pre><code class="java">  //主-主
+  BoxData.masterReplicate();  
+  //主-从
+  BoxData.slaveReplicate();</code></pre>
                 </div>
 
                 <br>
@@ -281,7 +376,138 @@
   }); 
 }</code></pre>
 
-				<br>
+				
+                <br>
+                <h5>数据持久层</h5>
+                <table style="margin: 0px; padding: 0px; width: 100%">
+                    <tr>
+                        <th>IO</th>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
+                            <pre style="margin: 0px; padding: 0px;"><code class="cs"> <b>BoxFileStreamConfig</b>
+ BoxMemoryStreamConfig
+ ReadonlyStreamConfig
+ CacheStreamConfig </code></pre>
+                        </td>
+                    </tr>
+                </table>
+
+                <br>
+                <h5>数据库路径设置</h5>
+                C# &amp; JAVA,&nbsp;  把数据库文件放到<b>项目工作目录外</b>会有更好性能
+                   <pre><code class="cs">//在虚拟机里，不同的路径有很大的读写速度差别.
+//先创建目录，再放入数据库.
+//new File(path).mkdirs(); 
+//Directory.CreateDirectory(path)
+iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
+在<b>扫描软件</b>中把数据库根目录设置为<b>例外</b>，可以加快读写速度
+                  <br> <br>
+                ASP.NET Cross Platform
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
+
+                <br>
+                Xamarin
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
+       System.Environment.SpecialFolder.Personal));</code></pre>
+
+       <br>
+                Unity3D
+                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
+
+                <br>
+                Android
+                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
+       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
+
+<br>
+                JSP WebApplication
+                <pre><code class="java">@WebListener()
+public class StartListener implements ServletContextListener {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+       String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
+       new File(path).mkdirs();   
+       iBoxDB.LocalServer.DB.root(path); 
+    }
+} </code></pre>
+
+<br />
+                Godot
+                <pre><code class="xml">&lt;PackageReference Include=&quot;iBoxDB&quot; Version=&quot;&quot; /&gt;  
+var dir = Godot.OS.GetUserDataDir();
+dir = Path.Combine(dir, &quot;DBROOT&quot;);
+Directory.CreateDirectory(dir);
+DB.Root(dir)</code></pre>
+
+				<br />
+                jMonkeyEngine
+                <pre><code class="java">File dir = JmeSystem.getStorageFolder(StorageFolderType.Internal);
+dir = new File(dir, &quot;ProjectName&quot;);
+dir = new File(dir, &quot;DatabaseName&quot;);
+dir.mkdir();       
+DB.root(dir.getAbsolutePath()); </code></pre>
+
+<br>
+                <h5>快速入门&nbsp;&nbsp; C# and JAVA</h5>
+                <pre><code class="cs"> using IBoxDB.LocalServer;
+
+ var db = new DB();
+ db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
+ AutoBox auto = db.Open();
+
+ auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
+ var record = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.Update(&quot;Table&quot;, record);
+ auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
+ <br />
+             <pre><code class="java"> import iboxdb.localserver.*;
+
+ DB db = new DB();
+ db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
+ AutoBox auto = db.open();
+
+ auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
+ Record record = auto.get(Record.class, &quot;Table&quot;, 1L);
+ record.Name = &quot;Kelly&quot;;
+ auto.update(&quot;Table&quot;, record);
+ auto.delete(&quot;Table&quot;, 1L);  </code></pre>
+
+
+ 				<br />
+                <h5>内存使用</h5>
+                <pre><code class="java"> DatabaseConfig cfg = db.getConfig();
+ //缓存，小于三分一总内存
+ cfg.CacheLength = cfg.mb(1024L);
+ //移动设备 64MB 
+ cfg.CacheLength = cfg.mb(64L);
+ //读线程, 在小缓存机器中设置 <b>8+</b>
+ cfg.ReadStreamCount = 8;
+ //写线程, 在小缓存机器中设置 <b>4-</b> 或者 <b>1</b>
+ cfg.WriteStreamCount = 1;</code></pre>
+
+
+ <br>
+         <h5>安装使用</h5>
+                <pre><code class="cs">.NET: 在项目中引用 NETDB/iBoxDB.DLL  </code></pre>
+                <pre><code class="java">Java: 在项目中引用 JavaDB/iBoxDB.jar </code></pre>
+                 
+                 <br>
+                <h5>与 MySQL 的性能参照</h5>
+                  <pre><code class="sql">iBoxDB
+ Insert: 1,000,000 AVG: 47,016 objects/s 
+ Update: 1,000,000 AVG: 25,558 objects/s 
+ Delete: 1,000,000 AVG: 42,714 objects/s 
+
+MySQL
+ Insert: 1,000,000 AVG: 5,514 objects/s 
+ Update: 1,000,000 AVG: 5,109 objects/s 
+ Delete: 1,000,000 AVG: 6,044 objects/s 
+</code></pre>
+
+
+<br>
                 <h5>数据类型支持</h5>
                 <table style="margin: 0px; padding: 0px; width: 100%;">
                     <tr>
@@ -421,124 +647,31 @@
                     </td>
                     </tr>
                 </table>
+                <pre><code class="java"> DatabaseConfig cfg;
+ //创建表
+ ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
+ //创建长度为 32 的索引
+ ensureIndex(Record.class, &quot;Table&quot;, &quot;Name(32)&quot;);
 
+ //如果要索引 byte[] 或其它, 
+ //使用 ToBase64String(byte[]) 转换为字符串 String. </code></pre>
 
-                <br>
-                <h5>数据持久层</h5>
-                <table style="margin: 0px; padding: 0px; width: 100%">
-                    <tr>
-                        <th>IO</th>
-                    </tr>
-                    <tr>
-                        <td style="margin: 0px; padding: 0px; vertical-align: top;">
-                            <pre style="margin: 0px; padding: 0px;"><code class="cs"> <b>BoxFileStreamConfig</b>
- BoxMemoryStreamConfig
- ReadonlyStreamConfig
- CacheStreamConfig </code></pre>
-                        </td>
-                    </tr>
-                </table>
-
-                <br>
-                <h5>数据库路径设置</h5>
-                C# &amp; JAVA,&nbsp;  把数据库文件放到项目工作目录外会有更好性能
-                   <pre><code class="cs">iBoxDB.LocalServer.DB.Root(&quot;/data/&quot;); </code></pre>
-
-                   <br>
-                ASP.NET Cross Platform
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(MapPath(&quot;~/App_Data/&quot;));</code></pre>
-
-                <br>
-                Xamarin
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath( 
-       System.Environment.SpecialFolder.Personal));</code></pre>
-
-       <br>
-                Unity3D
-                <pre><code class="cs">iBoxDB.LocalServer.DB.Root(Application.persistentDataPath);</code></pre>
-
-                <br>
-                Android
-                <pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
-       .getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
-
-<br>
-                JSP WebApplication
-                <pre><code class="java">@WebListener()
-public class StartListener implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-       String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;; 
-       new File(path).mkdirs();   
-       iBoxDB.LocalServer.DB.root(path); 
-    }
-} </code></pre>
-
-<br>
-                <h5>查询方式</h5>
-                <pre><code class="cs">//查询
-box.Select(&quot;from Member&quot;);
-//查询，提前加载内存， 以 '*' 开始
-box.Select(&quot;*from Member&quot;);
-//查询追溯, 以 '!' 开始
-box.Select(&quot;!from Member&quot;)  </code></pre>
-
-<br>
-                <h5>支持索引提升查询速度</h5>
-                <pre><code class="cs">config.EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Field1&quot;,&quot;Field2&quot;)
-config.ensureIndex(Member.class, &quot;Member&quot;, isUnique,&quot;Field1&quot;,&quot;Field2&quot;)
-box.Select(&quot;from Member where Field1 == ? &amp; Field2 == ?&quot;)</code></pre>
-
-<br>
-                <h5>快速入门&nbsp;&nbsp; C# and JAVA</h5>
-                <pre><code class="cs"> using IBoxDB.LocalServer;
-
- var db = new DB();
- db.GetConfig().EnsureTable&lt;Record&gt;(&quot;Table&quot;, &quot;Id&quot;);
- AutoBox auto = db.Open();
-
- auto.Insert(&quot;Table&quot;, new Record { Id = 1L, Name = &quot;Andy&quot; });
- var record = auto.Get&lt;Record&gt;(&quot;Table&quot;, 1L);
- record.Name = &quot;Kelly&quot;;
- auto.Update(&quot;Table&quot;, record);
- auto.Delete(&quot;Table&quot;, 1L);  </code></pre>
- <br />
-             <pre><code class="java"> import iboxdb.localserver.*;
-
- DB db = new DB();
- db.getConfig().ensureTable(Record.class, &quot;Table&quot;, &quot;Id&quot;);
- AutoBox auto = db.open();
-
- auto.insert(&quot;Table&quot;, new Record(1L, &quot;Andy&quot;));
- Record record = auto.get(Record.class, &quot;Table&quot;, 1L);
- record.Name = &quot;Kelly&quot;;
- auto.update(&quot;Table&quot;, record);
- auto.delete(&quot;Table&quot;, 1L);  </code></pre>
-
-
- <br>
-         <h5>安装使用</h5>
-                <pre><code class="cs">.NET: 在项目中引用 NETDB/iBoxDB.DLL  </code></pre>
-                <pre><code class="java">Java: 在项目中引用 JavaDB/iBoxDB.jar </code></pre>
-                 
-                 <br>
-                <h5>与 MySQL 的性能参照</h5>
-                  <pre><code class="sql">iBoxDB
- Insert: 1,000,000 AVG: 47,016 objects/s 
- Update: 1,000,000 AVG: 25,558 objects/s 
- Delete: 1,000,000 AVG: 42,714 objects/s 
-
-MySQL
- Insert: 1,000,000 AVG: 5,514 objects/s 
- Update: 1,000,000 AVG: 5,109 objects/s 
- Delete: 1,000,000 AVG: 6,044 objects/s 
-</code></pre>
+<br />
+ 				<h5>.NET AOT 注册类型</h5>
+<pre><code class="cs"> public static object Register
+  &lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;() 
+  where T : new()
+ {
+   return new T();
+ }
+ //触发 DynamicallyAccessedMemberTypes.All
+ Register&lt;T1&gt;();
+ EnsureTable&lt;T1&gt;(&quot;T1&quot;, &quot;Id&quot;); </code></pre>
 
 
                 <br />
-                <h5>数据库同步，主从与多主</h5>
-                <img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" /><br />
-
+                <!-- img src="images/p1.png" alt="iBoxDB Fast Transactional NoSQL Application Database Replication" / -->
+				<h5>全平台支持</h5>		
                 <img src="images/p3.png" alt="iBoxDB Fast Transactional NoSQL Application Database For Java, .Net, Android, Windows Phone, Mono, Unity3D, Xamarin, Linux, Windows" />
 
             </div>

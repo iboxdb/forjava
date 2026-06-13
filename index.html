@@ -250,9 +250,12 @@
                 <br />
                 <h5>Weak Object</h5>
                 <pre><code class="java">  //Strongly typed
-  box.select("from Table where Id > ?" , 1L);
+  box.select(&quot;from Table where Id > ?&quot; , 1L);
   //Weak Object
-  box.select("from Table where Id > ?" , new Variant("1")); </code></pre>
+  box.select(&quot;from Table where Id > ?&quot; , new Variant(&quot;1&quot;)); 
+
+  //!any Condition without Comparison is undefined!
+  select(&quot; ... where Name ... &quot;);</code></pre>
 
 
   				<br />

@@ -154,15 +154,15 @@
 					<div>
 						<pre><code class="cs">  using(var box = auto.Cube())
 							{
-							//select, insert, update, delete ...
-							//replace()=(insert or update)
-							CommitResult cr = box.Commit();
+							@//select, insert, update, delete ...
+							@//replace()=(insert or update)
+							@CommitResult cr = box.Commit();
 							}
 							</code></pre>
 						<br />
 						<pre><code class="java">  try(Box box = auto.cube()){
-							...
-							CommitResult cr = box.commit();
+							@...
+							@CommitResult cr = box.commit();
 							}  </code></pre>
 					</div>
 					as above, <b>box</b> is method's local variable, don't define as global variable.
@@ -295,7 +295,7 @@
 						//depends on the scale of dataset and corresponded Index configure.
 						//where Id == ? | Id == ? | Id == ?
 						foreach(var id in [ 1, 2, 3 ])
-						combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
+						@combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
 					
 					<br />
 					<h5>Custom QueryFunction</h5>
@@ -307,7 +307,7 @@
 					<h5>Custom Object Table Binding</h5>
 					<div>
 						<pre><code class="cs">  public bool Insert(Member m){
-							return auto.Insert(nameof(Member), m);
+							@return auto.Insert(nameof(Member), m);
 							}</code></pre>
 					</div>
 					
@@ -324,15 +324,15 @@
 					<h5>Compatible with LINQ (.NET)</h5>
 					<div>
 						<pre><code class="cs">  from o in box.Select&lt;Member&gt;(&quot;from Member&quot;)
-							where o.Text.Contains(text) select o;</code></pre>
+							@where o.Text.Contains(text) select o;</code></pre>
 					</div>
 					
 					<br />
 					<h5>Compatible with Stream (Java)</h5>
 					<div>
 						<pre><code class="java">  StreamSupport
-							.stream(box.select(Member.class,&quot;from Member&quot;).spliterator(), true)
-							.collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
+							@.stream(box.select(Member.class,&quot;from Member&quot;).spliterator(), true)
+							@.collect(groupingBy(m -> m.group, summarizingLong(m -> m.value)))</code></pre>
 					</div>
 					
 					<br />
@@ -354,7 +354,7 @@
 					<h5>Hot Mirror Copy</h5>
 					<div>
 						<pre><code class="cs">  auto.GetDatabase().CopyTo(bakAddr, bakRoot, buffer);
-							.CopyTo(bakAddr, bakRoot, buffer, new_mask_key_128000='!!NULL');</code></pre>
+							@.CopyTo(bakAddr, bakRoot, buffer, new_mask_key_128000='!!NULL');</code></pre>
 					</div>
 					
 					<br />
@@ -401,10 +401,10 @@
 					
 					</table>
 					<pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
-						//Snapshot...
-						box.Commit( ()=>{
-						//Serializable...
-						});
+						@//Snapshot...
+						@box.Commit( ()=>{
+						@@//Serializable...
+						@});
 						}</code></pre>
 					<br />
 					<h5>Update Increment</h5>
@@ -499,25 +499,25 @@
 					<br />
 					Xamarin
 					<pre><code class="cs">DB.Root(System.Environment.GetFolderPath(
-						System.Environment.SpecialFolder.LocalApplicationData/Personal))</code></pre>
+						@System.Environment.SpecialFolder.LocalApplicationData/Personal))</code></pre>
 					<br />
 					Unity3D
 					<pre><code class="cs">DB.Root(Application.persistentDataPath)</code></pre>
 					<br />
 					Android
 					<pre><code class="java">DB.root(android.os.Environment.getDataDirectory()
-						.getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;) </code></pre>
+						@.getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;) </code></pre>
 					
 					<br />
 					JSP WebApplication
 					<pre><code class="java">@WebListener()
 						public class StartListener implements ServletContextListener {
-						@Override
-						public void contextInitialized(ServletContextEvent sce) {
-						String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;;
-						new File(path).mkdirs();
-						DB.root(path);
-						}
+						@@Override
+						@public void contextInitialized(ServletContextEvent sce) {
+						@@String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;;
+						@@new File(path).mkdirs();
+						@@DB.root(path);
+						@}
 						} </code></pre>
 					
 					<br />
@@ -608,7 +608,7 @@
 						</tr>
 						<tr>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> bool
+								<pre style="margin: 0px; padding: 0px; font-size:18px"><code class="cs"> bool
 										char
 										byte
 										sbyte
@@ -642,8 +642,7 @@
 										string
 										
 										//non indexable
-										Dictionary
-										&lt;string, object&gt;
+										Dictionary&lt;string, object&gt;
 										byte[]
 										string[]
 										//file
@@ -666,7 +665,7 @@
 							</td>
 							
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> boolean
+								<pre style="margin: 0px; padding: 0px; font-size:18px"><code class="java"> boolean
 									Boolean
 									byte
 									Byte
@@ -691,8 +690,7 @@
 									String
 									
 									//non indexable
-									HashMap
-									&lt;String, Object&gt;
+									HashMap&lt;String, Object&gt;
 									byte[]
 									Object[]
 									//file
@@ -715,8 +713,7 @@
 						</tr>
 						<tr>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px">
-									<code class="cs">//Name
+								<pre style="margin: 0px; padding: 0px; font-size:18px"><code class="cs">//Name
 									*.Name
 									
 									//name
@@ -728,8 +725,7 @@
 									</code></pre>
 							</td>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px">
-									<code class="java">//Name
+								<pre style="margin: 0px; padding: 0px; font-size:18px"><code class="java">//Name
 									*.Name
 									*.Name(val)
 									*.setName(val)
@@ -753,10 +749,10 @@
 					<br />
 					<h5>.NET AOT Register Types</h5>
 					<pre><code class="cs"> public static object Register
-						&lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;()
-						where T : new()
+						@&lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;()
+						@where T : new()
 						{
-						return new T();
+						@return new T();
 						}
 						//Trigger DynamicallyAccessedMemberTypes.All
 						Register&lt;T1&gt;();

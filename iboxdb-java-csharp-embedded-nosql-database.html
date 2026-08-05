@@ -133,74 +133,74 @@
 				<pre style="display: none" id="code9"><code class="java">import iboxdb.localserver.*;
 					
 					public class App{
-					public static AutoBox auto;
-					public static Box cube(){
-					return auto.cube();
-					}
+					@public static AutoBox auto;
+					@public static Box cube(){
+					@@return auto.cube();
+					@}
 					}
 					synchronized static void onApplicationStart() {
-					DB.root(path);
-					DB db = new DB(1);
+					@DB.root(path);
+					@DB db = new DB(1);
 					
-					db.getConfig()
-					.ensureTable(Member.class, &quot;Table&quot;, &quot;Id&quot;)
-					.ensureIndex(Member.class, &quot;Table&quot;, &quot;Name&quot;);
+					@db.getConfig()
+					@@.ensureTable(Member.class, &quot;Table&quot;, &quot;Id&quot;)
+					@@.ensureIndex(Member.class, &quot;Table&quot;, &quot;Name&quot;);
 					
-					//Tree-&gt;Parts
-					db.getConfig()
-					.ensureTable(Node.class, &quot;Node&quot;, &quot;Id&quot;)
-					.ensureIndex(Node.class, &quot;Node&quot;, &quot;Parent&quot;);
+					@//Tree-&gt;Parts
+					@db.getConfig()
+					@@.ensureTable(Node.class, &quot;Node&quot;, &quot;Id&quot;)
+					@@.ensureIndex(Node.class, &quot;Node&quot;, &quot;Parent&quot;);
 					
-					db.getConfig()
-					.ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;)
-					.ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
+					@db.getConfig()
+					@@.ensureTable(Part.class, &quot;Part&quot;, &quot;Id&quot;)
+					@@.ensureIndex(Part.class, &quot;Part&quot;, &quot;Node&quot;);
 					
-					DatabaseConfig cfg = db.getConfig();
-					cfg.CacheLength = cfg.mb(512L);
-					cfg.FileIncSize = (int)cfg.mb(4);
+					@DatabaseConfig cfg = db.getConfig();
+					@cfg.CacheLength = cfg.mb(512L);
+					@cfg.FileIncSize = (int)cfg.mb(4);
 					
-					App.auto = db.open();
+					@App.auto = db.open();
 					}
 					
 					void anywhere1() {
-					App.auto.insert(&quot;Table&quot;, new Member());
+					@App.auto.insert(&quot;Table&quot;, new Member());
 					}
 					
 					void anywhere2() {
-					try (Box box = App.cube()) {
-					box.d(&quot;Table&quot;).insert(new Member());
-					CommitResult cr = box.commit();
-					}
+					@try (Box box = App.cube()) {
+					@@box.d(&quot;Table&quot;).insert(new Member());
+					@@CommitResult cr = box.commit();
+					@}
 					}
 					
 					boolean exists(Box box) {
-					return box.count(&quot;from Table limit 0,1&quot;) &gt; 0;
+					@return box.count(&quot;from Table limit 0,1&quot;) &gt; 0;
 					}
 					
 					&lt;V&gt; Iterable&lt;V&gt; startsWith(Box box, Class&lt;V&gt; vClass, String prefix) {
-					String begin = prefix;
-					char[] cs = prefix.toCharArray();
-					cs[cs.length - 1] = (char) ((short) cs[cs.length - 1] + 1);
-					String end = new String(cs);
-					return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end);
+					@String begin = prefix;
+					@char[] cs = prefix.toCharArray();
+					@cs[cs.length - 1] = (char) ((short) cs[cs.length - 1] + 1);
+					@String end = new String(cs);
+					@return box.select(vClass,&quot;from Table where Name&gt;=? &amp; Name&lt;?&quot;,begin,end);
 					}
 					
 					void treeJoin(Box box, long nodeRoot, int maxLevel, StringBuilder result) {
-					for (Node node :
-					box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) {
-					result.append(&quot; NODE:&quot;).append(node.Id);
-					for (Part part :
-					box.select(Part.class, &quot;from Part where Node==?&quot;, node.Id)) {
-					result.append(&quot; PART:&quot;).append(part.Id);
-					}
-					treeJoin(box, node.Id, maxLevel + 1, result);
-					}
+					@for (Node node :
+					@@@@box.select(Node.class, &quot;from Node where Parent==?&quot;, nodeRoot)) {
+					@@result.append(&quot; NODE:&quot;).append(node.Id);
+					@@for (Part part :
+					@@@@@box.select(Part.class, &quot;from Part where Node==?&quot;, node.Id)) {
+					@@@result.append(&quot; PART:&quot;).append(part.Id);
+					@@}
+					@@treeJoin(box, node.Id, maxLevel + 1, result);
+					@}
 					}
 					
 					synchronized static void onApplicationClose() {
-					//Wait for all background/async tasks to finished.
-					App.waitfor();
-					App.auto.getDatabase().close();
+					@//Wait for all background/async tasks to finished.
+					@App.waitfor();
+					@App.auto.getDatabase().close();
 					}
 					</code></pre>
 				
@@ -211,74 +211,74 @@
 					
 					public class AppServer : LocalDatabaseServer
 					{
-					private static AppServer server = new AppServer();
-					public static IDatabase DB(long address)
-					{
-					return server.GetInstance(address);
-					}
+					@private static AppServer server = new AppServer();
+					@public static IDatabase DB(long address)
+					@{
+					@@return server.GetInstance(address);
+					@}
 					
-					abstract class Config : BoxFileStreamConfig
-					{
-					public Config() : base()
-					{
-					CacheLength = MB(512); //1024L*1024L*512L
-					FileIncSize = (int)MB(4);
-					//Thread, default is 4
-					ReadStreamCount = 8;
-					//set equal to 1 in small device.
-					//ReadStreamCount = 1;
-					}
-					}
+					@abstract class Config : BoxFileStreamConfig
+					@{
+					@@public Config() : base()
+					@@{
+					@@@CacheLength = MB(512); //1024L*1024L*512L
+					@@@FileIncSize = (int)MB(4);
+					@@@//Thread, default is 4
+					@@@ReadStreamCount = 8;
+					@@@//set equal to 1 in small device.
+					@@@//ReadStreamCount = 1;
+					@@}
+					@}
 					
-					class MainConfig : Config
-					{
-					public MainConfig() : base()
-					{
-					EnsureTable&lt;Member&gt;(&quot;Member&quot;, &quot;Id&quot;);
-					//set Max-Length = 20, String default is 32
-					EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Name(20)&quot;);
-					EnsureTable&lt;Product&gt;(&quot;Product&quot;, &quot;Type&quot;, &quot;UID&quot;);
-					}
-					}
+					@class MainConfig : Config
+					@{
+					@@public MainConfig() : base()
+					@@{
+					@@@EnsureTable&lt;Member&gt;(&quot;Member&quot;, &quot;Id&quot;);
+					@@@//set Max-Length = 20, String default is 32
+					@@@EnsureIndex&lt;Member&gt;(&quot;Member&quot;, &quot;Name(20)&quot;);
+					@@@EnsureTable&lt;Product&gt;(&quot;Product&quot;, &quot;Type&quot;, &quot;UID&quot;);
+					@@}
+					@}
 					
-					class InventoryConfig : Config
-					{
-					public InventoryConfig() : base()
-					{
-					EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;);
-					}
-					}
+					@class InventoryConfig : Config
+					@{
+					@@public InventoryConfig() : base()
+					@@{
+					@@@EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;);
+					@@}
+					@}
 					
-					protected override DatabaseConfig BuildDatabaseConfig(long address)
-					{
-					switch (address)
-					{
-					case 1L: return new MainConfig();
-					case 2L: return new InventoryConfig();
-					default: return null;
-					}
-					}
+					@protected override DatabaseConfig BuildDatabaseConfig(long address)
+					@{
+					@@switch (address)
+					@@{
+					@@@case 1L: return new MainConfig();
+					@@@case 2L: return new InventoryConfig();
+					@@@default: return null;
+					@@}
+					@}
 					}
 					
 					void Anywhere1()
 					{
-					var auto = AppServer.DB(1L).Get();
-					auto.Insert(&quot;Member&quot;, new Member());
+					@var auto = AppServer.DB(1L).Get();
+					@auto.Insert(&quot;Member&quot;, new Member());
 					}
 					
 					void Anywhere2()
 					{
-					var db = AppServer.DB(2L);
-					using (var box = db.Cube())
-					{
-					box[&quot;Item&quot;].Insert(new Item());
-					CommitResult cr = box.Commit();
-					}
+					@var db = AppServer.DB(2L);
+					@using (var box = db.Cube())
+					@{
+					@@box[&quot;Item&quot;].Insert(new Item());
+					@@CommitResult cr = box.Commit();
+					@}
 					}
 					
 					void OnApplicationClose()
 					{
-					AppServer.server.Dispose();
+					@AppServer.server.Dispose();
 					}</code></pre>
 				
 				
@@ -289,27 +289,27 @@
 					&lt;%@page contentType=&quot;text/html&quot; pageEncoding=&quot;UTF-8&quot; session=&quot;false&quot; %&gt;
 					&lt;%@page import=&quot;iboxdb.localserver.*&quot; %&gt;
 					&lt;%!
-					public static AutoBox auto() {
-					synchronized (DB.class) {
-					if (DB.Tag != null) {
-					return (AutoBox) DB.Tag;
-					}
+					@public static AutoBox auto() {
+					@@synchronized (DB.class) {
+					@@@if (DB.Tag != null) {
+					@@@@return (AutoBox) DB.Tag;
+					@@@}
 					
-					String root = System.getProperty(&quot;user.home&quot;) + &quot;/jsp_data/&quot;;
-					new java.io.File(root).mkdirs();
-					DB.root(root);
-					DB db = new DB(1);
-					db.getConfig().ensureTable(JSPUser.class, &quot;JSPUser&quot;, &quot;id&quot;);
+					@@@String root = System.getProperty(&quot;user.home&quot;) + &quot;/jsp_data/&quot;;
+					@@@new java.io.File(root).mkdirs();
+					@@@DB.root(root);
+					@@@DB db = new DB(1);
+					@@@db.getConfig().ensureTable(JSPUser.class, &quot;JSPUser&quot;, &quot;id&quot;);
 					
-					DB.Tag = db.open();
-					return (AutoBox) DB.Tag;
-					}
-					}
+					@@@DB.Tag = db.open();
+					@@@return (AutoBox) DB.Tag;
+					@@}
+					@}
 					
-					public static class JSPUser {
-					public long id;
-					public String name;
-					}
+					@public static class JSPUser {
+					@@public long id;
+					@@public String name;
+					@}
 					%&gt;
 					
 					//index.jsp
@@ -317,12 +317,12 @@
 					&lt;%@include file=&quot;db.jsp&quot; %&gt;
 					
 					&lt;%
-					long id = auto().newId();
+					@long id = auto().newId();
 					
-					JSPUser user = new JSPUser();
-					user.id = id;
-					user.name = &quot;iBoxDB on JSP -&quot; + user.id;
-					auto().insert(&quot;JSPUser&quot;, user);
+					@JSPUser user = new JSPUser();
+					@user.id = id;
+					@user.name = &quot;iBoxDB on JSP -&quot; + user.id;
+					@auto().insert(&quot;JSPUser&quot;, user);
 					%>
 					&lt;html&gt;
 					&lt;body&gt;
@@ -334,24 +334,24 @@
 				<a href="javascript:void(0)" onclick="javascript:code4.style.display='block'">Save DB as String</a>
 				<br />
 				<pre style="display: none" id="code4"><code class="cs">Start(){
-					byte[] data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;));
-					db = new DB(data);
-					db.MinConfig().FileIncSize = 1;
-					...
-					auto = db.Open();
+					@byte[] data = Convert.FromBase64String(PlayerPrefs.GetString(&quot;DB&quot;,&quot;&quot;));
+					@db = new DB(data);
+					@db.MinConfig().FileIncSize = 1;
+					@...
+					@auto = db.Open();
 					}
 					Save() {
-					byte[] data = db.GetBuffer();
-					//data = Zip(data); = 1/5
-					PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data));
-					PlayerPrefs.Save();
+					@byte[] data = db.GetBuffer();
+					@//data = Zip(data); = 1/5
+					@PlayerPrefs.SetString(&quot;DB&quot;,Convert.ToBase64String(data));
+					@PlayerPrefs.Save();
 					}
 					</code></pre>
 				
 				<a href="javascript:void(0)" onclick="javascript:code3.style.display='block'">Unity3D WebGL Save</a>
 				<br />
 				<pre style="display: none" id="code3"><code class="cs">if (GUI.Button(new Rect(0, 50, Screen.width / 2, 50), &quot;Save&quot;)) {
-					Application.ExternalEval(&quot;FS.syncfs(false, function (err) {});&quot;);
+					@Application.ExternalEval(&quot;FS.syncfs(false, function (err) {});&quot;);
 					}
 					</code></pre>
 				
@@ -364,23 +364,23 @@
 					new Thread(() =&gt; { Hot(); }).Start();
 					static AutoBox auto;
 					public static void Hot() {
-					var db = new DB();
-					db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Time&quot;, &quot;Gid&quot;);
-					auto = db.Open();
-					auto.Insert(&quot;Item&quot;, new Item());
-					auto.Select(&quot;from Item&quot;);
+					@var db = new DB();
+					@db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Time&quot;, &quot;Gid&quot;);
+					@auto = db.Open();
+					@auto.Insert(&quot;Item&quot;, new Item());
+					@auto.Select(&quot;from Item&quot;);
 					}</code></pre>
 				
 				<a href="javascript:void(0)" onclick="javascript:code12.style.display='block'">Complex Search, Region Control</a>
 				<br />
 				<pre style="display: none" id="code12"><code class="cs">//use a simple query to control search region
 					box.Select&lt;User&gt;(&quot;from User where Version&gt;? limit 0,1000&quot;, last)
-					//with a complex query to filter data
-					.Where((u) =&gt; {
-					if ( u... )
-					if ( u... )
-					return u.Time &gt; dt ;
-					});
+					@//with a complex query to filter data
+					@.Where((u) =&gt; {
+					@@if ( u... )
+					@@@if ( u... )
+					@@@@return u.Time &gt; dt ;
+					@});
 					</code></pre>
 				
 				
@@ -389,19 +389,19 @@
 				<pre style="display: none" id="code21"><code class="cs">using IBoxDB.LocalServer.Replication;
 					DB db = new DB();
 					db.SetBoxRecycler(
-					(Socket socket, BoxData outBox, bool normalPoweroff) => {
-					if (socket.Actions > 0) {
-					foreach (var e in outBox.GetActions()) {
-					var actionType = e.ActionType;
-					var key = e.Key;
-					if (actionType == ActionType.Begin) {
-					continue;
-					}
+					@@@(Socket socket, BoxData outBox, bool normalPoweroff) => {
+					@if (socket.Actions > 0) {
+					@@foreach (var e in outBox.GetActions()) {
+					@@@var actionType = e.ActionType;
+					@@@var key = e.Key;
+					@@@if (actionType == ActionType.Begin) {
+					@@@@continue;
+					@@@}
 					
-					var tableName = e.TableName;
-					var value = e.Select();
-					Log (actionType + " '" + tableName + "' at key '" + key
-					+ "' \r\n" + DB.ToString (value));
+					@@@var tableName = e.TableName;
+					@@@var value = e.Select();
+					@@@Log (actionType + " '" + tableName + "' at key '" + key
+					@@@@+ "' \r\n" + DB.ToString (value));
 					}}});
 					</code></pre>
 				
@@ -413,18 +413,18 @@
 					db.WaitAnotherApp(1000 * 60 * 5);
 					
 					using (var auto = db.Open()){
-					...
-					//auto.Cube(); Insert(), Update()...
+					@...
+					@//auto.Cube(); Insert(), Update()...
 					}</code></pre>
 				
 				<a href="javascript:void(0)" onclick="javascript:code16.style.display='block'">Forward CRUD</a>
 				<br />
 				<pre style="display: none" id="code16"><code class="java">try (Box box = auto.cube()) {
-					// forward Update()
-					Member m = box.d(&quot;Table&quot;, 100L).update(Member.class);
-					m.setName(&quot;Name&quot;);
-					m.setAmount(BigDecimal.TEN);
-					CommitResult cr = box.commit();
+					@// forward Update()
+					@Member m = box.d(&quot;Table&quot;, 100L).update(Member.class);
+					@m.setName(&quot;Name&quot;);
+					@m.setAmount(BigDecimal.TEN);
+					@CommitResult cr = box.commit();
 					}</code></pre>
 				
 				
@@ -477,82 +477,40 @@ uncheck Automatically manage paging file - select No paging file -
 click Set - OK restart
 </code></pre>
 
-      <a href="javascript:void(0)" onclick="javascript:code23.style.display='block'">Creating Big Test Data</a>
-            <br />
-            <pre style="display: none" id="code23"><code class="java">//-Xmx6G
-var db = new DB(100);
-db.getConfig().ensureTable(new Ason("Id:", 0L), "Table");
-//Disable [SwapFileBuffer] can insert very big object
-//ONLY for creating test data.
-db.getConfig().SwapFileBuffer = 0;
-var auto = db.open();
-try (Box box = auto.cube()) {
-    var ason = new Ason("Id:", 0L, 
-    	"Bytes:", new byte[Integer.MAX_VALUE / 3]);
-    ason.set("Id", 1L);
-    ((byte[]) ason.get("Bytes"))[1] = 55;
-    box.d("Table").insert(ason);
-    ason.set("Id", 2L);
-    ((byte[]) ason.get("Bytes"))[1] = 66;
-    box.d("Table").insert(ason);
-    ason.set("Id", 3L);
-    ((byte[]) ason.get("Bytes"))[1] = 77;
-    box.d("Table").insert(ason);
-    CommitResult cr = box.commit();
-    System.out.println("Commit : " + cr);
-}
-auto.getDatabase().close();
-
-db = new DB(100);
-auto = db.open();
-try (Box box = auto.cube()) {
-    var local = box.d("Table", 1L).select();
-    System.out.println(((byte[]) local.get("Bytes")).length);
-    System.out.println(((byte[]) local.get("Bytes"))[1]);
-
-    local = box.d("Table", 2L).select();
-    System.out.println(((byte[]) local.get("Bytes")).length);
-    System.out.println(((byte[]) local.get("Bytes"))[1]);
-
-    local = box.d("Table", 3L).select();
-    System.out.println(((byte[]) local.get("Bytes")).length);
-    System.out.println(((byte[]) local.get("Bytes"))[1]);
-}</code></pre
-
 -->
 				<a href="javascript:void(0)" onclick="javascript:code22.style.display='block'">Dataset Combiner</a>
 				<br />
 				<pre style="display: none" id="code22"><code class="cs">//combining dataset
 					public class Combiner&lt;T&gt;
 					{
-					public Combiner(Func&lt;T, object&gt; getid){}
+					@public Combiner(Func&lt;T, object&gt; getid){}
 					}
 					
 					class Item
 					{
-					public long Id;
-					public string Name;
-					public string Location;
+					@public long Id;
+					@public string Name;
+					@public string Location;
 					}
 					
 					static void Main(string[] args)
 					{
-					DB db = new DB();
-					db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;)
-					.EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Name&quot;)
-					.EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Location&quot;);
+					@DB db = new DB();
+					@db.GetConfig().EnsureTable&lt;Item&gt;(&quot;Item&quot;, &quot;Id&quot;)
+					@@.EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Name&quot;)
+					@@.EnsureIndex&lt;Item&gt;(&quot;Item&quot;, &quot;Location&quot;);
 					
-					AutoBox auto = db.Open();
+					@AutoBox auto = db.Open();
 					
-					using(Box box = auto.Cube())
-					{
-					Combiner&lt;Item&gt; combiner = new Combiner&lt;Item&gt;(t =&gt; t.Id);
-					combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Name==?&quot;, &quot;Name4&quot;));
-					combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 1L));
-					combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 2L));
-					combiner.Add(
-					box.Select&lt;Item&gt;(&quot;from Item where Location==?&quot;, &quot;Location6&quot;));
-					}
+					@using(Box box = auto.Cube())
+					@{
+					@@Combiner&lt;Item&gt; combiner = new Combiner&lt;Item&gt;(t =&gt; t.Id);
+					@@combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Name==?&quot;, &quot;Name4&quot;));
+					@@combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 1L));
+					@@combiner.Add(box.Select&lt;Item&gt;(&quot;from Item where Id==?&quot;, 2L));
+					@@combiner.Add(
+					@@box.Select&lt;Item&gt;(&quot;from Item where Location==?&quot;, &quot;Location6&quot;));
+					@}
 					}
 					</code></pre>
 				

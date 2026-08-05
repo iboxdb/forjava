@@ -8,7 +8,7 @@ function replaceCodes(){
 		for(var j=0; j<tx.length; j++){
    			tx[j] = tx[j].trim();
    			
-   			tx[j] = tx[j].replace(/(?!\@Override$|\@WebListener)\@/g ,'  ');	
+   			tx[j] = tx[j].replace(/(?!\@Override|\@WebListener|\@page|\@include)\@/g ,'  ');	
 		}
 		ccs[i].innerHTML = tx.join('\n');
 	}

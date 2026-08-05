@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,MVCC,Java,Android,Unity3D,Xamarin,数据库事务,应用程序,文档数据库" />
+		<meta name="keywords" content="iBoxDB,NoSQL,ORM,数据库,ACID,MVCC,Java,Android,Unity3D,NET,数据库事务,应用程序,文档数据库" />
 		<meta name="description" content="双核高性能NoSQL数据库引擎 支持 JAVA .NET Unity Android Mono C# Linux Windows - iBoxDB" />
 		
 		<link rel="shortcut icon" href="favicon.ico" />
@@ -101,14 +101,14 @@
 					<div>
 						<pre><code class="cs">  using(var box = auto.Cube())
 							{
-							//select, insert, update, delete ...
-							//replace()=(insert or update)
-							var result = box.Commit();
+							@//select, insert, update, delete ...
+							@//replace()=(insert or update)
+							@var result = box.Commit();
 							}
 							</code></pre> <br />
 						<pre><code class="java">  try(Box box = auto.cube()){
-							...
-							CommitResult r = box.commit();
+							@...
+							@CommitResult r = box.commit();
 							}  </code></pre>
 					</div>
 					Box 是本地变量，每个 Box 都是单独的事务。AutoBox 在单进程应用程序中可以用作全局变量。
@@ -118,10 +118,10 @@
 					<h5>普通对象操作</h5>
 					<div>
 						<pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {
-							ID=box.NewId(),
-							Name = &quot;Andy&quot;,
-							Password = EncodePassowrd(&quot;123&quot;)
-							}
+							@@ID=box.NewId(),
+							@@Name = &quot;Andy&quot;,
+							@@Password = EncodePassowrd(&quot;123&quot;)
+							@}
 							);
 							</code></pre> <br />
 						<pre><code class="java">  Member m = new Member();
@@ -224,7 +224,7 @@
 						//取决于数据集的大小与索引设置.
 						//where Id == ? | Id == ? | Id == ?
 						foreach(var id in [ 1, 2, 3 ])
-						combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
+						@combiner.Add( box.Select(&quot;from Member where Id == ?&quot;,id) )</code></pre>
 					
 					
 					<br />
@@ -237,7 +237,7 @@
 					<h5>自定义表-对象绑定</h5>
 					<div>
 						<pre><code class="cs">  public bool Insert(Member m){
-							return auto.Insert(nameof(Member), m);
+							@return auto.Insert(nameof(Member), m);
 							}</code></pre>
 					</div>
 					
@@ -245,16 +245,16 @@
 					<h5>兼容 LINQ (.NET)</h5>
 					<div>
 						<pre><code class="cs">  from o in box.Select&lt;Class&gt;(&quot;from Class&quot;)
-							where o.Text.Contains(text)
-							select o;</code></pre>
+							@where o.Text.Contains(text)
+							@select o;</code></pre>
 					</div>
 					
 					<br />
 					<h5>兼容 Stream (Java8)</h5>
 					<div>
 						<pre><code class="java">  StreamSupport.stream(db.select(&quot;from Table&quot;).spliterator(), true)
-							.collect(Collectors.groupingBy((l) -&gt; l.get(&quot;GroupID&quot;),
-							Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
+							@.collect(Collectors.groupingBy((l) -&gt; l.get(&quot;GroupID&quot;),
+							@Collectors.summingLong((l) -&gt; (Long) l.get(&quot;Value&quot;))));</code></pre>
 					</div>
 					
 					<br />
@@ -373,10 +373,10 @@
 						</tr>
 					</table>
 					<pre style="margin: 0px; padding: 0px;"><code class="cs">using(var box = auto.Cube()){
-						//Snapshot...
-						box.Commit( ()=>{
-						//Serializable...
-						});
+						@//Snapshot...
+						@box.Commit( ()=>{
+						@@//Serializable...
+						@});
 						}</code></pre>
 					
 					
@@ -412,7 +412,7 @@
 					<br />
 					Xamarin
 					<pre><code class="cs">iBoxDB.LocalServer.DB.Root(System.Environment.GetFolderPath(
-						System.Environment.SpecialFolder.Personal));</code></pre>
+						@System.Environment.SpecialFolder.Personal));</code></pre>
 					
 					<br />
 					Unity3D
@@ -421,18 +421,18 @@
 					<br />
 					Android
 					<pre><code class="java">iBoxDB.LocalServer.DB.root(android.os.Environment.getDataDirectory()
-						.getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
+						@.getAbsolutePath() + &quot;/data/&quot; + packageName + &quot;/&quot;); </code></pre>
 					
 					<br />
 					JSP WebApplication
 					<pre><code class="java">@WebListener()
 						public class StartListener implements ServletContextListener {
-						@Override
-						public void contextInitialized(ServletContextEvent sce) {
-						String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;;
-						new File(path).mkdirs();
-						iBoxDB.LocalServer.DB.root(path);
-						}
+						@@Override
+						@public void contextInitialized(ServletContextEvent sce) {
+						@@String path = System.getProperty(&quot;user.home&quot;) + &quot;/data/&quot;;
+						@@new File(path).mkdirs();
+						@@iBoxDB.LocalServer.DB.root(path);
+						@}
 						} </code></pre>
 					
 					<br />
@@ -519,7 +519,7 @@
 						</tr>
 						<tr>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> bool
+								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="cs"> bool
 										char
 										byte
 										sbyte
@@ -553,8 +553,7 @@
 										string
 										
 										//non indexable
-										Dictionary
-										&lt;string, object&gt;
+										Dictionary&lt;string, object&gt;
 										MemoryStream
 										byte[]
 										string[]
@@ -576,7 +575,7 @@
 							</td>
 							
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="diff"> boolean
+								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="java"> boolean
 									Boolean
 									byte
 									Byte
@@ -601,12 +600,10 @@
 									String
 									
 									//non indexable
-									HashMap
-									&lt;String, Object&gt;
+									HashMap&lt;String, Object&gt;
 									MemoryStream
 									byte[]
 									Object[]
-									
 									
 									
 									
@@ -624,8 +621,7 @@
 						</tr>
 						<tr>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px">
-									<code class="cs">//Name
+								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="cs">//Name
 									*.Name
 									
 									//name
@@ -637,8 +633,7 @@
 									</code></pre>
 							</td>
 							<td style="margin: 0px; padding: 0px; vertical-align: top;">
-								<pre style="margin: 0px; padding: 0px; font-size:13px">
-									<code class="java">//Name
+								<pre style="margin: 0px; padding: 0px; font-size:13px"><code class="java">//Name
 									*.Name
 									*.Name(val)
 									*.setName(val)
@@ -662,10 +657,10 @@
 					<br />
 					<h5>.NET AOT 注册类型</h5>
 					<pre><code class="cs"> public static object Register
-						&lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;()
-						where T : new()
+						@&lt;[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T&gt;()
+						@where T : new()
 						{
-						return new T();
+						@return new T();
 						}
 						//触发 DynamicallyAccessedMemberTypes.All
 						Register&lt;T1&gt;();
@@ -701,6 +696,7 @@
 		<div class="outer" style="position: relative; top: -50px; left: -1px">
 		
 		</div>
+		
 		<script src="highlight/highlight.packS.jS?SRC=USER"></script>
 		<script>hljs.initHighlightingOnLoad();</script>
 	

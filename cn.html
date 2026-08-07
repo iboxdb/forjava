@@ -118,14 +118,14 @@
 					<h5>普通对象操作</h5>
 					<div>
 						<pre><code class="cs">  box[&quot;Member&quot;].Insert(new Member() {
-							@@ID=box.NewId(),
+							@@Id = box.NewId(),
 							@@Name = &quot;Andy&quot;,
 							@@Password = EncodePassowrd(&quot;123&quot;)
 							@}
 							);
 							</code></pre> <br />
 						<pre><code class="java">  Member m = new Member();
-							m.ID = box.newId();
+							m.Id = box.newId();
 							m.setName(&quot;Kevin&quot;);
 							box.d(&quot;Member&quot;).insert(m); </code></pre>
 					</div>

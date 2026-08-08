@@ -577,8 +577,13 @@
 					
 					<br />
 					<h5>Install</h5>
-					<pre><code class="cs">.NET: Add NETDB/iBoxDB.DLL  to Project</code></pre>
-					<pre><code class="java">Java: Add JavaDB/iboxdb.jar to Project</code></pre>
+					<pre><code class="cs">.NET: Add NETDB/iBoxDB.NET2.dll to Project</code></pre>
+					<pre><code class="java">Java: Add JavaDB/iboxdb-version.jar to Project</code></pre>
+					<pre><code class="sh">Runtime (ZIP/UnZIP):
+						Java 	(18MB/30MB):
+						$ jlink --output min_jdk  --add-modules java.base --compress=2
+						Mono 	(17MB/56MB):
+						$ dnf install mono-core</code></pre>
 					
 					<br />
 					<h5>Benchmark with MySQL</h5>

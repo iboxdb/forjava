@@ -260,6 +260,13 @@
 						//!any Condition without Comparison is undefined!
 						select(&quot; ... where Name ... &quot;);</code></pre>
 					
+					<br />
+					<h5>Using in Dynamic Language</h5>
+					<pre><code class="py">#Explicitly Converting Object
+						#if implicit conversion is not compatible
+						from System import Int64
+						select(&quot;... where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))</code></pre>
+					
 					
 					<br />
 					<h5>Index, make Select hundred times faster in average</h5>

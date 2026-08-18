@@ -253,19 +253,21 @@
 					<br />
 					<h5>Weak Object</h5>
 					<pre><code class="java">  //Strongly typed
-						box.select(&quot;from Table where Id > ?&quot; , 1L);
+						box.select(&quot;from Table where Id == ?&quot; , 1L);
 						//Weak Object
-						box.select(&quot;from Table where Id > ?&quot; , new Variant(&quot;1&quot;));
+						box.select(&quot;from Table where Id == ?&quot; , new Variant(&quot;1&quot;));
+						//!2 Weak Objects(Number and String) in Select is undefined!
 						
 						//!any Condition without Comparison is undefined!
-						select(&quot; ... where Name ... &quot;);</code></pre>
+						select(&quot; ... where Name ... &quot;);
+						</code></pre>
 					
 					<br />
 					<h5>Using in Dynamic Language</h5>
 					<pre><code class="py">#Explicitly Converting Object
 						#if implicit conversion is not compatible
 						from System import Int64
-						select(&quot;... where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))</code></pre>
+						select(&quot;...where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))</code></pre>
 					
 					
 					<br />

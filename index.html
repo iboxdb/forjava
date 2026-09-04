@@ -263,11 +263,15 @@
 						</code></pre>
 					
 					<br />
-					<h5>Using in Dynamic Language</h5>
+					<h5>Using in Dynamic Language, &nbsp; Python Node.js</h5>
 					<pre><code class="py">#Explicitly Converting Object
 						#if implicit conversion is not compatible
 						from System import Int64
-						select(&quot;...where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))</code></pre>
+						select(&quot;...where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))
+						
+						#using timestamp:number to store is easier than converting to Date:class
+						{'timestamp':datetime.now(timezone.utc).timestamp()}
+						</code></pre>
 					
 					
 					<br />

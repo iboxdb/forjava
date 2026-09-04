@@ -269,7 +269,8 @@
 						from System import Int64
 						select(&quot;...where id&gt;=? &amp; id&lt;=?&quot;, Int64(i), Int64(j))
 						
-						#using timestamp:number to store is easier than converting to Date:class
+						#using timestamp:number to store is easier
+						#than converting to Date:class
 						{'timestamp':datetime.now(timezone.utc).timestamp()}
 						</code></pre>
 					

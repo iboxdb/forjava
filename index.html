@@ -594,22 +594,24 @@
 					<pre><code class="cs">.NET: Add NETDB/iBoxDB.NET2.dll to Project</code></pre>
 					<pre><code class="java">Java: Add JavaDB/iboxdb-version.jar to Project</code></pre>
 					<pre><code class="sh">Runtime (ZIP/UnZIP):
-						Java 	(18MB/30MB):
+						Java 	(16MB/47MB):
 						$ jlink --output min_jdk  --add-modules java.base --compress=2
 						Mono 	(17MB/56MB):
 						$ dnf install mono-core</code></pre>
 					
 					<br />
 					<h5>Benchmark with MySQL</h5>
-					<pre><code class="sql">iBoxDB
-						Insert: 1,000,000 AVG: 47,016 objects/s
-						Update: 1,000,000 AVG: 25,558 objects/s
-						Delete: 1,000,000 AVG: 42,714 objects/s
+					<pre><code class="sql">Benchmark Version 1.7.5, Java=25, 2 Cores + 8G
+						
+						iBoxDB
+						Insert: 1,100,000 AVG: 22,055 objects/s
+						Update: 1,100,000 AVG: 38,833 objects/s
+						Delete: 1,100,000 AVG: 24,089 objects/s
 						
 						MySQL
-						Insert: 1,000,000 AVG: 5,514 objects/s
-						Update: 1,000,000 AVG: 5,109 objects/s
-						Delete: 1,000,000 AVG: 6,044 objects/s
+						Insert: 1,100,000 AVG: 1,948 objects/s
+						Update: 1,100,000 AVG: 1,515 objects/s
+						Delete: 1,100,000 AVG: 1,850 objects/s
 						</code></pre>
 					
 					<br />
